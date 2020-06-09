@@ -1,11 +1,18 @@
 import React from "react";
+import styled from "styled-components";
+
 
 const MainPage = () => {
-  return(
+  return (
     <div className="MainPage">
-    난 메인페이지야
+      <Button>안녕 오늘은 언제 집에 갈 것 같니? 123456 Wanted</Button>
+      <a href="google.com">dfsdfsd</a>
     </div>
   );
 }
+
+const Button = styled.button`
+  color: ${props => props.theme.color.main};
+`;
 
 export default MainPage;
