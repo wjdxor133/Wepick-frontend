@@ -8,7 +8,7 @@ const globalStyles = createGlobalStyle`
         color:inherit;
     }
     *{
-        box-sizing:boerder-box;
+        box-sizing:"boerder-box";
     }
     @font-face {
       font-family: 'Roboto', 'Noto Sans KR';
