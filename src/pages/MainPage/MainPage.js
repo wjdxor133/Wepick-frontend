@@ -31,23 +31,26 @@ const MainPage = () => {
   return (
     <>
       <MainImgBox></MainImgBox>
-      < Main >
+      <Main>
         <PostionBox>
           <FlexBox>
-            <PostionTitle>나에게 딱 맞는 포지션 <AiOutlineSetting /></PostionTitle>
+            <PostionTitle>
+              나에게 딱 맞는 포지션 <AiOutlineSetting />
+            </PostionTitle>
             <MoreView>더 보기</MoreView>
           </FlexBox>
-          <FlexBox>
-            {list}
-          </FlexBox>
+          <FlexBox>{list}</FlexBox>
         </PostionBox>
         <BlueBox>
           <Percent></Percent>
-          <BlueBoxText>프로필에 이력서 추가하고, 인사담당자에게 직접 면접 제안 받으세요.</BlueBoxText>
+          <BlueBoxText>
+            프로필에 이력서 추가하고, 인사담당자에게 직접 면접 제안 받으세요.
+          </BlueBoxText>
           <BlueBoxButton>이력서 강화하기</BlueBoxButton>
         </BlueBox>
         <QuestContainer>
-          <QuestCate>전체
+          <QuestCate>
+            전체
             <QuestTitle></QuestTitle>
             <QuestTitleFliter></QuestTitleFliter>
           </QuestCate>
@@ -76,14 +79,13 @@ const MainPage = () => {
         </QuestContainer>
 
         <Button>안녕 오늘은 언제 집에 갈 것 같니? 123456 Wanted</Button>
-
-      </Main >
+      </Main>
     </>
   );
-}
+};
 
 const Main = styled.div`
-  max-width: 1061px;
+  max-width: 1060px;
   padding: 0em 2em;
   margin: 0 auto;
 `;
@@ -91,24 +93,20 @@ const Main = styled.div`
 const MainImgBox = styled.div`
   width: 100%;
   height: 300px;
-  background-color: ${props => props.theme.color.main}
+  background-color: ${(props) => props.theme.color.main};
 `;
 
-const PostionBox = styled.div`
-
-`;
+const PostionBox = styled.div``;
 
 const BlueBox = styled.div`
   width: 100%;
-  background-color: ${props => props.theme.color.main};
-  display:flex;
+  background-color: ${(props) => props.theme.color.main};
+  display: flex;
   justify-content: space-between;
   padding: 1em;
 `;
 
-const Percent = styled.div`
-
-`;
+const Percent = styled.div``;
 
 const BlueBoxText = styled.p`
   color: white;
@@ -116,82 +114,66 @@ const BlueBoxText = styled.p`
 
 const BlueBoxButton = styled.div`
   background-color: white;
-  padding: .5em 1em;
+  padding: 0.5em 1em;
   width: 20%;
-  color: ${props => props.theme.color.main};
-  border-radius: .2em;
+  color: ${(props) => props.theme.color.main};
+  border-radius: 0.2em;
 `;
 
-const FlexBox = styled.div` 
+const FlexBox = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
 `;
 
 const PostionTitle = styled.div`
-  font-size: 1.357rem
+  font-size: 1.357rem;
 `;
 
 const MoreView = styled.span`
   font-size: 1.125rem;
-  color: ${props => props.theme.color.gray};
+  color: ${(props) => props.theme.color.gray};
 `;
 
-const QuestContainer = styled.div`
-
-`;
+const QuestContainer = styled.div``;
 
 const QuestCate = styled.div`
   border-bottom: 1px solid gray;
 `;
 
 const QuestTitle = styled.span`
-  color: ${props => props.theme.color.gray}
+  color: ${(props) => props.theme.color.gray};
 `;
 
 const QuestTitleFliter = styled.div`
   width: 122px;
   height: 60px;
-  border-radius: .3em;
+  border-radius: 0.3em;
   border: 1px solid gray;
-  color: white
+  color: white;
 `;
 
 const QuestFliterLeft = styled.div`
-  display:flex
+  display: flex;
 `;
 
 const QuestFliterBlue = styled.div`
-  color: ${props => props.theme.color.main}
+  color: ${(props) => props.theme.color.main};
 `;
 
-const QuestFliterCountry = styled.div`
-  
-`;
+const QuestFliterCountry = styled.div``;
 
-const QuestFliterArea = styled.div`
-  
-`;
+const QuestFliterArea = styled.div``;
 
-const QuestFliterCareer = styled.div`
-  
-`;
+const QuestFliterCareer = styled.div``;
 
-const QuestFliterRight = styled.div`
-  
-`;
+const QuestFliterRight = styled.div``;
 
-const AggressiveBox = styled.div`
-  
-`;
+const AggressiveBox = styled.div``;
 
-const AggressiveTitle = styled.div`
-  
-`;
+const AggressiveTitle = styled.div``;
 
-const AggressiveContent = styled.div`
-  
-`;
+const AggressiveContent = styled.div``;
 
 const AggressiveContentBox = styled.div`
   width: 200px;
@@ -205,18 +187,12 @@ const AggressiveImg = styled.div`
   border: 1px solid black;
 `;
 
-const AggressiveCI = styled.div`
-  
-`;
+const AggressiveCI = styled.div``;
 
-
-const AggressiveCIName = styled.div`
-  
-`;
-
+const AggressiveCIName = styled.div``;
 
 const Button = styled.button`
-  color: ${props => props.theme.color.main};
+  color: ${(props) => props.theme.color.main};
 `;
 
 export default MainPage;
