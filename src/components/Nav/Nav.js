@@ -47,13 +47,13 @@ const Nav = () => {
 export default Nav;
 
 const NavBar = styled.div`
-  position:relative;
+  position:fixed;
   width:100%;
   height:50px;
+  z-index:100;
 `;
 
 const NavWarp = styled.div`
-  position:fixed;
   width:100%;
   height:50px;
 `;
@@ -65,7 +65,7 @@ const Visible = styled.div`
   display:flex;
   justify-content:center;
   align-content:center;
-  z-index:10;
+  z-index:100;
   background-color:white;
 `;
 

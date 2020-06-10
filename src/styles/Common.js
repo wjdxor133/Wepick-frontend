@@ -3,6 +3,6 @@
 export default {
   color: {
     main: "#2986FA",
-    gray: "A9A9A9",
-  }
+    gray: "#999999",
+  },
 };
