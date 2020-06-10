@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
-import 'react-circular-progressbar/dist/styles.css';
+import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
+import "react-circular-progressbar/dist/styles.css";
 import { AiOutlineSetting } from "react-icons/ai";
 import { BsChevronLeft } from "react-icons/bs";
 import { BsChevronRight } from "react-icons/bs";
@@ -53,7 +53,7 @@ const MainPage = () => {
         img={aggreesiveData.thumbnail_url}
       />
     );
-  })
+  });
 
   const mainList = cate.map((mainData, idx) => {
     return (
@@ -62,7 +62,7 @@ const MainPage = () => {
         duty={mainData.duty}
       />
     );
-  })
+  });
 
   // const list = data.map((myData, idx) => {
 
@@ -79,20 +79,22 @@ const MainPage = () => {
   //   );
   // });
 
-  const list = data.filter(mockData => mockData.job_id < 5).map((myData, idx) => {
-    return (
-      <PositionList
-        key={myData.idx}
-        title={myData.title}
-        no={myData.job_id}
-        name={myData.company}
-        area={myData.country}
-        compensation={myData.reward_total}
-        img={myData.thumbnail_url}
-        like={myData.like}
-      />
-    );
-  });
+  const list = data
+    .filter((mockData) => mockData.job_id < 5)
+    .map((myData, idx) => {
+      return (
+        <PositionList
+          key={myData.idx}
+          title={myData.title}
+          no={myData.job_id}
+          name={myData.company}
+          area={myData.country}
+          compensation={myData.reward_total}
+          img={myData.thumbnail_url}
+          like={myData.like}
+        />
+      );
+    });
 
   const mainImg = topImg.map((topImgOne, idx) => {
     return (
@@ -102,14 +104,12 @@ const MainPage = () => {
         img={topImgOne.img}
       />
     );
-  })
+  });
 
   return (
     <>
       <Slider>
-        <MainBox mainWidth={mainWidth}>
-          {mainImg}
-        </MainBox>
+        <MainBox mainWidth={mainWidth}>{mainImg}</MainBox>
         <MainButton>
           <div>
             <BsChevronLeft />
@@ -119,7 +119,7 @@ const MainPage = () => {
           </div>
         </MainButton>
       </Slider>
-      < Main >
+      <Main>
         <PostionBox>
           <FlexBox>
             <PostionTitleContainer>
@@ -128,9 +128,7 @@ const MainPage = () => {
             </PostionTitleContainer>
             <MoreView>더 보기</MoreView>
           </FlexBox>
-          <FlexUl>
-            {list}
-          </FlexUl>
+          <FlexUl>{list}</FlexUl>
         </PostionBox>
         <BlueBox>
           <div>
@@ -144,11 +142,13 @@ const MainPage = () => {
                   textColor: "white",
                   pathColor: "white",
                   trailColor: "#0260d1",
-                  textSize: "25px"
+                  textSize: "25px",
                 })}
               />
             </Percent>
-            <BlueBoxText>프로필에 이력서 추가하고, 인사담당자에게 직접 면접 제안 받으세요.</BlueBoxText>
+            <BlueBoxText>
+              프로필에 이력서 추가하고, 인사담당자에게 직접 면접 제안 받으세요.
+            </BlueBoxText>
           </div>
           <BlueBoxButton>이력서 강화하기</BlueBoxButton>
         </BlueBox>
@@ -160,25 +160,34 @@ const MainPage = () => {
           <FlexBox>
             <QuestFliterLeft>
               <QuestFliterButton>최신순</QuestFliterButton>
-              <QuestFliterButton><span>국가</span> 한국</QuestFliterButton>
-              <QuestFliterButton propsColor="black"><span>지역</span> 전국</QuestFliterButton>
-              <QuestFliterButton propsColor="black"><span>경력</span> 전체</QuestFliterButton>
+              <QuestFliterButton>
+                <span>국가</span> 한국
+              </QuestFliterButton>
+              <QuestFliterButton propsColor="black">
+                <span>지역</span> 전국
+              </QuestFliterButton>
+              <QuestFliterButton propsColor="black">
+                <span>경력</span> 전체
+              </QuestFliterButton>
             </QuestFliterLeft>
             <QuestFliterRight>
-              <QuestFliterButton><span><FiFilter color="#2986FA" /></span>필터</QuestFliterButton>
+              <QuestFliterButton>
+                <span>
+                  <FiFilter color="#2986FA" />
+                </span>
+                필터
+              </QuestFliterButton>
             </QuestFliterRight>
           </FlexBox>
           <AggressiveBox>
             <PostionTitle>적극 채용 중인 회사</PostionTitle>
-            <FlexUl>
-              {aggreesiveList}
-            </FlexUl>
+            <FlexUl>{aggreesiveList}</FlexUl>
           </AggressiveBox>
         </QuestContainer>
-      </Main >
+      </Main>
     </>
   );
-}
+};
 
 const Main = styled.div`
   max-width: 1060px;
@@ -190,17 +199,15 @@ const PostionBox = styled.div`
   margin: 3em 0em 5em 0em;
 `;
 
-
-
 const BlueBox = styled.div`
   width: 100%;
-  background-color: ${props => props.theme.color.main};
-  display:flex;
+  background-color: ${(props) => props.theme.color.main};
+  display: flex;
   justify-content: space-between;
   padding: 1em 2em;
-  border-radius: .2em;
+  border-radius: 0.2em;
   align-items: center;
-  div{
+  div {
     display: flex;
     align-items: center;
   }
@@ -221,12 +228,12 @@ const BlueBoxButton = styled.div`
   background-color: white;
   padding: 1em 3em;
   text-align: center;
-  color: ${props => props.theme.color.main};
-  border-radius: .2em;
+  color: ${(props) => props.theme.color.main};
+  border-radius: 0.2em;
   font-weight: 600;
 `;
 
-const FlexBox = styled.div` 
+const FlexBox = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -235,10 +242,10 @@ const FlexBox = styled.div`
 const PostionTitleContainer = styled.div`
   display: flex;
   align-items: center;
-  .setting{
-    color: ${props => props.theme.color.gray};
-    margin-left: .7em;
-    margin-top: -.3em;
+  .setting {
+    color: ${(props) => props.theme.color.gray};
+    margin-left: 0.7em;
+    margin-top: -0.3em;
   }
 `;
 
@@ -246,17 +253,15 @@ const PostionTitle = styled.div`
   font-size: 1.5rem;
   margin: 1em 0em 1em 0em;
   font-weight: 600;
-  color: ${props => props.theme.color.font}
+  color: ${(props) => props.theme.color.font};
 `;
 
 const MoreView = styled.span`
   font-size: 1.25rem;
-  color: ${props => props.theme.color.gray};
+  color: ${(props) => props.theme.color.gray};
 `;
 
-const QuestContainer = styled.div`
-
-`;
+const QuestContainer = styled.div``;
 
 const QuestCate = styled.div`
   border-bottom: 1px solid gray;
@@ -276,35 +281,31 @@ const FlexUlCate = styled.ul`
 `;
 
 const QuestFliterLeft = styled.div`
-  display:flex;
+  display: flex;
   margin-top: 1em;
 `;
 
 const QuestFliterButton = styled.div`
-  padding: .8em 1em;
+  padding: 0.8em 1em;
   border: 1px solid #dddddd;
-  font-size: .8125rem;
-  border-radius: .2em;
+  font-size: 0.8125rem;
+  border-radius: 0.2em;
   display: flex;
   align-items: center;
-  margin-right: .5em;
-  color: ${props => props.propsColor === "black" ? "black" : "#2986FA"};
-  :last-child{
+  margin-right: 0.5em;
+  color: ${(props) => (props.propsColor === "black" ? "black" : "#2986FA")};
+  :last-child {
     margin-right: 0em;
   }
-  span{
-    margin-right: .3em;
+  span {
+    margin-right: 0.3em;
     color: #999999;
   }
 `;
 
-const QuestFliterRight = styled.div`
-  
-`;
+const QuestFliterRight = styled.div``;
 
-const AggressiveBox = styled.div`
-  
-`;
+const AggressiveBox = styled.div``;
 
 const Slider = styled.div`
   width: 100%;
@@ -314,32 +315,32 @@ const Slider = styled.div`
 `;
 
 const MainBox = styled.ul`
-    /* overflow: hidden;
+  /* overflow: hidden;
     width: 100%;
     height: 300px;
     margin: 0 auto;  */
-    width: 500%;
-    display: flex;
-    transform: translateX( -${props => props.mainWidth}px );
-    transition: transform ease-out 3s;
+  width: 500%;
+  display: flex;
+  transform: translateX(-${(props) => props.mainWidth}px);
+  transition: transform ease-out 3s;
 `;
 
 const MainButton = styled.div`
-    position: absolute;
-    top: 13em;
-    right: 0px;
-    z-index: 10;
-    display: flex;
-    font-size: 1rem;
-    margin-right: calc((100vw - 1060px) / 2);
-    div{
-        background-color: white;
-        border-radius: 100%;
-        width: 45px;
-        height: 45px;
-        text-align: center;
-        line-height: 3.3em;
-    }
+  position: absolute;
+  top: 13em;
+  right: 0px;
+  z-index: 10;
+  display: flex;
+  font-size: 1rem;
+  margin-right: calc((100vw - 1060px) / 2);
+  div {
+    background-color: white;
+    border-radius: 100%;
+    width: 45px;
+    height: 45px;
+    text-align: center;
+    line-height: 3.3em;
+  }
 `;
 
 export default MainPage;
