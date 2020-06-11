@@ -1,36 +1,44 @@
 {
     "position": [
         {
-            "no": 1,
+            "job_id": 1,
             "title": "프론트엔드 개발자",
-            "name": "아이포트폴리오",
-            "area": "서울, 한국",
-            "compensation": "1,000,000",
-            "img": "https://static.wanted.co.kr/images/company/9726/dqwzr62wc4tzmlvv__400_400.jpg"
+            "company": "아이포트폴리오",
+            "country": "서울",
+            "region": "한국",
+            "reward_total": "1,000,000",
+            "like": 5,
+            "thumbnail_url": "https://static.wanted.co.kr/images/company/9726/dqwzr62wc4tzmlvv__400_400.jpg"
         },
         {
-            "no": 2,
+            "job_id": 2,
             "title": "프론트엔드 개발",
-            "name": "코코네",
-            "area": "서울, 한국",
-            "compensation": "1,000,000",
-            "img": "https://static.wanted.co.kr/images/company/962/ztomvmeu9xzvxwoy__400_400.jpg"
+            "company": "코코네",
+            "country": "서울",
+            "region": "한국",
+            "like": 5,
+            "reward_total": "1,000,000",
+            "thumbnail_url": "https://static.wanted.co.kr/images/company/962/ztomvmeu9xzvxwoy__400_400.jpg"
         },
         {
-            "no": 3,
+            "job_id": 3,
             "title": "웹 프론트엔드 개발자",
-            "name": "크로키닷컴(지그재그)",
-            "area": "서울, 한국",
-            "compensation": "1,000,000",
-            "img": "https://static.wanted.co.kr/images/company/506/dtmfb8owtgurptwv__400_400.jpg"
+            "company": "크로키닷컴(지그재그)",
+            "country": "서울",
+            "region": "한국",
+            "like": 5,
+            "reward_total": "1,000,000",
+            "thumbnail_url": "https://static.wanted.co.kr/images/company/506/dtmfb8owtgurptwv__400_400.jpg"
         },
         {
-            "no": 4,
+            "job_id": 4,
             "title": "Fromtend Engineer",
-            "name": "슈퍼브에이아이",
-            "area": "서울, 한국",
-            "compensation": "1,000,000",
-            "img": "https://static.wanted.co.kr/images/company/3643/d94erw5yz19skgib__400_400.jpg"
+            "company": "슈퍼브에이아이",
+            "country": "서울",
+            "region": "한국",
+            "like": 5,
+            "reward_total": "1,000,000",
+            "thumbnail_url": "https://static.wanted.co.kr/images/company/3643/d94erw5yz19skgib__400_400.jpg"
         }
     ]
 }

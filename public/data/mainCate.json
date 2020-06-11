@@ -1,0 +1,97 @@
+{
+    "main_category": [
+        {
+            "no": 1,
+            "main_category_id": "개발",
+            "duty": [
+                {
+                    "sub_category_id": "서버 개발자",
+                    "image_url": "https://static.wanted.co.kr/images/tags/a5cfdc9e.jpg",
+                    "link_url": "https://www.wanted.co.kr/wdlist/518/872?country=kr&job_sort=job.latest_order&years=-1&locations=all"
+                },
+                {
+                    "sub_category_id": "웹 개발자",
+                    "image_url": "https://static.wanted.co.kr/images/tags/a5cfdc9e.jpg",
+                    "link_url": "https://www.wanted.co.kr/wdlist/518/872?country=kr&job_sort=job.latest_order&years=-1&locations=all"
+                },
+                {
+                    "sub_category_id": "프론트엔드 개발자",
+                    "image_url": "https://static.wanted.co.kr/images/tags/a5cfdc9e.jpg",
+                    "link_url": "https://www.wanted.co.kr/wdlist/518/872?country=kr&job_sort=job.latest_order&years=-1&locations=all"
+                },
+                {
+                    "sub_category_id": "자바 개발자",
+                    "image_url": "https://static.wanted.co.kr/images/tags/a5cfdc9e.jpg",
+                    "link_url": "https://www.wanted.co.kr/wdlist/518/872?country=kr&job_sort=job.latest_order&years=-1&locations=all"
+                },
+                {
+                    "sub_category_id": "안드로이드 개발자",
+                    "image_url": "https://static.wanted.co.kr/images/tags/a5cfdc9e.jpg",
+                    "link_url": "https://www.wanted.co.kr/wdlist/518/872?country=kr&job_sort=job.latest_order&years=-1&locations=all"
+                }
+            ]
+        },
+        {
+            "no": 2,
+            "main_category_id": "경영, 비즈니스",
+            "duty": [
+                {
+                    "sub_category_id": "서버 개발자",
+                    "image_url": "https://static.wanted.co.kr/images/tags/a5cfdc9e.jpg",
+                    "link_url": "https://www.wanted.co.kr/wdlist/518/872?country=kr&job_sort=job.latest_order&years=-1&locations=all"
+                },
+                {
+                    "sub_category_id": "웹 개발자",
+                    "image_url": "https://static.wanted.co.kr/images/tags/a5cfdc9e.jpg",
+                    "link_url": "https://www.wanted.co.kr/wdlist/518/872?country=kr&job_sort=job.latest_order&years=-1&locations=all"
+                },
+                {
+                    "sub_category_id": "프론트엔드 개발자",
+                    "image_url": "https://static.wanted.co.kr/images/tags/a5cfdc9e.jpg",
+                    "link_url": "https://www.wanted.co.kr/wdlist/518/872?country=kr&job_sort=job.latest_order&years=-1&locations=all"
+                },
+                {
+                    "sub_category_id": "자바 개발자",
+                    "image_url": "https://static.wanted.co.kr/images/tags/a5cfdc9e.jpg",
+                    "link_url": "https://www.wanted.co.kr/wdlist/518/872?country=kr&job_sort=job.latest_order&years=-1&locations=all"
+                },
+                {
+                    "sub_category_id": "안드로이드 개발자",
+                    "image_url": "https://static.wanted.co.kr/images/tags/a5cfdc9e.jpg",
+                    "link_url": "https://www.wanted.co.kr/wdlist/518/872?country=kr&job_sort=job.latest_order&years=-1&locations=all"
+                }
+            ]
+        },
+        {
+            "no": 3,
+            "main_category_id": "마케팅, 광고",
+            "duty": [
+                {
+                    "sub_category_id": "서버 개발자",
+                    "image_url": "https://static.wanted.co.kr/images/tags/a5cfdc9e.jpg",
+                    "link_url": "https://www.wanted.co.kr/wdlist/518/872?country=kr&job_sort=job.latest_order&years=-1&locations=all"
+                },
+                {
+                    "sub_category_id": "웹 개발자",
+                    "image_url": "https://static.wanted.co.kr/images/tags/a5cfdc9e.jpg",
+                    "link_url": "https://www.wanted.co.kr/wdlist/518/872?country=kr&job_sort=job.latest_order&years=-1&locations=all"
+                },
+                {
+                    "sub_category_id": "프론트엔드 개발자",
+                    "image_url": "https://static.wanted.co.kr/images/tags/a5cfdc9e.jpg",
+                    "link_url": "https://www.wanted.co.kr/wdlist/518/872?country=kr&job_sort=job.latest_order&years=-1&locations=all"
+                },
+                {
+                    "sub_category_id": "자바 개발자",
+                    "image_url": "https://static.wanted.co.kr/images/tags/a5cfdc9e.jpg",
+                    "link_url": "https://www.wanted.co.kr/wdlist/518/872?country=kr&job_sort=job.latest_order&years=-1&locations=all"
+                },
+                {
+                    "sub_category_id": "안드로이드 개발자",
+                    "image_url": "https://static.wanted.co.kr/images/tags/a5cfdc9e.jpg",
+                    "link_url": "https://www.wanted.co.kr/wdlist/518/872?country=kr&job_sort=job.latest_order&years=-1&locations=all"
+                }
+            ]
+        }
+    ]
+}
