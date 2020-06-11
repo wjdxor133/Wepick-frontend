@@ -4,5 +4,6 @@ export default {
   color: {
     main: "#2986FA",
     gray: "#999999",
+    font: "#333333",
   },
 };

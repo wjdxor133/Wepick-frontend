@@ -1,37 +1,95 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
 import { AiOutlineSetting } from "react-icons/ai";
+import { BsChevronLeft } from "react-icons/bs";
+import { BsChevronRight } from "react-icons/bs";
+import { FiFilter } from "react-icons/fi";
+import TopCate from "./TopCate";
 import PositionList from "./PositionList";
 import MainImg from "./MainImg";
+import Aggreesive from "./Aggreesive";
 
 const MainPage = () => {
-  const [data, setdata] = useState([]);
+  const [data, setData] = useState([]);
+  const [cate, setCate] = useState([]);
+  const [aggreesive, setAggreesive] = useState([]);
   const [topImg, setTopImg] = useState([]);
+
+  const mainWidth = window.innerWidth;
+  const percentage = 66;
+
   useEffect(() => {
     fetch("/data/mainMock.json")
       .then((res) => res.json())
       .then((res) => {
-        setdata(res.position);
+        setData(res.position);
         console.log(res.position);
       });
     fetch("/data/mainTopImg.json")
       .then((res) => res.json())
       .then((res) => {
         setTopImg(res.main_top_img);
-        console.log(res.main_top_img);
+      });
+    fetch("/data/mainCate.json")
+      .then((res) => res.json())
+      .then((res) => {
+        setCate(res.main_category);
+      });
+    fetch("/data/aggreesive.json")
+      .then((res) => res.json())
+      .then((res) => {
+        setAggreesive(res.aggreesive);
       });
   }, []);
 
-  const list = data.map((myData, idx) => {
+  const aggreesiveList = aggreesive.map((aggreesiveData, idx) => {
+    return (
+      <Aggreesive
+        title={aggreesiveData.title}
+        position={aggreesiveData.position}
+        ci={aggreesiveData.ci}
+        img={aggreesiveData.thumbnail_url}
+      />
+    );
+  })
+
+  const mainList = cate.map((mainData, idx) => {
+    return (
+      <TopCate
+        main_category_id={mainData.main_category_id}
+        duty={mainData.duty}
+      />
+    );
+  })
+
+  // const list = data.map((myData, idx) => {
+
+  //   return (
+  //     <PositionList
+  //       key={myData.idx}
+  //       title={myData.title}
+  //       no={myData.job_id}
+  //       name={myData.company}
+  //       area={myData.country}
+  //       compensation={myData.reward_total}
+  //       img={myData.thumbnail_url}
+  //     />
+  //   );
+  // });
+
+  const list = data.filter(mockData => mockData.job_id < 5).map((myData, idx) => {
     return (
       <PositionList
         key={myData.idx}
         title={myData.title}
-        no={myData.no}
-        name={myData.name}
-        area={myData.area}
-        compensation={myData.compensation}
-        img={myData.img}
+        no={myData.job_id}
+        name={myData.company}
+        area={myData.country}
+        compensation={myData.reward_total}
+        img={myData.thumbnail_url}
+        like={myData.like}
       />
     );
   });
@@ -48,53 +106,75 @@ const MainPage = () => {
 
   return (
     <>
-      <MainImgBox>{mainImg}</MainImgBox>
+      <Slider>
+        <MainBox mainWidth={mainWidth}>
+          {mainImg}
+        </MainBox>
+        <MainButton>
+          <div>
+            <BsChevronLeft />
+          </div>
+          <div>
+            <BsChevronRight />
+          </div>
+        </MainButton>
+      </Slider>
       < Main >
         <PostionBox>
           <FlexBox>
-            <PostionTitle>나에게 딱 맞는 포지션 <AiOutlineSetting /></PostionTitle>
+            <PostionTitleContainer>
+              <PostionTitle>나에게 딱 맞는 포지션 </PostionTitle>
+              <AiOutlineSetting className="setting" size="27" />
+            </PostionTitleContainer>
             <MoreView>더 보기</MoreView>
           </FlexBox>
-          <FlexBox>
+          <FlexUl>
             {list}
-          </FlexBox>
+          </FlexUl>
         </PostionBox>
         <BlueBox>
-          <Percent></Percent>
-          <BlueBoxText>프로필에 이력서 추가하고, 인사담당자에게 직접 면접 제안 받으세요.</BlueBoxText>
+          <div>
+            <Percent>
+              <CircularProgressbar
+                value={percentage}
+                text={`${percentage}%`}
+                strokeWidth={6}
+                styles={buildStyles({
+                  strokeLinecap: "butt",
+                  textColor: "white",
+                  pathColor: "white",
+                  trailColor: "#0260d1",
+                  textSize: "25px"
+                })}
+              />
+            </Percent>
+            <BlueBoxText>프로필에 이력서 추가하고, 인사담당자에게 직접 면접 제안 받으세요.</BlueBoxText>
+          </div>
           <BlueBoxButton>이력서 강화하기</BlueBoxButton>
         </BlueBox>
         <QuestContainer>
-          <QuestCate>전체
-            <QuestTitle></QuestTitle>
-            <QuestTitleFliter></QuestTitleFliter>
+          <QuestCate>
+            <PostionTitle>전체</PostionTitle>
+            <FlexUlCate>{mainList}</FlexUlCate>
           </QuestCate>
           <FlexBox>
             <QuestFliterLeft>
-              <QuestFliterBlue>최신순</QuestFliterBlue>
-              <QuestFliterCountry>국가 한국</QuestFliterCountry>
-              <QuestFliterArea>지역 전국</QuestFliterArea>
-              <QuestFliterCareer>경력 전체</QuestFliterCareer>
+              <QuestFliterButton>최신순</QuestFliterButton>
+              <QuestFliterButton><span>국가</span> 한국</QuestFliterButton>
+              <QuestFliterButton propsColor="black"><span>지역</span> 전국</QuestFliterButton>
+              <QuestFliterButton propsColor="black"><span>경력</span> 전체</QuestFliterButton>
             </QuestFliterLeft>
             <QuestFliterRight>
-              <QuestFliterBlue>필터</QuestFliterBlue>
+              <QuestFliterButton><span><FiFilter color="#2986FA" /></span>필터</QuestFliterButton>
             </QuestFliterRight>
           </FlexBox>
           <AggressiveBox>
-            <AggressiveTitle>적극 채용 중인 회사</AggressiveTitle>
-            <AggressiveContent>
-              <AggressiveContentBox>
-                <AggressiveImg></AggressiveImg>
-                <AggressiveCI></AggressiveCI>
-                <AggressiveCIName>위코드</AggressiveCIName>
-                {/* <PostionListText>1개 포지션</PostionListText> */}
-              </AggressiveContentBox>
-            </AggressiveContent>
+            <PostionTitle>적극 채용 중인 회사</PostionTitle>
+            <FlexUl>
+              {aggreesiveList}
+            </FlexUl>
           </AggressiveBox>
         </QuestContainer>
-
-        <Button>안녕 오늘은 언제 집에 갈 것 같니? 123456 Wanted</Button>
-
       </Main >
     </>
   );
@@ -106,39 +186,44 @@ const Main = styled.div`
   margin: 0 auto;
 `;
 
-const MainImgBox = styled.ul`
-  overflow: hidden;
-  width: 100*5%;
-  height: 300px;
-  /* background-color: ${props => props.theme.color.main} */
-`;
-
 const PostionBox = styled.div`
-
+  margin: 3em 0em 5em 0em;
 `;
+
+
 
 const BlueBox = styled.div`
   width: 100%;
   background-color: ${props => props.theme.color.main};
   display:flex;
   justify-content: space-between;
-  padding: 1em;
+  padding: 1em 2em;
+  border-radius: .2em;
+  align-items: center;
+  div{
+    display: flex;
+    align-items: center;
+  }
 `;
 
 const Percent = styled.div`
-
+  width: 62px;
+  height: 62px;
 `;
 
 const BlueBoxText = styled.p`
   color: white;
+  font-size: 1.125rem;
+  margin-left: 1em;
 `;
 
 const BlueBoxButton = styled.div`
   background-color: white;
-  padding: .5em 1em;
-  width: 20%;
+  padding: 1em 3em;
+  text-align: center;
   color: ${props => props.theme.color.main};
   border-radius: .2em;
+  font-weight: 600;
 `;
 
 const FlexBox = styled.div` 
@@ -147,12 +232,25 @@ const FlexBox = styled.div`
   align-items: center;
 `;
 
+const PostionTitleContainer = styled.div`
+  display: flex;
+  align-items: center;
+  .setting{
+    color: ${props => props.theme.color.gray};
+    margin-left: .7em;
+    margin-top: -.3em;
+  }
+`;
+
 const PostionTitle = styled.div`
-  font-size: 1.357rem
+  font-size: 1.5rem;
+  margin: 1em 0em 1em 0em;
+  font-weight: 600;
+  color: ${props => props.theme.color.font}
 `;
 
 const MoreView = styled.span`
-  font-size: 1.125rem;
+  font-size: 1.25rem;
   color: ${props => props.theme.color.gray};
 `;
 
@@ -162,38 +260,42 @@ const QuestContainer = styled.div`
 
 const QuestCate = styled.div`
   border-bottom: 1px solid gray;
+  padding-bottom: 1em;
+  margin-top: 3em;
 `;
 
-const QuestTitle = styled.span`
-  color: ${props => props.theme.color.gray}
+const FlexUl = styled.ul`
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
 `;
 
-const QuestTitleFliter = styled.div`
-  width: 122px;
-  height: 60px;
-  border-radius: .3em;
-  border: 1px solid gray;
-  color: white
+const FlexUlCate = styled.ul`
+  display: flex;
+  align-items: center;
 `;
 
 const QuestFliterLeft = styled.div`
-  display:flex
+  display:flex;
+  margin-top: 1em;
 `;
 
-const QuestFliterBlue = styled.div`
-  color: ${props => props.theme.color.main}
-`;
-
-const QuestFliterCountry = styled.div`
-  
-`;
-
-const QuestFliterArea = styled.div`
-  
-`;
-
-const QuestFliterCareer = styled.div`
-  
+const QuestFliterButton = styled.div`
+  padding: .8em 1em;
+  border: 1px solid #dddddd;
+  font-size: .8125rem;
+  border-radius: .2em;
+  display: flex;
+  align-items: center;
+  margin-right: .5em;
+  color: ${props => props.propsColor === "black" ? "black" : "#2986FA"};
+  :last-child{
+    margin-right: 0em;
+  }
+  span{
+    margin-right: .3em;
+    color: #999999;
+  }
 `;
 
 const QuestFliterRight = styled.div`
@@ -204,38 +306,40 @@ const AggressiveBox = styled.div`
   
 `;
 
-const AggressiveTitle = styled.div`
-  
-`;
-
-const AggressiveContent = styled.div`
-  
-`;
-
-const AggressiveContentBox = styled.div`
-  width: 200px;
-  height: 270px;
-  border: 1px solid black;
-`;
-
-const AggressiveImg = styled.div`
+const Slider = styled.div`
   width: 100%;
-  height: 55%;
-  border: 1px solid black;
+  height: 300px;
+  overflow: hidden;
+  margin-top: 0 auto;
 `;
 
-const AggressiveCI = styled.div`
-  
+const MainBox = styled.ul`
+    /* overflow: hidden;
+    width: 100%;
+    height: 300px;
+    margin: 0 auto;  */
+    width: 500%;
+    display: flex;
+    transform: translateX( -${props => props.mainWidth}px );
+    transition: transform ease-out 3s;
 `;
 
-
-const AggressiveCIName = styled.div`
-  
-`;
-
-
-const Button = styled.button`
-  color: ${props => props.theme.color.main};
+const MainButton = styled.div`
+    position: absolute;
+    top: 13em;
+    right: 0px;
+    z-index: 10;
+    display: flex;
+    font-size: 1rem;
+    margin-right: calc((100vw - 1060px) / 2);
+    div{
+        background-color: white;
+        border-radius: 100%;
+        width: 45px;
+        height: 45px;
+        text-align: center;
+        line-height: 3.3em;
+    }
 `;
 
 export default MainPage;

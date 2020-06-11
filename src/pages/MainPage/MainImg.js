@@ -1,7 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 
-const MainImg = (props) => {
+const MainImg = props => {
+
     return (
         <MainImgList>
             <img src={props.img} alt="" />
@@ -17,20 +18,22 @@ const MainImg = (props) => {
 }
 
 const MainImgList = styled.li`
-    position: relative;
     img{
-        width: 110%;
+        width: 100%;
+        position: relative;
     }
+   
 `;
 
 const MainImgBox = styled.div`
-    max-width: 1000px;
-    padding: 0em 2em;
-`
+    /* max-width: 1000px; */
+`;
 
 const MainWhiteBox = styled.div`
+    position: absolute;
     z-index: 10;
     top: 8em;
+    margin-left: calc((100vw - 1060px) / 2);
     background-color: white;
     width: 340px;
     height: 150px;
@@ -56,11 +59,5 @@ const MainWhiteBox = styled.div`
         border-top: 1px solid #dddddd;
     }
 `;
-
-// const GoLink = styled.p`
-//     /* color: ${props => props.theme.color.main}; */
-//     font-size: 1.125rem;
-//     font-weight: 600;
-// `;
 
 export default MainImg;
