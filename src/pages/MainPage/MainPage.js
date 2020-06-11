@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { AiOutlineSetting } from "react-icons/ai";
-import PositionList from "./PositionList";
+import PositionList from "/PositionList";
 
 const MainPage = () => {
   const [data, setdata] = useState([]);

@@ -37,18 +37,18 @@ const WdWrap = styled.div`
 const WdTitle = styled.div`
   visibility:${props => props.titleOn?"visible":"hidden"};
   height:2em;
-  & > a {
-  display:flex;
-  justify-content:space-between;
-  font-size: 17px;
-  color: #333;
-  line-height: 20px;
-  vertical-align: top;
-  padding-right: 20px;
-  padding-bottom: 15px;
-  width: 100%;
-  text-overflow: ellipsis;
-  white-space: nowrap;  
+  a {
+    display:flex;
+    justify-content:space-between;
+    font-size: 17px;
+    color: #333;
+    line-height: 20px;
+    vertical-align: top;
+    padding-right: 20px;
+    padding-bottom: 15px;
+    width: 100%;
+    text-overflow: ellipsis;
+    white-space: nowrap;  
   }
 `;
 
@@ -58,18 +58,16 @@ const I = styled.i`
 
 const Plus = styled.li`
   display: ${props => props.plus? "":"none"};
-  & > a {
+  a {
     display:flex;
     justify-content:space-between;
   }
 `;
 
 const WdContents = styled.ul`
-  & > li {
+  li {
     font-size: 13px;
     color: #999;
-    padding: 5px 20px 5px 0;
-    & > a {      
-    }
+    padding: 5px 20px 5px 0;  
   }
 `;

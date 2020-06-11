@@ -1,16 +1,23 @@
 import React, { useState, useEffect } from "react";
 import styled, {css} from "styled-components"
-import { Link, withRouter } from "react-router-dom";
+import { Link } from "react-router-dom";
 import WdList from "../WdList/WdList"
-import WdListJson from "../../NavData/WdList.json"
 
+const Nav = (props) => {
 
-const Nav = () => {
+  const [hiddenToggle, setHidden] = useState(false)
+  const [data, setData] = useState({})
 
-  const [hiddenToggle, setHidden] = useState(false)  
+  useEffect(() =>{
+    fetch("data/navWdListMock.json", {})
+    .then((response) => response.json())
+    .then((res) => {
+      setData(res)
+    })
+  }, []);
 
   return (
-    <NavBar>
+    <NavBar modal={props.modal} setModal={props.setModal}>
       <NavWarp>
         <Visible show={hiddenToggle}>
         <NavContents>
@@ -26,31 +33,31 @@ const Nav = () => {
           <NavUl>
             <li><Link to="/">1</Link></li>
             <li><Link to="/">1</Link></li>
-            <li><Link to="/">회원가입/로그인</Link></li>
+            <li onClick={() => (props.setModal(true))}><Link to="/">회원가입/로그인</Link></li>
             <li><Link to="/">기업 서비스</Link></li>
           </NavUl>        
         </NavContents>            
       </Visible>
         <Invisible show={hiddenToggle} onMouseLeave={() => setHidden(false)}>
-          <div>
-            <WdList titleName={WdListJson.dev.title} titleUrl={WdListJson.dev.url} list={WdListJson.dev.list}/>
-            <WdList plus="/1" titleName={WdListJson.dev2.title} titleUrl={WdListJson.dev2.url} list={WdListJson.dev2.list}/>
-            <WdList plus="/2" titleName={WdListJson.biz.title} titleUrl={WdListJson.biz.url} list={WdListJson.biz.list}/>
-            <WdList plus="/3" titleName={WdListJson.market.title} titleUrl={WdListJson.market.url} list={WdListJson.market.list}/>
-            <WdList plus="/4" titleName={WdListJson.design.title} titleUrl={WdListJson.design.url} list={WdListJson.design.list}/>
-          </div>
+          {data.dev && <div>
+            <WdList titleName={data.dev.title} titleUrl={data.dev.url} list={data.dev.list}/>
+            <WdList plus="/1" titleName={data.dev2.title} titleUrl={data.dev2.url} list={data.dev2.list}/>
+            <WdList plus="/2" titleName={data.biz.title} titleUrl={data.biz.url} list={data.biz.list}/>
+            <WdList plus="/3" titleName={data.market.title} titleUrl={data.market.url} list={data.market.list}/>
+            <WdList plus="/4" titleName={data.design.title} titleUrl={data.design.url} list={data.design.list}/>
+          </div>}
       </Invisible>
-      </NavWarp>
+      </NavWarp>    
     </NavBar>
   );
 }
 export default Nav;
 
-const NavBar = styled.div`
+const NavBar = styled.nav`
   position:fixed;
   width:100%;
   height:50px;
-  z-index:100;
+  z-index:10;
 `;
 
 const NavWarp = styled.div`
@@ -70,13 +77,13 @@ const Visible = styled.div`
 `;
 
 const NavContents = styled.div`
-  @media (min-width: 1200px) {    
-    display:flex;
+  @media (min-width: 1200px) {       
     width:87.72%;
+    max-width: 1060px;
+    height:100%;
+    display:flex;
     justify-content:space-between;
     align-items:center;
-    height:100%;
-    max-width: 1060px;
   }
   @media (max-width: 1199px) and (min-width: 992px) {
     width: 90%;
@@ -84,16 +91,16 @@ const NavContents = styled.div`
 `;
 
 const Logo = styled.i`
-    & > a {
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      width:100%;
-      height:100%;
-      font-size: 22px;
-      letter-spacing:-1px;
-      font-weight:bold;
-    }
+  a {
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    width:100%;
+    height:100%;
+    font-size: 22px;
+    letter-spacing:-1px;
+    font-weight:bold;
+  }
 `;
 
 const NavUl = styled.ul`
@@ -105,11 +112,10 @@ const NavUl = styled.ul`
     line-height: 1;
     font-weight: 600;
     padding: 17px 13px;
-    &:hover {
-      ${props => 
-        props.underLine &&
-          css`
-            box-shadow:inset 0 -2px #ddd;
+    :hover {
+      ${props => props.underLine &&
+        css`
+          box-shadow:inset 0 -2px #ddd;
       `}  
     }
   }
@@ -121,21 +127,17 @@ const Invisible = styled.div`
   width:100%;
   height:295px;
   background-color:white;
-  transform:
-  ${props => {
-    if(props.show) return "translateY(0px)";
-    else return "translateY(-294px)";
-  }};
+  transform:${props =>props.show?"translateY(0px)":"translateY(-294px)"};
   transition:ease 0.5s;      
   display:flex;
   justify-content:center;  
   border-bottom:1px solid #e1e2e3;  
   & > div {
-    @media (min-width: 1200px) { 
-    width:87.72%;
-    height:100%;
-    display:flex;
-    max-width: 1060px;
+      @media (min-width: 1200px) { 
+      width:87.72%;
+      height:100%;
+      display:flex;
+      max-width: 1060px;
     }
     @media (max-width: 1199px) and (min-width: 992px) {
       width: 90%;
