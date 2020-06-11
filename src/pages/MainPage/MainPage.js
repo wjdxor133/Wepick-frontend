@@ -51,7 +51,7 @@ const MainPage = () => {
         img={aggreesiveData.thumbnail_url}
       />
     );
-  })
+  });
 
   const mainList = cate.map((mainData, idx) => {
     return (
@@ -60,7 +60,7 @@ const MainPage = () => {
         duty={mainData.duty}
       />
     );
-  })
+  });
 
   const list = data.map((myData, idx) => {
     return (
@@ -79,19 +79,21 @@ const MainPage = () => {
   return (
     <>
       <MainImgBox></MainImgBox>
-      < Main >
+      <Main>
         <PostionBox>
           <FlexBox>
-            <PostionTitle>나에게 딱 맞는 포지션 <AiOutlineSetting /></PostionTitle>
+            <PostionTitle>
+              나에게 딱 맞는 포지션 <AiOutlineSetting />
+            </PostionTitle>
             <MoreView>더 보기</MoreView>
           </FlexBox>
-          <FlexUl>
-            {list}
-          </FlexUl>
+          <FlexUl>{list}</FlexUl>
         </PostionBox>
         <BlueBox>
           <Percent></Percent>
-          <BlueBoxText>프로필에 이력서 추가하고, 인사담당자에게 직접 면접 제안 받으세요.</BlueBoxText>
+          <BlueBoxText>
+            프로필에 이력서 추가하고, 인사담당자에게 직접 면접 제안 받으세요.
+          </BlueBoxText>
           <BlueBoxButton>이력서 강화하기</BlueBoxButton>
         </BlueBox>
         <QuestContainer>
@@ -102,9 +104,15 @@ const MainPage = () => {
           <FlexBox>
             <QuestFliterLeft>
               <QuestFliterBlue>최신순</QuestFliterBlue>
-              <QuestFliterCountry><span>국가</span> 한국</QuestFliterCountry>
-              <QuestFliterArea><span>지역</span> 전국</QuestFliterArea>
-              <QuestFliterCareer><span>경력</span> 전체</QuestFliterCareer>
+              <QuestFliterCountry>
+                <span>국가</span> 한국
+              </QuestFliterCountry>
+              <QuestFliterArea>
+                <span>지역</span> 전국
+              </QuestFliterArea>
+              <QuestFliterCareer>
+                <span>경력</span> 전체
+              </QuestFliterCareer>
             </QuestFliterLeft>
             <QuestFliterRight>
               <QuestFliterBlue>필터</QuestFliterBlue>
@@ -112,18 +120,14 @@ const MainPage = () => {
           </FlexBox>
           <AggressiveBox>
             <PostionTitle>적극 채용 중인 회사</PostionTitle>
-            <FlexUl>
-              {aggreesiveList}
-            </FlexUl>
+            <FlexUl>{aggreesiveList}</FlexUl>
           </AggressiveBox>
         </QuestContainer>
-
         <Button>안녕 오늘은 언제 집에 갈 것 같니? 123456 Wanted</Button>
-
-      </Main >
+      </Main>
     </>
   );
-}
+};
 
 const Main = styled.div`
   max-width: 1060px;
@@ -134,26 +138,22 @@ const Main = styled.div`
 const MainImgBox = styled.div`
   width: 100%;
   height: 300px;
-  background-color: ${props => props.theme.color.main}
+  background-color: ${(props) => props.theme.color.main};
 `;
 
-const PostionBox = styled.div`
-
-`;
+const PostionBox = styled.div``;
 
 const BlueBox = styled.div`
   width: 100%;
-  background-color: ${props => props.theme.color.main};
-  display:flex;
+  background-color: ${(props) => props.theme.color.main};
+  display: flex;
   justify-content: space-between;
   padding: 1.5em;
-  border-radius: .2em;
+  border-radius: 0.2em;
   align-items: center;
 `;
 
-const Percent = styled.div`
-
-`;
+const Percent = styled.div``;
 
 const BlueBoxText = styled.p`
   color: white;
@@ -162,15 +162,15 @@ const BlueBoxText = styled.p`
 
 const BlueBoxButton = styled.div`
   background-color: white;
-  padding: .7em 1em;
+  padding: 0.7em 1em;
   width: 20%;
-  color: ${props => props.theme.color.main};
-  border-radius: .2em;
+  color: ${(props) => props.theme.color.main};
+  border-radius: 0.2em;
   text-align: center;
   font-weight: 600;
 `;
 
-const FlexBox = styled.div` 
+const FlexBox = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -183,12 +183,10 @@ const PostionTitle = styled.div`
 
 const MoreView = styled.span`
   font-size: 1.125rem;
-  color: ${props => props.theme.color.gray};
+  color: ${(props) => props.theme.color.gray};
 `;
 
-const QuestContainer = styled.div`
-
-`;
+const QuestContainer = styled.div``;
 
 const QuestCate = styled.div`
   border-bottom: 1px solid gray;
@@ -197,7 +195,7 @@ const QuestCate = styled.div`
 `;
 
 const QuestTitle = styled.span`
-  color: ${props => props.theme.color.gray}
+  color: ${(props) => props.theme.color.gray};
 `;
 
 const FlexUl = styled.ul`
@@ -207,35 +205,25 @@ const FlexUl = styled.ul`
 `;
 
 const QuestFliterLeft = styled.div`
-  display:flex
+  display: flex;
 `;
 
 const QuestFliterBlue = styled.div`
-  color: ${props => props.theme.color.main}
+  color: ${(props) => props.theme.color.main};
 `;
 
-const QuestFliterCountry = styled.div`
-  
-`;
+const QuestFliterCountry = styled.div``;
 
-const QuestFliterArea = styled.div`
-  
-`;
+const QuestFliterArea = styled.div``;
 
-const QuestFliterCareer = styled.div`
-  
-`;
+const QuestFliterCareer = styled.div``;
 
-const QuestFliterRight = styled.div`
-  
-`;
+const QuestFliterRight = styled.div``;
 
-const AggressiveBox = styled.div`
-  
-`;
+const AggressiveBox = styled.div``;
 
 const Button = styled.button`
-  color: ${props => props.theme.color.main};
+  color: ${(props) => props.theme.color.main};
 `;
 
 export default MainPage;
