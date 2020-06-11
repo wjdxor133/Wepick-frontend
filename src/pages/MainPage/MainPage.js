@@ -2,15 +2,23 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { AiOutlineSetting } from "react-icons/ai";
 import PositionList from "./PositionList";
+import MainImg from "./MainImg";
 
 const MainPage = () => {
   const [data, setdata] = useState([]);
+  const [topImg, setTopImg] = useState([]);
   useEffect(() => {
     fetch("/data/mainMock.json")
       .then((res) => res.json())
       .then((res) => {
         setdata(res.position);
         console.log(res.position);
+      });
+    fetch("/data/mainTopImg.json")
+      .then((res) => res.json())
+      .then((res) => {
+        setTopImg(res.main_top_img);
+        console.log(res.main_top_img);
       });
   }, []);
 
@@ -28,9 +36,19 @@ const MainPage = () => {
     );
   });
 
+  const mainImg = topImg.map((topImgOne, idx) => {
+    return (
+      <MainImg
+        title={topImgOne.title}
+        content={topImgOne.content}
+        img={topImgOne.img}
+      />
+    );
+  })
+
   return (
     <>
-      <MainImgBox></MainImgBox>
+      <MainImgBox>{mainImg}</MainImgBox>
       < Main >
         <PostionBox>
           <FlexBox>
@@ -83,15 +101,16 @@ const MainPage = () => {
 }
 
 const Main = styled.div`
-  max-width: 1061px;
+  max-width: 1060px;
   padding: 0em 2em;
   margin: 0 auto;
 `;
 
-const MainImgBox = styled.div`
-  width: 100%;
+const MainImgBox = styled.ul`
+  overflow: hidden;
+  width: 100*5%;
   height: 300px;
-  background-color: ${props => props.theme.color.main}
+  /* background-color: ${props => props.theme.color.main} */
 `;
 
 const PostionBox = styled.div`
