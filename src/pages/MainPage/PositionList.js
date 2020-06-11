@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 const PositionList = (props) => {
     // const [position, setposition] = useState({});
-    console.log(props)
+    // console.log(props)
     return (
         <PositionBoxList >
             <PositionImg><img src={props.img} alt="" /></PositionImg>
@@ -17,7 +17,7 @@ const PositionList = (props) => {
 
 const PositionBoxList = styled.li`
     margin-right: 1rem;
-    & :last-child{
+    :last-child{
         margin-right: 0rem
     }
     p{
