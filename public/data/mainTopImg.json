@@ -1,0 +1,29 @@
+{
+    "main_top_img": [
+        {
+            "title": "코리빙 스타트업 MGRV",
+            "content": "커뮤니티 팀 리더 (팀장) 채용",
+            "img": "https://static.wanted.co.kr/images/banners/web/956/web_title_img_1591592063.jpg"
+        },
+        {
+            "title": "네이버제트(NAVER Z)",
+            "content": "ZEPETO 개발, 서비스, 콘텐츠 직군 채용",
+            "img": "https://static.wanted.co.kr/images/banners/web/952/web_title_img_1591009555.jpg"
+        },
+        {
+            "title": "큐피스티(글램)",
+            "content": "개발 •데이터•디자인•기획 직무 채용",
+            "img": "https://static.wanted.co.kr/images/banners/web/930/web_title_img_1586745888.jpg"
+        },
+        {
+            "title": "카카오커머스 • 메이커스",
+            "content": "기술직군 채용 중",
+            "img": "https://static.wanted.co.kr/images/banners/web/940/web_title_img_1591317970.jpg"
+        },
+        {
+            "title": "딜리버리히어로 코리아",
+            "content": "전 직군 채용 중! (개발, 기획, 마케팅 등)",
+            "img": "https://static.wanted.co.kr/images/banners/web/881/web_title_img_1587547606.jpg"
+        }
+    ]
+}
