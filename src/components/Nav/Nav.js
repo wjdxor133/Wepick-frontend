@@ -7,6 +7,8 @@ const Nav = (props) => {
 
   const [hiddenToggle, setHidden] = useState(false)
   const [data, setData] = useState({})
+  const [isLogin, setLogin] = useState(true)
+  const [profileToggle, setProfileHidden] = useState(false)
 
   useEffect(() =>{
     fetch("data/navWdListMock.json", {})
@@ -19,34 +21,43 @@ const Nav = (props) => {
   return (
     <NavBar modal={props.modal} setModal={props.setModal}>
       <NavWarp>
+      
         <Visible show={hiddenToggle}>
-        <NavContents>
-          <Logo><Link to="/">wanted</Link></Logo>
-          <NavUl underLine>
-            <li onMouseEnter={() => setHidden(true)}><Link to="/">탐색</Link></li>
-            <li onMouseEnter={() => setHidden(false)}><Link to="/">직군별 연봉</Link></li>
-            <li onMouseEnter={() => setHidden(false)}><Link to="/">이력서</Link></li>
-            <li onMouseEnter={() => setHidden(false)}><Link to="/">추천</Link></li>
-            <li onMouseEnter={() => setHidden(false)}><Link to="/">이벤트</Link></li>
-            <li onMouseEnter={() => setHidden(false)}><Link to="/">매치업</Link></li>
-          </NavUl>
-          <NavUl>
-            <li><Link to="/">1</Link></li>
-            <li><Link to="/">1</Link></li>
-            <li onClick={() => (props.setModal(true))}><Link to="/">회원가입/로그인</Link></li>
-            <li><Link to="/">기업 서비스</Link></li>
-          </NavUl>        
-        </NavContents>            
-      </Visible>
-        <Invisible show={hiddenToggle} onMouseLeave={() => setHidden(false)}>
-          {data.dev && <div>
-            <WdList titleName={data.dev.title} titleUrl={data.dev.url} list={data.dev.list}/>
-            <WdList plus="/1" titleName={data.dev2.title} titleUrl={data.dev2.url} list={data.dev2.list}/>
-            <WdList plus="/2" titleName={data.biz.title} titleUrl={data.biz.url} list={data.biz.list}/>
-            <WdList plus="/3" titleName={data.market.title} titleUrl={data.market.url} list={data.market.list}/>
-            <WdList plus="/4" titleName={data.design.title} titleUrl={data.design.url} list={data.design.list}/>
-          </div>}
-      </Invisible>
+          <NavContents>
+            <Logo><Link to="/">wanted</Link></Logo>
+            <NavUl underLine>
+              <li onMouseEnter={() => {setHidden(true); setProfileHidden(false);}}><Link to="/">탐색</Link></li>
+              <li onMouseEnter={() => setHidden(false)}><Link to="/">직군별 연봉</Link></li>
+              <li onMouseEnter={() => setHidden(false)}><Link to="/">이력서</Link></li>
+              <li onMouseEnter={() => setHidden(false)}><Link to="/">추천</Link></li>
+              <li onMouseEnter={() => setHidden(false)}><Link to="/">이벤트</Link></li>
+              <li onMouseEnter={() => setHidden(false)}><Link to="/">매치업</Link></li>
+            </NavUl>
+            <NavUl>
+              <LoginLi login={isLogin} onClick={() => setProfileHidden(!profileToggle)}><Link to="/">로그아웃</Link></LoginLi>
+              <LogoutLi login={isLogin} onClick={() => (props.setModal(true))}><Link to="/">회원가입/로그인</Link></LogoutLi>
+              <li><Link to="/">기업 서비스</Link></li>
+              <HiddenProfile show={profileToggle}>
+                <ul>
+                  <li>프로필</li>
+                  <li>프로필</li>
+                  <li>프로필</li>
+                  <li>프로필</li>
+                  <li>프로필</li>
+                </ul>
+              </HiddenProfile>
+            </NavUl>        
+          </NavContents>            
+        </Visible>
+          <Invisible show={hiddenToggle} onMouseLeave={() => setHidden(false)}>
+            {data.dev && <div>
+              <WdList titleName={data.dev.title} titleUrl={data.dev.url} list={data.dev.list}/>
+              <WdList plus="/1" titleName={data.dev2.title} titleUrl={data.dev2.url} list={data.dev2.list}/>
+              <WdList plus="/2" titleName={data.biz.title} titleUrl={data.biz.url} list={data.biz.list}/>
+              <WdList plus="/3" titleName={data.market.title} titleUrl={data.market.url} list={data.market.list}/>
+              <WdList plus="/4" titleName={data.design.title} titleUrl={data.design.url} list={data.design.list}/>
+            </div>}          
+          </Invisible>            
       </NavWarp>    
     </NavBar>
   );
@@ -104,6 +115,7 @@ const Logo = styled.i`
 `;
 
 const NavUl = styled.ul`
+  position: relative;
   display:flex;
   justify-content:space-around;  
   & > li > a {
@@ -119,6 +131,14 @@ const NavUl = styled.ul`
       `}  
     }
   }
+`;
+
+const LoginLi = styled.li`
+  display:${props =>props.login?"":"none"};
+`;
+
+const LogoutLi = styled.li`
+  display:${props =>props.login?"none":""};
 `;
 
 const Invisible = styled.div`
@@ -143,4 +163,16 @@ const Invisible = styled.div`
       width: 90%;
     }
   }
+`;
+
+const HiddenProfile = styled.div`
+  position:${props =>props.show?"absolute":""};
+  display:${props =>props.show?"":"none"};
+  background-color: #fff;
+  top:34px;
+  width:170px;
+  height:100px;
+  border-radius: 0 0 3px 3px;
+  box-shadow: 0 2px 0 0 rgba(0,0,0,.05);
+  border: 1px solid #e1e2e3; 
 `;
