@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from "react";
 import styled, {css} from "styled-components"
-import { Link } from "react-router-dom";
+import { Link, withRouter  } from "react-router-dom";
 import WdList from "../WdList/WdList"
+import LoginModal from "../../components/LoginModal/LoginModal"
+import { GoogleLogout } from 'react-google-login';
 
 const Nav = (props) => {
 
   const [hiddenToggle, setHidden] = useState(false)
   const [data, setData] = useState({})
-  const [isLogin, setLogin] = useState(true)
+  const [isLogin, setLogin] = useState(false)
   const [profileToggle, setProfileHidden] = useState(false)
+  const [isModal, setModal] = useState(false)
 
   useEffect(() =>{
     fetch("data/navWdListMock.json", {})
@@ -18,10 +21,16 @@ const Nav = (props) => {
     })
   }, []);
 
+  useEffect(() => {
+    isModal?
+    window.document.body.style.overflow="hidden":
+    window.document.body.style.overflow="auto"  
+  });
+
   return (
-    <NavBar modal={props.modal} setModal={props.setModal}>
-      <NavWarp>
-      
+    <>
+    <NavBar>
+      <NavWarp>      
         <Visible show={hiddenToggle}>
           <NavContents>
             <Logo><Link to="/">wanted</Link></Logo>
@@ -35,21 +44,33 @@ const Nav = (props) => {
             </NavUl>
             <NavUl>
               <LoginLi login={isLogin} onClick={() => setProfileHidden(!profileToggle)}><Link to="/">로그아웃</Link></LoginLi>
-              <LogoutLi login={isLogin} onClick={() => (props.setModal(true))}><Link to="/">회원가입/로그인</Link></LogoutLi>
+              <LogoutLi login={isLogin} onClick={() => (setModal(true))}><Link to="/">회원가입/로그인</Link></LogoutLi>
               <li><Link to="/">기업 서비스</Link></li>
               <HiddenProfile show={profileToggle}>
                 <ul>
-                  <li>프로필</li>
-                  <li>프로필</li>
-                  <li>프로필</li>
-                  <li>프로필</li>
-                  <li>프로필</li>
+                  <li><Link to="/">프로필</Link></li>
+                  <li><Link to="/">지원현황</Link></li>
+                  <li><Link to="/">좋아요</Link></li>
+                  <li><Link to="/">북마크</Link></li>
+                  <GoogleLogout
+                    clientId="95532860446-c8epnqedahgonnetd4ahe925c1gs00f8.apps.googleusercontent.com"
+                    render={props => (
+                      <li onClick={props.onClick} disabled={props.disabled}><Link to="/">로그아웃</Link></li>
+                    )}              
+                    onLogoutSuccess={
+                      function logOutEnd() {
+                        localStorage.removeItem("accessToken");
+                        setLogin(false);
+                        setProfileHidden(false);
+                      }                      
+                    }                 
+                  />
                 </ul>
               </HiddenProfile>
             </NavUl>        
           </NavContents>            
         </Visible>
-          <Invisible show={hiddenToggle} onMouseLeave={() => setHidden(false)}>
+        <Invisible show={hiddenToggle} onMouseLeave={() => setHidden(false)}>
             {data.dev && <div>
               <WdList titleName={data.dev.title} titleUrl={data.dev.url} list={data.dev.list}/>
               <WdList plus="/1" titleName={data.dev2.title} titleUrl={data.dev2.url} list={data.dev2.list}/>
@@ -58,11 +79,13 @@ const Nav = (props) => {
               <WdList plus="/4" titleName={data.design.title} titleUrl={data.design.url} list={data.design.list}/>
             </div>}          
           </Invisible>            
-      </NavWarp>    
+      </NavWarp>
     </NavBar>
+    <LoginModal modal={isModal} setModal={setModal} setLogin={setLogin} route={props} isLogin={isLogin}/>
+    </>  
   );
 }
-export default Nav;
+export default withRouter(Nav);
 
 const NavBar = styled.nav`
   position:fixed;
@@ -171,8 +194,32 @@ const HiddenProfile = styled.div`
   background-color: #fff;
   top:34px;
   width:170px;
-  height:100px;
   border-radius: 0 0 3px 3px;
   box-shadow: 0 2px 0 0 rgba(0,0,0,.05);
-  border: 1px solid #e1e2e3; 
+  border: 1px solid #e1e2e3;
+  ul {
+    padding-top:10px;
+    li {
+      display: flex;  
+      align-items: center;  
+      justify-content: center;
+      height:40px;
+      width:100%;
+      margin:10px 0;      
+      font-weight: 400;
+      font-size: 15px;
+      color: #333;      
+    }
+    li:first-child {
+      padding: 10px 0;
+      border-bottom: 1px solid #e1e2e3;
+    }
+    li:last-child {
+      height: 46px;
+      margin:10px 0 0 0;
+      background-color: #f2f4f7;
+      border-top: 1px solid #e1e2e3;
+      color: #767676;      
+    }
+  }
 `;

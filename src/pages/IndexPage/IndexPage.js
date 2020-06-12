@@ -2,18 +2,10 @@ import React, { useState, useEffect } from "react";
 import styled, {css} from "styled-components"
 import { Link, withRouter } from "react-router-dom";
 import Nav from "../../components/Nav/Nav"
-import LoginModal from "../../components/LoginModal/LoginModal"
 
 const IndexPage = (props) => {
 
-  const [isModal, setModal] = useState(false);
   const [data, setData] = useState({})
-
-  useEffect(() => {
-    isModal?
-    window.document.body.style.overflow="hidden":
-    window.document.body.style.overflow="auto"  
-  });
 
   useEffect(() =>{
     fetch("data/indexImgMock.json", {})
@@ -25,8 +17,7 @@ const IndexPage = (props) => {
  
   return (
     <>
-      <Nav setModal={setModal}/>
-      <LoginModal modal={isModal} setModal={setModal} route={props} />     
+      <Nav/>
       <Index>    
         <AddImg high="550px" paddingLeft src={data.intro1}>
           <ImgText>
@@ -182,19 +173,6 @@ const Ul = styled.ul`
     } 
   }
 `;
-
-// const Logo = styled.img.attrs({
-//   src: "../../images/logo_skt.png"
-// })`
-
-//   width:160px;
-//   height:50px;
-//   /* background-image:url(${(props) => props.src}); */
-//   /* src:${(props) => props.src};
-//   src:""; */
-  
-
-// `;
 
 const Button = styled.div`
   width:285.56px;

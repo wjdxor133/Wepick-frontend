@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
-import styled, {css} from "styled-components"
-import { Link, withRouter } from "react-router-dom";
-import GoogleLogin from "react-google-login";
+import React from "react";
+import styled from "styled-components"
+import { Link } from "react-router-dom";
+import { GoogleLogin } from "react-google-login";
 
 const LoginModal = (props) => { 
 
@@ -48,7 +48,8 @@ const LoginModal = (props) => {
               )}
               onSuccess={
                 function goToMain(res) {
-                  const token = localStorage.setItem("accessToken", res.accessToken)
+                  localStorage.setItem("accessToken", res.accessToken);
+                  const token = localStorage.getItem("accessToken", res.accessToken);
                   // fetch("http://10.58.5.247:8000/api/google", {
                   //   method: "POST",
                   //   headers: {
@@ -60,7 +61,10 @@ const LoginModal = (props) => {
                   //   }),                                    
                   // })
                   // .then(console.log("완료"))
-                  // .then(props.route.history.push("/main"))
+                  // .then(props.route.history.push("/main"))                  
+                    props.setLogin(true);
+                    props.setModal(false);
+                                    // console.log(token)
                 }              
               }            
             />
