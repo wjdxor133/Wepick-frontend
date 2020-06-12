@@ -6,7 +6,7 @@ const topCate = (props) => {
     // console.log(props)
     return (
         <TopCateList>
-            <p>{props.main_category_id}</p>
+            <p>{props.duty.sub_category_id}</p>
         </TopCateList>
     );
 }
