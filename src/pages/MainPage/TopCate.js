@@ -6,7 +6,7 @@ const topCate = (props) => {
     // console.log(props)
     return (
         <TopCateList>
-            <p>{props.main_category_id}</p>
+            <p>{props.duty.sub_category_id}</p>
         </TopCateList>
     );
 }
@@ -22,7 +22,7 @@ const TopCateList = styled.li`
     background-image: url({props.img});
     line-height: 3em;
     font-weight: 500;
-    /* color: white */
+    margin-right: .5em;
 `;
 
 
