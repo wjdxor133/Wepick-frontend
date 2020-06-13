@@ -3,16 +3,30 @@ import styled, { css } from "styled-components";
 import ModalPortal from "../../Modal/ModalPortal";
 import ShareModal from "./ShareModal";
 import DetailApply from "./DetailApply";
+import MapContainer from "./MapContainer";
+import PositionList from "../MainPage/PositionList";
 import { AiFillHeart } from "react-icons/ai";
 import { BsFillBookmarkFill } from "react-icons/bs";
-import PositionList from "../MainPage/PositionList";
+import { FiCheck } from "react-icons/fi";
 
-const DetailPage = () => {
+const DetailPage = (props) => {
+  const [detailData, setDetailData] = useState([]);
   const [detailList, setDetailList] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [apply, setApply] = useState(false);
+  const [likeColor, setLikeColor] = useState(false);
+  const [bookMarkColor, setBookMarkColor] = useState(false);
+  const [followColor, setFollowColor] = useState(false);
 
   useEffect(() => {
+    // 채용 디테일 페이지 모든 데이터
+    fetch("/data/teak2Data/DetailPageMock.json")
+      .then((res) => res.json())
+      .then((res) => {
+        setDetailData(res.data);
+      });
+
+    //원티드 추천 공고 데이터
     fetch("/data/mainMock.json")
       .then((res) => res.json())
       .then((res) => {
@@ -20,8 +34,10 @@ const DetailPage = () => {
         setDetailList(res.position);
       });
   }, []);
-  console.log("DetailList", detailList);
+  // console.log("detailList", detailList);
+  // console.log("referer_amount", detailData);
 
+  // 로그인 여부에 따라 다른 모달창이 뜸
   const checkToken = () => {
     if (localStorage.getItem("token")) {
       setShowModal(true);
@@ -31,12 +47,26 @@ const DetailPage = () => {
     }
   };
 
-  const showShareModal = () => {
-    checkToken();
-  };
+  const Click = (event) => {
+    if (event === "apply") {
+      setApply(true);
+    }
 
-  const applyClick = () => {
-    setApply(true);
+    if (event === "modal") {
+      checkToken();
+    }
+
+    if (event === "like") {
+      setLikeColor(!likeColor);
+    }
+
+    if (event === "bookMark") {
+      setBookMarkColor(!bookMarkColor);
+    }
+
+    if (event === "follow") {
+      setFollowColor(!followColor);
+    }
   };
 
   return (
@@ -50,7 +80,12 @@ const DetailPage = () => {
         <h1>Header</h1>
         <DetailPageBox>
           <PageLeft>
-            <h1 style={{ height: "1000px" }}>데이터 받을 곳</h1>
+            <div className="jobImg">
+              <img
+                src="https://static.wanted.co.kr/images/company/9664/nvenzgyfdwchgdq2__1080_790.jpg"
+                alt=" "
+              ></img>
+            </div>
             <MapBox>
               <div className="mapText1">
                 <p>마감일</p>
@@ -60,8 +95,10 @@ const DetailPage = () => {
                 <p>상시</p>
                 <p>경기도 성남시 분당구 성남대로331번길</p>
               </div>
-              <GoogleMap></GoogleMap>
             </MapBox>
+            <GoogleMap>
+              <MapContainer />
+            </GoogleMap>
             <FollowBox>
               <div className="FollowLeft">
                 <img
@@ -73,7 +110,20 @@ const DetailPage = () => {
                   <p className="FollowText2">IT, 컨텐츠</p>
                 </div>
               </div>
-              <Button shape="follow">팔로우</Button>
+              <Button
+                shape="follow"
+                color={followColor}
+                onClick={() => {
+                  Click("follow");
+                }}
+              >
+                <div className="followBox">
+                  <div className="followIcon">
+                    <FiCheck size="15" />
+                  </div>
+                  {followColor ? "팔로잉" : "팔로우"}
+                </div>
+              </Button>
             </FollowBox>
           </PageLeft>
           <PageRight>
@@ -94,7 +144,12 @@ const DetailPage = () => {
                         <p>500,000원</p>
                       </div>
                     </div>
-                    <Button shape="share" onClick={showShareModal}>
+                    <Button
+                      shape="share"
+                      onClick={() => {
+                        Click("modal");
+                      }}
+                    >
                       공유하기
                     </Button>
                   </CompensationBox>
@@ -102,21 +157,57 @@ const DetailPage = () => {
                     <div className="boxBottom">
                       <div className="BottomLeft">
                         <div className="Bottom1">
-                          <AiFillHeart size="16" color="#e1e2e3" />
-                          <p> 109</p>
+                          <AiFillHeart
+                            size="16"
+                            color={likeColor ? "red" : "#e1e2e3"}
+                            onClick={() => {
+                              Click("like");
+                            }}
+                          />
+                          <p className="likeCount"> 109</p>
                         </div>
                         <ul className="Bottom2">
-                          <li>1</li>
-                          <li>2</li>
-                          <li>3</li>
+                          {/* 배열로 받아야 함 */}
+                          <li>
+                            <img
+                              className="profileImg1"
+                              src="https://lh5.googleusercontent.com/-0RCDys4PImk/AAAAAAAAAAI/AAAAAAAAAAA/AMZuucnGJA6X_ZtFqyfoXJLaJebV-YCeOg/s96-c/photo.jpg"
+                              alt="profile1.png"
+                            ></img>
+                          </li>
+                          <li>
+                            <img
+                              className="profileImg2"
+                              src="https://s3.ap-northeast-2.amazonaws.com/wanted-public/profile_default.png"
+                              alt="profile2.png"
+                            ></img>
+                          </li>
+                          <li>
+                            <img
+                              className="profileImg3"
+                              src="https://s3.ap-northeast-2.amazonaws.com/wanted-public/profile_default.png"
+                              alt="profile3.png"
+                            ></img>
+                          </li>
                         </ul>
                       </div>
                       <div className="Bottom3">
-                        <BsFillBookmarkFill size="18" color="#e1e2e3" />
+                        <BsFillBookmarkFill
+                          size="15"
+                          color={bookMarkColor ? "#258bf7" : "#e1e2e3"}
+                          onClick={() => {
+                            Click("bookMark");
+                          }}
+                        />
                       </div>
                     </div>
                   </CompensationIcon>
-                  <Button shape="apply" onClick={applyClick}>
+                  <Button
+                    shape="apply"
+                    onClick={() => {
+                      Click("apply");
+                    }}
+                  >
                     지원하기
                   </Button>
                 </div>
@@ -150,7 +241,7 @@ const DetailPage = () => {
 
 const DetailPageIn = styled.div`
   max-width: 1060px;
-  padding: 0 1em;
+  padding: 0 3em;
   margin: 0 auto;
 `;
 
@@ -161,12 +252,17 @@ const DetailPageBox = styled.div`
 `;
 
 const PageLeft = styled.div`
-  width: 60%;
-  margin-right: 1.3em;
+  width: 65%;
+
+  .jobImg {
+    img {
+      width: 100%;
+    }
+  }
 `;
 
 const PageRight = styled.div`
-  width: 35%;
+  width: 33%;
 `;
 
 const PageBottom = styled.div`
@@ -238,10 +334,14 @@ const CompensationIcon = styled.div`
         align-items: center;
         border: 1px solid #e1e2e3;
         border-radius: 20px;
-        padding: 0.5em;
+        padding: 0.2em 0.5em 0.4em;
 
-        p {
-          font-size: 0.85rem;
+        &:hover {
+          cursor: pointer;
+        }
+
+        .likeCount {
+          font-size: 0.8rem;
           font-weight: 700;
           margin-left: 0.5em;
         }
@@ -249,12 +349,43 @@ const CompensationIcon = styled.div`
 
       .Bottom2 {
         display: flex;
+        margin-left: 0.6em;
+
+        li {
+          width: 26px;
+          height: 26px;
+          .profileImg1 {
+            width: 100%;
+            border-radius: 50%;
+            border: 0.1rem solid #fff;
+            z-index: 2;
+          }
+          .profileImg2 {
+            width: 100%;
+            border-radius: 50%;
+            margin-left: -0.5em;
+            border: 0.1rem solid #fff;
+            z-index: 1;
+          }
+          .profileImg3 {
+            width: 100%;
+            border-radius: 50%;
+            margin-left: -1em;
+            border: 0.1rem solid #fff;
+            z-index: 0;
+          }
+        }
       }
     }
 
     .Bottom3 {
       border: 1px solid #e1e2e3;
       border-radius: 50%;
+      padding: 0.23em 0.25em;
+
+      &:hover {
+        cursor: pointer;
+      }
     }
   }
 `;
@@ -277,6 +408,16 @@ const Button = styled.button`
         cursor: pointer;
       }
     `};
+
+  .followBox {
+    display: flex;
+    align-items: center;
+
+    .followIcon {
+      line-height: 0.5rem;
+      display: ${(props) => (props.color ? "block" : "none")};
+    }
+  }
 
   ${(props) =>
     props.shape === "apply" &&
@@ -301,13 +442,19 @@ const Button = styled.button`
   ${(props) =>
     props.shape === "follow" &&
     css`
-      background-color: ${(props) => props.theme.color.main};
-      border: 1px solid ${(props) => props.theme.color.main};
+      background-color: ${(props) =>
+        props.color ? "#fff" : props.theme.color.main};
+      border: 1px solid
+        ${(props) => (props.color ? "#333" : props.theme.color.main)};
       border-radius: 2px;
       padding: 0.5em 1.5em;
-      color: white;
+      color: ${(props) => (props.color ? "#333" : "#fff")};
       font-weight: 700;
       outline: none;
+
+      &:hover {
+        cursor: pointer;
+      }
     `}
 `;
 
@@ -334,7 +481,9 @@ const MapBox = styled.div`
   }
 `;
 
-const GoogleMap = styled.div``;
+const GoogleMap = styled.div`
+  width: 100%;
+`;
 
 const FollowBox = styled.div`
   display: flex;
@@ -347,6 +496,10 @@ const FollowBox = styled.div`
   .FollowLeft {
     display: flex;
     align-items: center;
+
+    &:hover {
+      cursor: pointer;
+    }
     img {
       width: 50px;
       height: 50px;

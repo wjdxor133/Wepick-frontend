@@ -18,8 +18,8 @@ const DetailApply = ({ setApply }) => {
         setResumeData(res.resume);
         console.log("res", res.resume);
       });
-    console.log("resumeData", resumeData);
   }, []);
+  console.log("resumeData", resumeData);
 
   return (
     <DetailApplyPage>
@@ -82,7 +82,7 @@ const DetailApply = ({ setApply }) => {
 };
 
 const DetailApplyPage = styled.div`
-  width: 90%;
+  width: 100%;
   border: 1px solid #e1e2e3;
 `;
 
