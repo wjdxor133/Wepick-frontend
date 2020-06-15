@@ -3,21 +3,21 @@ import styled from "styled-components";
 import { AiFillHeart } from 'react-icons/ai';
 
 const PositionList = (props) => {
-    return (
-        <PositionBoxList >
-            <PositionImg>
-                <img src={props.thumbnail} alt="" />
-                <LikeBox><div><AiFillHeart /></div><span>{props.like}</span> </LikeBox>
-            </PositionImg>
-            <PositionListTitle> {props.title} </PositionListTitle>
-            <PositionText>
-                <p> {props.company} </p>
-                <span> {props.region} </span>
-                <span> {props.country} </span>
-            </PositionText>
-            <Compensation>채용보상금 {props.compensation}원</Compensation>
-        </PositionBoxList>
-    );
+  return (
+    <PositionBoxList >
+      <PositionImg>
+        <img src={props.thumbnail} alt="" />
+        <LikeBox><div><AiFillHeart /></div><span>{props.like}</span> </LikeBox>
+      </PositionImg>
+      <PositionListTitle> {props.title} </PositionListTitle>
+      <PositionText>
+        <p> {props.company} </p>
+        <span> {props.region} </span>
+        <span> {props.country} </span>
+      </PositionText>
+      <Compensation>채용보상금 {props.compensation}원</Compensation>
+    </PositionBoxList>
+  );
 }
 
 const PositionBoxList = styled.li`
