@@ -6,13 +6,14 @@ const PositionList = (props) => {
     return (
         <PositionBoxList >
             <PositionImg>
-                <img src={props.img} alt="" />
+                <img src={props.thumbnail} alt="" />
                 <LikeBox><div><AiFillHeart /></div><span>{props.like}</span> </LikeBox>
             </PositionImg>
             <PositionListTitle> {props.title} </PositionListTitle>
             <PositionText>
-                <p> {props.name} </p>
-                <p> {props.area} </p>
+                <p> {props.company} </p>
+                <span> {props.region} </span>
+                <span> {props.country} </span>
             </PositionText>
             <Compensation>채용보상금 {props.compensation}원</Compensation>
         </PositionBoxList>
@@ -24,9 +25,9 @@ const PositionBoxList = styled.li`
     :last-child{
         margin-right: 0rem
     }
-    p{
-        font-size: .75rem;
-        color: ${props => props.theme.color.gray}
+    span {
+        font-size: .875rem;
+        color: ${props => props.theme.color.gray}; 
     }
 `;
 

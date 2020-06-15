@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
+import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import 'react-circular-progressbar/dist/styles.css';
 import { AiOutlineSetting } from "react-icons/ai";
 import { BsChevronLeft } from "react-icons/bs";
@@ -10,6 +10,7 @@ import TopCate from "./TopCate";
 import PositionList from "./PositionList";
 import MainImg from "./MainImg";
 import Aggreesive from "./Aggreesive";
+// import { API } from "../../config";
 
 const MainPage = () => {
   const [data, setData] = useState([]);
@@ -17,7 +18,7 @@ const MainPage = () => {
   const [aggreesive, setAggreesive] = useState([]);
   const [topImg, setTopImg] = useState([]);
 
-  const mainWidth = window.innerWidth;
+  // const mainWidth = window.innerWidth;
   const percentage = 66;
 
   useEffect(() => {
@@ -32,24 +33,32 @@ const MainPage = () => {
       .then((res) => {
         setTopImg(res.main_top_img);
       });
+
     fetch("/data/mainCate.json")
       .then((res) => res.json())
       .then((res) => {
-        setCate(res.main_category);
+        setCate(res.data);
       });
+    // fetch(`${API}/job/category`)
+    //   .then((res) => res.json())
+    //   .then((res) => {
+    //     setCate(res.data);
+    //     console.log(res.data);
+    //   });
+
     fetch("/data/aggreesive.json")
       .then((res) => res.json())
       .then((res) => {
-        setAggreesive(res.aggreesive);
+        setAggreesive(res.data);
       });
   }, []);
 
   const aggreesiveList = aggreesive.map((aggreesiveData, idx) => {
     return (
       <Aggreesive
-        title={aggreesiveData.title}
-        position={aggreesiveData.position}
-        ci={aggreesiveData.ci}
+        title={aggreesiveData.name}
+        position={aggreesiveData.number_positions}
+        ci={aggreesiveData.logo_url}
         img={aggreesiveData.thumbnail_url}
       />
     );
@@ -58,14 +67,34 @@ const MainPage = () => {
   const mainList = cate.map((mainData, idx) => {
     return (
       <TopCate
-        main_category_id={mainData.main_category_id}
-        duty={mainData.duty}
+        id={mainData.id}
+        main_category_id={mainData.name}
+        backImg={mainData.background_image}
+        duty={mainData.sub_category}
       />
     );
   })
 
-  // const list = data.map((myData, idx) => {
 
+
+  const list = data.map((myData, idx) => {
+
+    return (
+      <PositionList
+        key={myData.idx}
+        title={myData.title}
+        no={myData.job_id}
+        company={myData.company}
+        region={myData.region}
+        country={myData.country}
+        compensation={myData.reward_total}
+        thumbnail={myData.thumbnail}
+        like={myData.like}
+      />
+    );
+  });
+
+  // const list = data.filter(mockData => mockData.job_id < 5).map((myData, idx) => {
   //   return (
   //     <PositionList
   //       key={myData.idx}
@@ -75,24 +104,10 @@ const MainPage = () => {
   //       area={myData.country}
   //       compensation={myData.reward_total}
   //       img={myData.thumbnail_url}
+  //       like={myData.like}
   //     />
   //   );
   // });
-
-  const list = data.filter(mockData => mockData.job_id < 5).map((myData, idx) => {
-    return (
-      <PositionList
-        key={myData.idx}
-        title={myData.title}
-        no={myData.job_id}
-        name={myData.company}
-        area={myData.country}
-        compensation={myData.reward_total}
-        img={myData.thumbnail_url}
-        like={myData.like}
-      />
-    );
-  });
 
   const mainImg = topImg.map((topImgOne, idx) => {
     return (
@@ -100,6 +115,7 @@ const MainPage = () => {
         title={topImgOne.title}
         content={topImgOne.content}
         img={topImgOne.img}
+        key={idx}
       />
     );
   })
@@ -107,15 +123,15 @@ const MainPage = () => {
   return (
     <>
       <Slider>
-        <MainBox mainWidth={mainWidth}>
+        <MainBox>
           {mainImg}
         </MainBox>
         <MainButton>
           <div>
-            <BsChevronLeft />
+            <BsChevronLeft direction="left" />
           </div>
           <div>
-            <BsChevronRight />
+            <BsChevronRight direction="right" />
           </div>
         </MainButton>
       </Slider>
@@ -165,7 +181,9 @@ const MainPage = () => {
               <QuestFliterButton propsColor="black"><span>경력</span> 전체</QuestFliterButton>
             </QuestFliterLeft>
             <QuestFliterRight>
-              <QuestFliterButton><span><FiFilter color="#2986FA" /></span>필터</QuestFliterButton>
+              <QuestFliterButton>
+                <span><FiFilter color="#2986FA" /></span>필터
+              </QuestFliterButton>
             </QuestFliterRight>
           </FlexBox>
           <AggressiveBox>
@@ -314,32 +332,39 @@ const Slider = styled.div`
 `;
 
 const MainBox = styled.ul`
+    width: 500%;
+    display: flex;
+    transform: translateX( -${props => props.translate}px );
+    transition: transform ease-out ${props => props.transition}s;
+`;
+
+/* const MainBox = styled.ul`
     /* overflow: hidden;
     width: 100%;
     height: 300px;
     margin: 0 auto;  */
-    width: 500%;
-    display: flex;
-    transform: translateX( -${props => props.mainWidth}px );
-    transition: transform ease-out 3s;
-`;
+/* width: 500 %;
+display: flex;
+transform: translateX(-${ props => props.mainWidth }px);
+transition: transform ease - out 0.45s;
+`;  */
 
 const MainButton = styled.div`
-    position: absolute;
-    top: 13em;
-    right: 0px;
-    z-index: 10;
-    display: flex;
-    font-size: 1rem;
-    margin-right: calc((100vw - 1060px) / 2);
-    div{
-        background-color: white;
-        border-radius: 100%;
-        width: 45px;
-        height: 45px;
-        text-align: center;
-        line-height: 3.3em;
-    }
+position: absolute;
+top: 13em;
+right: 0px;
+z-index: 10;
+display: flex;
+font-size: 1rem;
+margin-right: calc((100vw - 1060px) / 2);
+div{
+  background-color: white;
+  border-radius: 100;
+  width: 45px;
+  height: 45px;
+  text-align: center;
+  line-height: 3.3em;
+}
 `;
 
 export default MainPage;
