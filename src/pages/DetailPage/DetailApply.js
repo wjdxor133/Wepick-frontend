@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import ResumeItemBox from "./ResumeItemBox";
+import FileUpload from "./FlieUpload";
 import styled, { css } from "styled-components";
 import { IoIosArrowForward } from "react-icons/io";
 import { BsPlus } from "react-icons/bs";
 
 const DetailApply = ({ setApply }) => {
-  const [resumeData, setResumeData] = useState();
+  const [resumeData, setResumeData] = useState([]);
   const goback = () => {
     setApply(false);
   };
@@ -16,10 +17,9 @@ const DetailApply = ({ setApply }) => {
       .then((res) => res.json())
       .then((res) => {
         setResumeData(res.resume);
-        console.log("res", res.resume);
       });
   }, []);
-  console.log("resumeData", resumeData);
+  // console.log("resumeData", resumeData);
 
   return (
     <DetailApplyPage>
@@ -60,14 +60,26 @@ const DetailApply = ({ setApply }) => {
             <ApplyInfoText>첨부파일</ApplyInfoText>
             <div className="IconBox">
               <BsPlus color="#2886fa" />
-              <ApplyInfoText textColor="blue">파일 업로드</ApplyInfoText>
+              <FileUpload></FileUpload>
             </div>
           </div>
           <div className="ResumeList">
             <ul>
-              <li>
-                <ResumeItemBox />
-              </li>
+              {resumeData.map((resume, idx) => {
+                // console.log("resume", resume);
+                return (
+                  <li>
+                    <ResumeItemBox
+                      key={idx}
+                      name={resume.name}
+                      languge={resume.languge}
+                      resume={resume.date}
+                      write={resume.write}
+                      resumeCheck={true}
+                    />
+                  </li>
+                );
+              })}
             </ul>
           </div>
           <Button newResume>새 이력서 작성</Button>
@@ -205,6 +217,10 @@ const Button = styled.button`
       font-weight: 700;
       font-size: 0.9rem;
       border-radius: 3px;
+
+      &:hover {
+        cursor: pointer;
+      }
     `}
 
   ${(props) =>

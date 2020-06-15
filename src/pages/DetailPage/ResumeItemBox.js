@@ -2,15 +2,29 @@ import React from "react";
 import { IoIosArrowForward } from "react-icons/io";
 import styled, { css } from "styled-components";
 
-const ResumeItemBox = () => {
+const ResumeItemBox = ({
+  name,
+  languge,
+  resume,
+  write,
+  resumeCheck,
+  fileCheck,
+  fileName,
+  fileDate,
+  fileText,
+}) => {
   return (
-    <ResumeItemBoxIn>
+    <ResumeItemBoxIn fileCheck={fileCheck} ResumeCheck={resumeCheck}>
       <div className="BoxLeft">
         <input type="checkbox" id="cb1" />
         <label for="cb1"></label>
         <ResumeTextBox>
-          <ResumeText bold>임정택</ResumeText>
-          <ResumeText>한국어 | 2020.06.12 | 작성 중</ResumeText>
+          <ResumeText bold>{fileCheck ? fileName : name}</ResumeText>
+          <ResumeText>
+            {fileCheck
+              ? fileDate + fileText
+              : `${languge} | ${resume} | ${write}`}
+          </ResumeText>
         </ResumeTextBox>
       </div>
       <IoIosArrowForward size="12" />
@@ -24,6 +38,7 @@ const ResumeItemBoxIn = styled.div`
   background-color: #f4f5f7;
   border: 1px solid #f4f5f7;
   padding: 0.5em 0.9em;
+  margin-bottom: 0.5em;
 
   .BoxLeft {
     display: flex;

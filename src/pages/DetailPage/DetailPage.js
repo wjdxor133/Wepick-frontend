@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled, { css } from "styled-components";
+import Slider from "../../components/Slider/Slider";
 import ModalPortal from "../../Modal/ModalPortal";
 import ShareModal from "./ShareModal";
 import DetailApply from "./DetailApply";
@@ -10,13 +11,18 @@ import { BsFillBookmarkFill } from "react-icons/bs";
 import { FiCheck } from "react-icons/fi";
 
 const DetailPage = (props) => {
-  const [detailData, setDetailData] = useState([]);
+  const [detailData, setDetailData] = useState({});
   const [detailList, setDetailList] = useState([]);
   const [showModal, setShowModal] = useState(false);
-  const [apply, setApply] = useState(false);
+  const [apply, setApply] = useState(true);
   const [likeColor, setLikeColor] = useState(false);
   const [bookMarkColor, setBookMarkColor] = useState(false);
   const [followColor, setFollowColor] = useState(false);
+
+  // const img = [
+  //   "https://static.wanted.co.kr/images/company/4348/ueurxkxxd696lkuv__1080_790.jpg",
+  //   "https://static.wanted.co.kr/images/company/4348/afekmathpewbo8jq__1080_790.jpg",
+  // ];
 
   useEffect(() => {
     // 채용 디테일 페이지 모든 데이터
@@ -35,7 +41,7 @@ const DetailPage = (props) => {
       });
   }, []);
   // console.log("detailList", detailList);
-  // console.log("referer_amount", detailData);
+  console.log("detailData", detailData.images && detailData.images.length);
 
   // 로그인 여부에 따라 다른 모달창이 뜸
   const checkToken = () => {
@@ -58,10 +64,12 @@ const DetailPage = (props) => {
 
     if (event === "like") {
       setLikeColor(!likeColor);
+      // 백엔드에 true, false 값을 보내야 함
     }
 
     if (event === "bookMark") {
       setBookMarkColor(!bookMarkColor);
+      // 백엔드에 true, false 값을 보내야 함
     }
 
     if (event === "follow") {
@@ -80,24 +88,36 @@ const DetailPage = (props) => {
         <h1>Header</h1>
         <DetailPageBox>
           <PageLeft>
-            <div className="jobImg">
-              <img
-                src="https://static.wanted.co.kr/images/company/9664/nvenzgyfdwchgdq2__1080_790.jpg"
-                alt=" "
-              ></img>
+            <Slider slides={detailData.images && detailData.images} />
+            <div className="jobTitle">
+              <h3>{detailData.name}</h3>
+              <div className="TitleText">
+                <p className="TextLeft">{detailData.company}</p>
+                <div className="TextRight">
+                  <span className="Benchmark">|</span>
+                  <span>
+                    {detailData.region}
+                    <span> .</span>
+                    {detailData.country}
+                  </span>
+                </div>
+              </div>
             </div>
+            <InnerHTML
+              dangerouslySetInnerHTML={{ __html: detailData.article }}
+            ></InnerHTML>
             <MapBox>
               <div className="mapText1">
                 <p>마감일</p>
                 <p>근무지역</p>
               </div>
               <div className="mapText2">
-                <p>상시</p>
-                <p>경기도 성남시 분당구 성남대로331번길</p>
+                <p>{detailData.deadline}</p>
+                <p>{detailData.location}</p>
               </div>
             </MapBox>
             <GoogleMap>
-              <MapContainer />
+              <MapContainer lat={detailData.lat} lng={detailData.lng} />
             </GoogleMap>
             <FollowBox>
               <div className="FollowLeft">
@@ -137,11 +157,11 @@ const DetailPage = (props) => {
                     <div className="boxTop">
                       <div className="item1">
                         <span className="person">추천인</span>
-                        <p>500,000원</p>
+                        <p>{detailData.referer_amount}원</p>
                       </div>
                       <div className="item1">
                         <span className="person">지원자</span>
-                        <p>500,000원</p>
+                        <p>{detailData.fereree_amount}원</p>
                       </div>
                     </div>
                     <Button
@@ -156,18 +176,20 @@ const DetailPage = (props) => {
                   <CompensationIcon>
                     <div className="boxBottom">
                       <div className="BottomLeft">
-                        <div className="Bottom1">
+                        <div
+                          className="Bottom1"
+                          onClick={() => {
+                            Click("like");
+                          }}
+                        >
                           <AiFillHeart
                             size="16"
                             color={likeColor ? "red" : "#e1e2e3"}
-                            onClick={() => {
-                              Click("like");
-                            }}
                           />
-                          <p className="likeCount"> 109</p>
+                          <p className="likeCount"> {detailData.likes}</p>
                         </div>
                         <ul className="Bottom2">
-                          {/* 배열로 받아야 함 */}
+                          {/* 이미지를 배열로 받아서 뿌려야 함 */}
                           <li>
                             <img
                               className="profileImg1"
@@ -254,10 +276,83 @@ const DetailPageBox = styled.div`
 const PageLeft = styled.div`
   width: 65%;
 
-  .jobImg {
+  /* .jobImg {
+    position: relative;
     img {
       width: 100%;
+      border-radius: 3px;
     }
+
+    .allowLeft {
+      position: absolute;
+      color: #999;
+      top: 50%;
+      left: 3%;
+    }
+
+    .allowRight {
+      position: absolute;
+      color: #999;
+      top: 50%;
+      right: 3%;
+    }
+  } */
+
+  .jobTitle {
+    margin-top: 2em;
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 0.6em;
+      color: #333;
+    }
+
+    .TitleText {
+      display: flex;
+      font-size: 0.85rem;
+
+      .TextLeft {
+        font-weight: 700;
+        color: #333;
+      }
+
+      .TextRight {
+        display: flex;
+        align-items: center;
+
+        span {
+          font-weight: 700;
+          margin-right: 0.5em;
+          color: #999;
+        }
+
+        .Benchmark {
+          font-size: 0.6rem;
+          font-weight: 400;
+          margin: 0 0.8em 0;
+          color: #999;
+        }
+      }
+    }
+  }
+`;
+
+const InnerHTML = styled.div`
+  padding: 2em 0em 4em;
+  p {
+    font-size: 0.9rem;
+    padding: 0.7em 0 1em;
+    color: #333;
+
+    span {
+      line-height: 1.5em;
+    }
+  }
+
+  h6 {
+    font-size: 0.9rem;
+    font-weight: 700;
+    margin-top: 0.8em;
   }
 `;
 
@@ -289,6 +384,7 @@ const Fixed = styled.div`
 `;
 const CompensationBox = styled.div`
   border: 1px solid #e1e2e3;
+  border-radius: 3px;
   padding: 1em;
 
   p {

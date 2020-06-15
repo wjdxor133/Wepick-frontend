@@ -9,18 +9,22 @@ const containerStyle = {
 };
 
 const MapContainer = (props) => {
-  // 위도 경도 props로 받을 예정
-  //   const [location, setLocation] = useState({});
   return (
     <>
       <Map
-        google={props.google}
+        google={props && props.google}
         zoom={14}
         containerStyle={containerStyle}
-        initialCenter={{ lat: 37.505834, lng: 127.050149 }}
+        initialCenter={{
+          lat: Number(props && props.lat),
+          lng: Number(props && props.lng),
+        }}
       >
-        <Marker onClick={props.onMarkerClick} name={"Current location"} />
-        <InfoWindow onClose={props.onInfoWindowClose}>
+        <Marker
+          onClick={props && props.onMarkerClick}
+          name={"Current location"}
+        />
+        <InfoWindow onClose={props && props.onInfoWindowClose}>
           <div>{/* <h1>{this.state.selectedPlace.name}</h1> */}</div>
         </InfoWindow>
       </Map>
