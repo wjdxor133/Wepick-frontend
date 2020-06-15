@@ -1,28 +1,32 @@
-import React, { useState, useEffect } from "react";
-import styled, {css} from "styled-components"
-import { Link, withRouter } from "react-router-dom";
+import React from "react";
+import styled from "styled-components"
+import { withRouter } from "react-router-dom";
 
 function WdList(props) {
   return(
     <WdWrap>
-      <WdTitle titleOn={props.titleName}>
-        <Link to={props.titleUrl}>
-          {props.titleName}<I titleOn={props.titleName}>></I>
-        </Link>
+      <WdTitle titleOn={props.titleName} onClick={() => props.history.push(`${props.titleUrl}`)}>
+        <span>{props.titleName}</span>
+        <i>></i>    
       </WdTitle>
       <WdContents>
         {props.list.map((item, inx) => {
           return (        
-            <li key={inx}><Link to={item.url}>{item.name}</Link></li>
+            <li key={inx} onClick={() => props.history.push(`${item.url}`)}>
+              {item.name}
+            </li>
           )
         })}
-        <Plus plus={props.plus}><Link to={props.plus}><span>더보기</span><i>></i></Link></Plus>
+        <Plus plus={props.plus} onClick={() => props.history.push(`${props.plus}`)}>
+          <span>더보기</span>
+          <i>></i>
+        </Plus>
       </WdContents>
     </WdWrap>
   )
 }
 
-export default WdList;
+export default withRouter(WdList);
 
 const WdWrap = styled.div`
   display:flex;
@@ -36,38 +40,33 @@ const WdWrap = styled.div`
 
 const WdTitle = styled.div`
   visibility:${props => props.titleOn?"visible":"hidden"};
+  cursor: pointer;
+  display:flex;
+  justify-content:space-between;
   height:2em;
-  a {
-    display:flex;
-    justify-content:space-between;
+  width:100%;
+  padding-right:20px;  
+  span {
     font-size: 17px;
     color: #333;
     line-height: 20px;
-    vertical-align: top;
     padding-right: 20px;
     padding-bottom: 15px;
-    width: 100%;
-    text-overflow: ellipsis;
-    white-space: nowrap;  
-  }
-`;
-
-const I = styled.i`
-  display: ${props => props.titleOn? "":"none"};
-`;
-
-const Plus = styled.li`
-  display: ${props => props.plus? "":"none"};
-  a {
-    display:flex;
-    justify-content:space-between;
-  }
+  }  
 `;
 
 const WdContents = styled.ul`
   li {
+    cursor: pointer;
     font-size: 13px;
     color: #999;
     padding: 5px 20px 5px 0;  
   }
+`;
+
+const Plus = styled.li`  
+  cursor: pointer;
+  display:flex;
+  justify-content:space-between;  
+  display: ${props => props.plus? "":"none"};
 `;

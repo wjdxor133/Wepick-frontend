@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import styled, {css} from "styled-components"
-import { Link, withRouter } from "react-router-dom";
+import styled from "styled-components"
+import { withRouter } from "react-router-dom";
 import Nav from "../../components/Nav/Nav"
+import Footer from "../../components/Footer/Footer"
 
-const IndexPage = (props) => {
+const IndexPage = ( props ) => {
 
   const [data, setData] = useState({})
 
@@ -14,6 +15,10 @@ const IndexPage = (props) => {
       setData(res)
     })
   }, []);
+
+  useEffect(() => {
+    document.documentElement.scrollTop=0;
+  }, [])
  
   return (
     <>
@@ -23,7 +28,7 @@ const IndexPage = (props) => {
           <ImgText>
             <h1>요즘 이직, 원티드</h1>
             <h3>나에게 딱 맞는 회사, 원티드에서 찾아보세요!</h3>
-            <Button><Link to="/">지금 시작하기</Link></Button>
+            <Button onClick={() => props.history.push("/cv")}>지금 시작하기</Button>
           </ImgText>                  
         </AddImg>
         <AddImg high="715px" flex src={data.intro2}>
@@ -31,7 +36,7 @@ const IndexPage = (props) => {
             <h2>매치업</h2>
             <p>프로필 등록 한번으로 인사담당자에게</p>
             <span>직접 면접 제안을 받으세요.</span>
-            <Link to="/">더 알아보기</Link>
+            <i onClick={() => props.history.push("/cv")}>더 알아보기</i>
           </MiniBox>
           <MiniBox src={data.miniImg2}> 
             <h2>태그 검색</h2>
@@ -48,20 +53,21 @@ const IndexPage = (props) => {
           <h1>나에게 딱 맞는 회사 찾기</h1>
           <h4>회원가입 후, 지금 가장 인기있는 채용 소식을 팔로우 해보세요.</h4>
           <Ul top="60px">
-            <li><Link to="/"><img src={data.naver}/></Link></li>
-            <li><Link to="/"><img src={data.toss}/></Link></li>
-            <li><Link to="/"><img src={data.kakao}/></Link></li>
-            <li><Link to="/"><img src={data.coupang}/></Link></li>
+            <li onClick={() => props.history.push("/cv")}><img src={data.naver} alt=""/></li>
+            <li onClick={() => props.history.push("/cv")}><img src={data.toss} alt=""/></li>
+            <li onClick={() => props.history.push("/cv")}><img src={data.kakao} alt=""/></li>
+            <li onClick={() => props.history.push("/cv")}><img src={data.coupang} alt=""/></li>
           </Ul>
           <Ul top="30px">
-            <li><Link to="/"><img src={data.airbnb}/></Link></li>
-            <li><Link to="/"><img src={data.woowa}/></Link></li>
-            <li><Link to="/"><img src={data.sk}/></Link></li>
-            <li><Link to="/"><img src={data.facebook}/></Link></li>
+            <li onClick={() => props.history.push("/cv")}><img src={data.airbnb} alt=""/></li>
+            <li onClick={() => props.history.push("/cv")}><img src={data.woowa} alt=""/></li>
+            <li onClick={() => props.history.push("/cv")}><img src={data.sk} alt=""/></li>
+            <li onClick={() => props.history.push("/cv")}><img src={data.facebook} alt=""/></li>
           </Ul>
-          <Button marginTop><Link to="/">지금 시작하기</Link></Button>
+          <Button marginTop onClick={() => props.history.push("/cv")}>지금 시작하기</Button>
         </Pick>
       </Index>      
+      <Footer/>
     </>
   );
 }
@@ -131,7 +137,8 @@ const MiniBox = styled.div`
     margin: 7px auto 0;
     font-size: 16px;
   }
-  a {
+  i {
+    cursor:pointer;
     display: inline-block;
     margin-top: 15px;
     font-size: 16px;
@@ -164,11 +171,12 @@ const Ul = styled.ul`
   width:100%;
   margin-top:${(props) => props.top};
   li {
+    cursor:pointer;
     display:flex;
     align-items:center;
     justify-content:center;
     margin:10px 40px;
-    a > img {
+    img {
       width:160px;
     } 
   }
@@ -186,8 +194,6 @@ const Button = styled.div`
   justify-content:center;
   color: #fff;
   margin-top:${props => props.marginTop&&"80px"};
-  a {
-    font-weight: 600;
-    font-size: 20px;
-  }
+  font-size: 20px;
+  font-weight: 600;  
 `;

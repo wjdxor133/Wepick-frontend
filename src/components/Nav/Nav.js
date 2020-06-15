@@ -1,19 +1,21 @@
 import React, { useState, useEffect } from "react";
-import styled, {css} from "styled-components"
-import { Link, withRouter  } from "react-router-dom";
+import styled from "styled-components"
+import { Link, withRouter } from "react-router-dom";
+import { connect } from "react-redux";
+import { changeNavColor, changeModal, changeProfile } from "../../store/actions";
 import WdList from "../WdList/WdList"
 import LoginModal from "../../components/LoginModal/LoginModal"
-import { GoogleLogout } from 'react-google-login';
+import GoogleLogoutGo from "../GoogleLogoutGo/GoogleLogoutGo"
 
-const Nav = (props) => {
+const Nav = ( { changeNavColor, changeModal, changeProfile, navPick, loginCheck, profileUpdown }, props ) => {
+  const navBlueColor = (input) => {
+    changeNavColor(input);
+  };
+  
+  const [data, setData] = useState({}) //히든 메뉴리스트 data 받을
+  const [menuUpdown, setMenuUpdown] = useState(false) //히든 메뉴리스트(탐색 호버시 나올)
 
-  const [hiddenToggle, setHidden] = useState(false)
-  const [data, setData] = useState({})
-  const [isLogin, setLogin] = useState(false)
-  const [profileToggle, setProfileHidden] = useState(false)
-  const [isModal, setModal] = useState(false)
-
-  useEffect(() =>{
+  useEffect(() => {
     fetch("data/navWdListMock.json", {})
     .then((response) => response.json())
     .then((res) => {
@@ -21,71 +23,63 @@ const Nav = (props) => {
     })
   }, []);
 
-  useEffect(() => {
-    isModal?
-    window.document.body.style.overflow="hidden":
-    window.document.body.style.overflow="auto"  
-  });
-
   return (
     <>
-    <NavBar>
-      <NavWarp>      
-        <Visible show={hiddenToggle}>
-          <NavContents>
-            <Logo><Link to="/">wanted</Link></Logo>
-            <NavUl underLine>
-              <li onMouseEnter={() => {setHidden(true); setProfileHidden(false);}}><Link to="/">탐색</Link></li>
-              <li onMouseEnter={() => setHidden(false)}><Link to="/">직군별 연봉</Link></li>
-              <li onMouseEnter={() => setHidden(false)}><Link to="/">이력서</Link></li>
-              <li onMouseEnter={() => setHidden(false)}><Link to="/">추천</Link></li>
-              <li onMouseEnter={() => setHidden(false)}><Link to="/">이벤트</Link></li>
-              <li onMouseEnter={() => setHidden(false)}><Link to="/">매치업</Link></li>
-            </NavUl>
-            <NavUl>
-              <LoginLi login={isLogin} onClick={() => setProfileHidden(!profileToggle)}><Link to="/">로그아웃</Link></LoginLi>
-              <LogoutLi login={isLogin} onClick={() => (setModal(true))}><Link to="/">회원가입/로그인</Link></LogoutLi>
-              <li><Link to="/">기업 서비스</Link></li>
-              <HiddenProfile show={profileToggle}>
-                <ul>
-                  <li><Link to="/">프로필</Link></li>
-                  <li><Link to="/">지원현황</Link></li>
-                  <li><Link to="/">좋아요</Link></li>
-                  <li><Link to="/">북마크</Link></li>
-                  <GoogleLogout
-                    clientId="95532860446-c8epnqedahgonnetd4ahe925c1gs00f8.apps.googleusercontent.com"
-                    render={props => (
-                      <li onClick={props.onClick} disabled={props.disabled}><Link to="/">로그아웃</Link></li>
-                    )}              
-                    onLogoutSuccess={
-                      function logOutEnd() {
-                        localStorage.removeItem("accessToken");
-                        setLogin(false);
-                        setProfileHidden(false);
-                      }                      
-                    }                 
-                  />
-                </ul>
-              </HiddenProfile>
-            </NavUl>        
-          </NavContents>            
-        </Visible>
-        <Invisible show={hiddenToggle} onMouseLeave={() => setHidden(false)}>
-            {data.dev && <div>
-              <WdList titleName={data.dev.title} titleUrl={data.dev.url} list={data.dev.list}/>
-              <WdList plus="/1" titleName={data.dev2.title} titleUrl={data.dev2.url} list={data.dev2.list}/>
-              <WdList plus="/2" titleName={data.biz.title} titleUrl={data.biz.url} list={data.biz.list}/>
-              <WdList plus="/3" titleName={data.market.title} titleUrl={data.market.url} list={data.market.list}/>
-              <WdList plus="/4" titleName={data.design.title} titleUrl={data.design.url} list={data.design.list}/>
-            </div>}          
-          </Invisible>            
-      </NavWarp>
-    </NavBar>
-    <LoginModal modal={isModal} setModal={setModal} setLogin={setLogin} route={props} isLogin={isLogin}/>
+      <NavBar>
+        <NavWarp>      
+          <VisibleBox show={menuUpdown}>
+            <NavContents>
+              {/* <Logo onClick={() => props.history.push("/")}><Link>히스토리용</Link></Logo> */}
+              <Logo onClick={() => {navBlueColor(0); changeProfile(false); setMenuUpdown(false); document.documentElement.scrollTop=0;}}><Link to="/">wanted</Link></Logo>
+              <NavUl underLine navPick={navPick}>
+                <Link to="/" onClick={() => {navBlueColor(1); changeProfile(false);}} onMouseEnter={() => {setMenuUpdown(true); changeProfile(false);}}>탐색</Link>
+                <Link to="/" onClick={() => {navBlueColor(2); changeProfile(false);}} onMouseEnter={() => setMenuUpdown(false)}>직군별 연봉</Link>
+                <Link to="/cv" onClick={() => {navBlueColor(3); changeProfile(false);}} onMouseEnter={() => setMenuUpdown(false)}>이력서</Link>
+                <Link to="/" onClick={() => {navBlueColor(4); changeProfile(false);}} onMouseEnter={() => setMenuUpdown(false)}>추천</Link>
+                <Link to="/" onClick={() => {navBlueColor(5); changeProfile(false);}} onMouseEnter={() => setMenuUpdown(false)}>이벤트</Link>
+                <Link to="/" onClick={() => {navBlueColor(6); changeProfile(false);}} onMouseEnter={() => setMenuUpdown(false)}>매치업</Link>
+              </NavUl>
+              <NavUl>
+                <InLoginProfile onClick={() => changeProfile(!profileUpdown)} loginCheck={loginCheck}/>
+                <InLogoutProfile onClick={() => changeModal(true)} loginCheck={loginCheck}>회원가입/로그인</InLogoutProfile>
+                <Link to="/">기업 서비스</Link>
+                <HiddenProfile show={profileUpdown}>
+                  <ul>
+                    <li><Link to="/">프로필</Link></li>
+                    <li><Link to="/">지원현황</Link></li>
+                    <li><Link to="/">좋아요</Link></li>
+                    <li><Link to="/">북마크</Link></li>
+                    <GoogleLogoutGo/>                
+                  </ul>
+                </HiddenProfile>
+              </NavUl>        
+            </NavContents>            
+          </VisibleBox>
+          <InvisibleBox show={menuUpdown} onMouseLeave={() => setMenuUpdown(false)}>
+              {data.dev && <div>
+                <WdList titleName={data.dev.title} titleUrl={data.dev.url} list={data.dev.list}/>
+                <WdList titleName={data.dev2.title} titleUrl={data.dev2.url} list={data.dev2.list} plus="/1"/>
+                <WdList titleName={data.biz.title} titleUrl={data.biz.url} list={data.biz.list} plus="/2"/>
+                <WdList titleName={data.market.title} titleUrl={data.market.url} list={data.market.list} plus="/3"/>
+                <WdList titleName={data.design.title} titleUrl={data.design.url} list={data.design.list} plus="/4"/>
+              </div>}          
+            </InvisibleBox>            
+        </NavWarp>
+      </NavBar>
+      <LoginModal/>
     </>  
   );
 }
-export default withRouter(Nav);
+
+const mapStateToProps = (state) => {
+  return {
+    navPick:state.navPick,
+    loginCheck:state.loginCheck,
+    profileUpdown:state.profileUpdown
+  }
+}
+
+export default withRouter(connect(mapStateToProps, {changeNavColor, changeModal, changeProfile})(Nav));
 
 const NavBar = styled.nav`
   position:fixed;
@@ -99,7 +93,7 @@ const NavWarp = styled.div`
   height:50px;
 `;
 
-const Visible = styled.div` 
+const VisibleBox = styled.div` 
   position:fixed;  
   width:100%;
   height:50px;
@@ -111,17 +105,10 @@ const Visible = styled.div`
 `;
 
 const NavContents = styled.div`
-  @media (min-width: 1200px) {       
-    width:87.72%;
-    max-width: 1060px;
-    height:100%;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-  }
-  @media (max-width: 1199px) and (min-width: 992px) {
-    width: 90%;
-  }
+  width: 1060px;
+  height:100%;
+  display:flex;
+  justify-content:space-between;
 `;
 
 const Logo = styled.i`
@@ -137,41 +124,49 @@ const Logo = styled.i`
   }
 `;
 
-const NavUl = styled.ul`
-  position: relative;
+const NavUl = styled.ul`  
   display:flex;
-  justify-content:space-around;  
-  & > li > a {
-    vertical-align: middle;
+  align-items:center;
+  a {
+    cursor:pointer;
     font-size: 14px;
-    line-height: 1;
     font-weight: 600;
     padding: 17px 13px;
     :hover {
-      ${props => props.underLine &&
-        css`
-          box-shadow:inset 0 -2px #ddd;
-      `}  
+      box-shadow:${props => props.underLine && "inset 0 -2px #ddd"};
     }
+  }
+  a:nth-child(${props => props.navPick && props.navPick}) {
+    box-shadow:inset 0 -2px rgb(37, 139, 247);
   }
 `;
 
-const LoginLi = styled.li`
-  display:${props =>props.login?"":"none"};
+const InLoginProfile = styled.div`
+  display:${props =>props.loginCheck?"":"none"};
+  cursor:pointer;
+  background-image:url("https://s3.ap-northeast-2.amazonaws.com/wanted-public/profile_default.png");
+  width: 32px;
+    height: 32px;
+    border-radius: 9999px;
+    border: 1px solid #d1d1d1;
+    background-color: #eee;
+    background-position: 50%;
+    background-size: cover;
 `;
 
-const LogoutLi = styled.li`
-  display:${props =>props.login?"none":""};
+const InLogoutProfile = styled.a`
+  display:${props =>props.loginCheck?"none":""};
+  cursor:pointer;
 `;
 
-const Invisible = styled.div`
+const InvisibleBox = styled.div`
   position:absolute;
   top:50px;
   width:100%;
   height:295px;
   background-color:white;
   transform:${props =>props.show?"translateY(0px)":"translateY(-294px)"};
-  transition:ease 0.5s;      
+  transition:ease 0.3s;      
   display:flex;
   justify-content:center;  
   border-bottom:1px solid #e1e2e3;  
@@ -192,7 +187,7 @@ const HiddenProfile = styled.div`
   position:${props =>props.show?"absolute":""};
   display:${props =>props.show?"":"none"};
   background-color: #fff;
-  top:34px;
+  top:50px;
   width:170px;
   border-radius: 0 0 3px 3px;
   box-shadow: 0 2px 0 0 rgba(0,0,0,.05);
@@ -200,6 +195,7 @@ const HiddenProfile = styled.div`
   ul {
     padding-top:10px;
     li {
+      cursor:pointer;
       display: flex;  
       align-items: center;  
       justify-content: center;
