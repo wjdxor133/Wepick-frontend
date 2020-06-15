@@ -1,0 +1,29 @@
+{
+  "data": {
+    "id": 2,
+    "sub_category_id": 1,
+    "name": "백엔드 개발자",
+    "company": "모바일퉁(트래블월렛)",
+    "region": "서울",
+    "country": "한국",
+    "referer_amount": "500000.00",
+    "fereree_amount": "500000.00",
+    "likes": 0,
+    "article": "<p><span>모바일퉁에서 함께 모바일 환전 플랫폼을 만들어나갈 훌륭한 개발자를 모십니다.<br><br>• 모바일퉁은 외환 거래 비용을 줄이고 외환 시장을 혁신해 나가는 핀테크 스타트업입니다. 금융 분야 전문가들과 IT 전문가들이 모여 모바일 환전 서비스 '트래블월렛'을 운영하고 있습니다.<br>• '트래블월렛'은 모바일 환전 및 외화선불카드, 해외송금 서비스를 고객들에게 제공하고 있습니다. 현재 자산 20억 규모, 가입자 3만명의 안정적인 핀테크 회사로 외환 관련 서비스에 혁신을 일으키고 있습니다.<br>• 모바일퉁은 VISA 라이선스를 획득하여 외화선불카드를 개발하고 있으며 은행권 및 VISA와의 협업, 오픈뱅킹, 카드 발급 및 프로세싱, 전자금융업 개발을 경험해보실 수 있습니다.</span></p><h6>주요업무</h6><p><span>• '트래블월렛' 서비스 개발<br>• '트래블월렛' 외환선불카드 서비스 개발<br><br>[주요 기술 스택]<br></span><a href=\"https://stackshare.io/mobiletoong/travel-wallet\" rel=\"noopener noreferrer\" target=\"_blank\">https://stackshare.io/mobiletoong/travel-wallet</a><span></span></p><h6>자격요건</h6><p><span>• 웹 서비스, RESTful API 개발, 운영 경력 2년 이상<br>• Java 언어와 Spring Boot 프레임워크를 이용한 웹 어플리케이션 개발 경험<br>• MySQL(Maria DB) 등의 RDBMS 사용 경험<br>• Linux 기반 서버 사용 경험</span></p><h6>우대사항</h6><p><span>• Ruby on Rails 프레임워크 개발 경험<br>• 오픈뱅킹, 핀테크, 금융 관련 서비스 관련 개발 경험<br>• 전자금융업, ISMS, PCI-DSS 경험</span></p><h6>혜택 및 복지</h6><p><span>• 연봉: 협의가능 <br>• 선릉역 5분거리<br>• 주 5일 자율 출근제<br>• 점심비 지원<br>• 매달 독서구입비 지원<br>• 무료 커피와 간식 제공되는 공유 오피스 입주</span></p>",
+    "deadline": "상시",
+    "location": "서울 삼성동 테헤란로 415",
+    "lat": "37.5056545",
+    "lng": "127.0515387",
+    "logo_url": "https://static.wanted.co.kr/images/wdes/0_4.045f3ff4.jpg",
+    "images": [
+      {
+        "name": "first",
+        "url": "https://static.wanted.co.kr/images/company/4348/ueurxkxxd696lkuv__1080_790.jpg"
+      },
+      {
+        "name": "second",
+        "url": "https://static.wanted.co.kr/images/company/4348/afekmathpewbo8jq__1080_790.jpg"
+      }
+    ]
+  }
+}
