@@ -2,18 +2,18 @@ import React from "react";
 import styled from "styled-components";
 
 const Aggressive = (props) => {
-    return (
-        <AggressiveContentBox>
-            <AggressiveImg><img src={props.img} alt="" className="imgHover" /></AggressiveImg>
-            <div className="paddingBox">
-                <AggressiveCI>
-                    <img src={props.ci} alt="" />
-                </AggressiveCI>
-                <AggressiveCIName className="titleHover">{props.title}</AggressiveCIName>
-                <p>{props.position}개 포지션</p>
-            </div>
-        </AggressiveContentBox>
-    );
+  return (
+    <AggressiveContentBox>
+      <AggressiveImg><img src={props.img} alt="" className="imgHover" /></AggressiveImg>
+      <div className="paddingBox">
+        <AggressiveCI>
+          <img src={props.ci} alt="" />
+        </AggressiveCI>
+        <AggressiveCIName className="titleHover">{props.title}</AggressiveCIName>
+        <p>{props.position}개 포지션</p>
+      </div>
+    </AggressiveContentBox>
+  );
 }
 
 const AggressiveContentBox = styled.li`
