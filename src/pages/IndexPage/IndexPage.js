@@ -78,6 +78,40 @@ const Index = styled.div`
   width:100%;
 `;
 
+const AddImg = styled.div`
+  display:flex;
+  justify-content:${props => props.flex && "center"};
+  align-items:${props => props.flex && "center"};
+  width:100%;
+  height: ${(props) => props.high};
+  transform:translateY(50px);
+  background-image:url(
+    ${(props) => props.src}
+    );
+  padding-left:${props => props.paddingLeft && "calc(50% - 450px)"};   
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 50%;
+`;
+
+const ImgText = styled.div`  
+  padding-top: 160px;
+  text-align: left;
+  h1 {
+    font-size: 50px;
+    font-weight: 600;
+    line-height: 1.2;
+  }
+  h3 {
+    line-height: 1.2;
+    margin: 16px 0 36px;
+    white-space: pre-wrap;
+    color: #666;
+    font-size: 20px;
+    font-weight: 400;
+  }
+`;
+
 const MiniBox = styled.div`
   background-image:url(${(props) => props.src});
   padding: 60px 0 0;
@@ -161,5 +195,5 @@ const Button = styled.div`
   color: #fff;
   margin-top:${props => props.marginTop&&"80px"};
   font-size: 20px;
-  font-weight: 600;
+  font-weight: 600;  
 `;
