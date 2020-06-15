@@ -9,25 +9,26 @@ const containerStyle = {
 };
 
 const MapContainer = (props) => {
+  console.log("props 확인", props && props.lat);
+
   return (
     <>
-      <Map
-        google={props && props.google}
-        zoom={14}
-        containerStyle={containerStyle}
-        initialCenter={{
-          lat: Number(props && props.lat),
-          lng: Number(props && props.lng),
-        }}
-      >
-        <Marker
-          onClick={props && props.onMarkerClick}
-          name={"Current location"}
-        />
-        <InfoWindow onClose={props && props.onInfoWindowClose}>
-          <div>{/* <h1>{this.state.selectedPlace.name}</h1> */}</div>
-        </InfoWindow>
-      </Map>
+      {props.lat && (
+        <Map
+          google={props.google}
+          zoom={14}
+          containerStyle={containerStyle}
+          initialCenter={{
+            lat: Number(props.lat),
+            lng: Number(props.lng),
+          }}
+        >
+          <Marker onClick={props.onMarkerClick} name={"Current location"} />
+          <InfoWindow onClose={props.onInfoWindowClose}>
+            <div>{/* <h1>{this.state.selectedPlace.name}</h1> */}</div>
+          </InfoWindow>
+        </Map>
+      )}
     </>
   );
 };

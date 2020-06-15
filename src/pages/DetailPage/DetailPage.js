@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled, { css } from "styled-components";
+import Nav from "../../components/Nav/Nav";
+import Footer from "../../components/Footer/Footer";
 import Slider from "../../components/Slider/Slider";
 import ModalPortal from "../../Modal/ModalPortal";
 import ShareModal from "./ShareModal";
@@ -9,24 +11,21 @@ import PositionList from "../MainPage/PositionList";
 import { AiFillHeart } from "react-icons/ai";
 import { BsFillBookmarkFill } from "react-icons/bs";
 import { FiCheck } from "react-icons/fi";
+import { API } from "../../config";
 
 const DetailPage = (props) => {
-  const [detailData, setDetailData] = useState({});
+  const [detailData, setDetailData] = useState([]);
   const [detailList, setDetailList] = useState([]);
   const [showModal, setShowModal] = useState(false);
-  const [apply, setApply] = useState(true);
+  const [apply, setApply] = useState(false);
   const [likeColor, setLikeColor] = useState(false);
   const [bookMarkColor, setBookMarkColor] = useState(false);
   const [followColor, setFollowColor] = useState(false);
 
-  // const img = [
-  //   "https://static.wanted.co.kr/images/company/4348/ueurxkxxd696lkuv__1080_790.jpg",
-  //   "https://static.wanted.co.kr/images/company/4348/afekmathpewbo8jq__1080_790.jpg",
-  // ];
-
   useEffect(() => {
     // 채용 디테일 페이지 모든 데이터
-    fetch("/data/teak2Data/DetailPageMock.json")
+    // fetch("/data/teak2Data/DetailPageMock.json") -> 목 데이터
+    fetch(`${API}/job/36`)
       .then((res) => res.json())
       .then((res) => {
         setDetailData(res.data);
@@ -41,7 +40,7 @@ const DetailPage = (props) => {
       });
   }, []);
   // console.log("detailList", detailList);
-  console.log("detailData", detailData.images && detailData.images.length);
+  console.log("detailData", detailData > 0 && detailData[0].lat);
 
   // 로그인 여부에 따라 다른 모달창이 뜸
   const checkToken = () => {
@@ -79,32 +78,36 @@ const DetailPage = (props) => {
 
   return (
     <>
+      <Nav />
       {showModal ? (
         <ModalPortal elementId="modal">
           <ShareModal showModal={showModal} setShowModal={setShowModal} />
         </ModalPortal>
       ) : null}
       <DetailPageIn>
-        <h1>Header</h1>
         <DetailPageBox>
           <PageLeft>
-            <Slider slides={detailData.images && detailData.images} />
+            <Slider slides={detailData.length > 0 && detailData[0].images} />
             <div className="jobTitle">
-              <h3>{detailData.name}</h3>
+              <h3>{detailData.length > 0 && detailData[0].name}</h3>
               <div className="TitleText">
-                <p className="TextLeft">{detailData.company}</p>
+                <p className="TextLeft">
+                  {detailData.length > 0 && detailData[0].company}
+                </p>
                 <div className="TextRight">
                   <span className="Benchmark">|</span>
                   <span>
-                    {detailData.region}
-                    <span> .</span>
-                    {detailData.country}
+                    {detailData.length > 0 && detailData[0].region}
+                    <span> . </span>
+                    {detailData.length > 0 && detailData[0].country}
                   </span>
                 </div>
               </div>
             </div>
             <InnerHTML
-              dangerouslySetInnerHTML={{ __html: detailData.article }}
+              dangerouslySetInnerHTML={{
+                __html: detailData.length > 0 && detailData[0].article,
+              }}
             ></InnerHTML>
             <MapBox>
               <div className="mapText1">
@@ -112,21 +115,26 @@ const DetailPage = (props) => {
                 <p>근무지역</p>
               </div>
               <div className="mapText2">
-                <p>{detailData.deadline}</p>
-                <p>{detailData.location}</p>
+                <p>{detailData.length > 0 && detailData[0].deadline}</p>
+                <p>{detailData.length > 0 && detailData[0].location}</p>
               </div>
             </MapBox>
             <GoogleMap>
-              <MapContainer lat={detailData.lat} lng={detailData.lng} />
+              <MapContainer
+                lat={detailData.length > 0 && detailData[0].lat}
+                lng={detailData.length > 0 && detailData[0].lng}
+              />
             </GoogleMap>
             <FollowBox>
               <div className="FollowLeft">
                 <img
-                  src="https://static.wanted.co.kr/images/wdes/0_5.f4e880de.jpg"
+                  src={detailData.length > 0 && `${detailData[0].logo_url}`}
                   alt="로고 이미지"
                 ></img>
                 <div>
-                  <p className="FollowText1">인공지능연구원</p>
+                  <p className="FollowText1">
+                    {detailData.length > 0 && detailData[0].company}
+                  </p>
                   <p className="FollowText2">IT, 컨텐츠</p>
                 </div>
               </div>
@@ -157,11 +165,19 @@ const DetailPage = (props) => {
                     <div className="boxTop">
                       <div className="item1">
                         <span className="person">추천인</span>
-                        <p>{detailData.referer_amount}원</p>
+                        <p>
+                          {detailData.length > 0 &&
+                            detailData[0].referer_amount.slice(0, 3) + ",000"}
+                          원
+                        </p>
                       </div>
                       <div className="item1">
                         <span className="person">지원자</span>
-                        <p>{detailData.fereree_amount}원</p>
+                        <p>
+                          {detailData.length > 0 &&
+                            detailData[0].fereree_amount.slice(0, 3) + ",000"}
+                          원
+                        </p>
                       </div>
                     </div>
                     <Button
@@ -186,7 +202,10 @@ const DetailPage = (props) => {
                             size="16"
                             color={likeColor ? "red" : "#e1e2e3"}
                           />
-                          <p className="likeCount"> {detailData.likes}</p>
+                          <p className="likeCount">
+                            {" "}
+                            {detailData.length > 0 && detailData[0].likes}
+                          </p>
                         </div>
                         <ul className="Bottom2">
                           {/* 이미지를 배열로 받아서 뿌려야 함 */}
@@ -257,13 +276,14 @@ const DetailPage = (props) => {
           </ul>
         </PageBottom>
       </DetailPageIn>
+      <Footer />
     </>
   );
 };
 
 const DetailPageIn = styled.div`
   max-width: 1060px;
-  padding: 0 3em;
+  padding: 50px 3em 0;
   margin: 0 auto;
 `;
 
@@ -380,7 +400,7 @@ const PageBottom = styled.div`
 
 const Fixed = styled.div`
   position: sticky;
-  top: 20px;
+  top: 50px;
 `;
 const CompensationBox = styled.div`
   border: 1px solid #e1e2e3;
@@ -519,7 +539,7 @@ const Button = styled.button`
     props.shape === "apply" &&
     css`
       width: 100%;
-      border: 1px solid #258bf7;
+      border: 1px solid #21c621;
       border-radius: 3px;
       background-color: #21c621;
       color: white;
