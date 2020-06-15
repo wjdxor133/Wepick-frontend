@@ -5,6 +5,8 @@ import Index from "./pages/IndexPage/IndexPage";
 import cv from "./pages/CvPage/CvPage";
 
 import Main from "./pages/MainPage/MainPage";
+import DetailPage from "./pages/DetailPage/DetailPage";
+import ShareModal from "./pages/DetailPage/ShareModal";
 
 
 class Routes extends Component {
@@ -17,6 +19,8 @@ class Routes extends Component {
           <Route exact path="/cv" component={cv} />
 
           <Route exact path="/main" component={Main} />
+          <Route exact path="/DetailPage" component={DetailPage} />
+          <Route exact path="/ShareModal" component={ShareModal} />
 
         </Switch>
       </Router>

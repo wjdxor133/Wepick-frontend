@@ -2,24 +2,39 @@ import React from "react";
 import styled from "styled-components";
 
 const Aggressive = (props) => {
-    return (
-        <AggressiveContentBox>
-            <AggressiveImg><img src={props.img} alt="" /></AggressiveImg>
-            <div className="paddingBox">
-                <AggressiveCI><img src={props.ci} alt="" /></AggressiveCI>
-                <AggressiveCIName>{props.title}</AggressiveCIName>
-                <p>{props.position}개 포지션</p>
-            </div>
-        </AggressiveContentBox>
-    );
+  return (
+    <AggressiveContentBox>
+      <AggressiveImg><img src={props.img} alt="" className="imgHover" /></AggressiveImg>
+      <div className="paddingBox">
+        <AggressiveCI>
+          <img src={props.ci} alt="" />
+        </AggressiveCI>
+        <AggressiveCIName className="titleHover">{props.title}</AggressiveCIName>
+        <p>{props.position}개 포지션</p>
+      </div>
+    </AggressiveContentBox>
+  );
 }
 
 const AggressiveContentBox = styled.li`
+  position: relative;
   width: 200px;
   height: 270px;
   border: 1px solid #dddddd;
   border-radius: .2em;
   margin-right: 1em;
+  :hover{
+   .titleHover{
+       color: ${props => props.theme.color.main};
+   }
+   .imgHover{
+       animation: imgAni 2s forwards;
+   }
+   @keyframes imgAni {
+  from {transform: scale(1);}
+  to {transform: scale(1.2);}
+}
+  }
   :last-child {
       margin-right: 0em;
   }
@@ -27,23 +42,25 @@ const AggressiveContentBox = styled.li`
     padding: 0 1em;
     }
     p{
-        font-size: .75rem;
+        font-size: .875rem;
         color: ${props => props.theme.color.gray}
     }
 `;
 
 const AggressiveImg = styled.div`
   width: 100%;
+  overflow: hidden;
   img{
       width: 100%;
   }
 `;
 
 const AggressiveCI = styled.div`
+  position: absolute;
+  top: 7em;
   width: 50px;
   height: 50px;
   border: 1px solid #dddddd;
-  margin-top: -2em;
   img{
       width: 100%;
   }
@@ -52,6 +69,7 @@ const AggressiveCI = styled.div`
 const AggressiveCIName = styled.div`
   font-size: 1rem;
   font-weight: 500;
+  margin: 2.5em 0em .5em 0em;
 `;
 
 

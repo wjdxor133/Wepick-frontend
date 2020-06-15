@@ -1,39 +1,39 @@
 {
-    "aggreesive": [
+    "data": [
         {
-            "job_id": 1,
-            "title": "원티드랩",
-            "position": 14,
-            "ci": "https://static.wanted.co.kr/images/wdes/0_5.ce4fd8b1.jpg",
-            "thumbnail_url": "https://static.wanted.co.kr/images/company/79/osol7sjguseux3gu__1080_790.jpg"
+            "id": 1,
+            "name": "센트비(Sentbe)",
+            "logo_url": "https://static.wanted.co.kr/images/wdes/0_4.0879c021.jpg",
+            "thumbnail_url": "https://static.wanted.co.kr/images/company/1422/jlo5nocxdxknij0h__400_400.jpg",
+            "number_positions": 1
         },
         {
-            "job_id": 2,
-            "title": "머니브레인",
-            "position": 8,
-            "ci": "https://static.wanted.co.kr/images/wdes/0_5.ce4fd8b1.jpg",
-            "thumbnail_url": "https://static.wanted.co.kr/images/company/1257/k6ge4hg47yyg9te6__1080_790.jpg"
+            "id": 2,
+            "name": "화해(버드뷰)",
+            "logo_url": "https://static.wanted.co.kr/images/wdes/0_4.799382a7.jpg",
+            "thumbnail_url": "https://static.wanted.co.kr/images/company/216/5yktpatbrkyyxkmx__400_400.jpg",
+            "number_positions": 3
         },
         {
-            "job_id": 3,
-            "title": "네이버제트",
-            "position": 5,
-            "ci": "https://static.wanted.co.kr/images/wdes/0_5.ce4fd8b1.jpg",
-            "thumbnail_url": "https://static.wanted.co.kr/images/company/12879/th8tivqp7gqofmdz__1080_790.jpg"
+            "id": 3,
+            "name": "스튜디오씨드코리아",
+            "logo_url": "https://static.wanted.co.kr/images/wdes/0_4.bc86c537.jpg",
+            "thumbnail_url": "https://static.wanted.co.kr/images/company/452/10104_2_0.f21a4554__400_400.jpg",
+            "number_positions": 1
         },
         {
-            "job_id": 4,
-            "title": "코빗",
-            "position": 6,
-            "ci": "https://static.wanted.co.kr/images/wdes/0_5.ce4fd8b1.jpg",
-            "thumbnail_url": "https://static.wanted.co.kr/images/company/3643/d94erw5yz19skgib__400_400.jpg"
+            "id": 4,
+            "name": "쿨잼컴퍼니",
+            "logo_url": "https://static.wanted.co.kr/images/wdes/0_4_ccf340b5-3748-4a2e-952e-c0f2ca7cb784.jpg",
+            "thumbnail_url": "https://static.wanted.co.kr/images/company/718/yfkoqlnqpk2wmyio__400_400.jpg",
+            "number_positions": 1
         },
         {
-            "job_id": 5,
-            "title": "퀘스처너스",
-            "position": 4,
-            "ci": "https://static.wanted.co.kr/images/wdes/0_5.ce4fd8b1.jpg",
-            "thumbnail_url": "https://static.wanted.co.kr/images/company/3643/d94erw5yz19skgib__400_400.jpg"
+            "id": 5,
+            "name": "프렌트립(프립)",
+            "logo_url": "https://static.wanted.co.kr/images/wdes/0_4.7efce19e.jpg",
+            "thumbnail_url": "https://static.wanted.co.kr/images/company/138/rtlukfganehvlsiv__400_400.jpg",
+            "number_positions": 1
         }
     ]
 }
