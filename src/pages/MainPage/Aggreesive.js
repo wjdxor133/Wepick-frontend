@@ -2,8 +2,6 @@ import React from "react";
 import styled from "styled-components";
 
 const Aggressive = (props) => {
-    // const [position, setposition] = useState({});
-    console.log(props)
     return (
         <AggressiveContentBox>
             <AggressiveImg><img src={props.img} alt="" /></AggressiveImg>
@@ -19,7 +17,7 @@ const Aggressive = (props) => {
 const AggressiveContentBox = styled.li`
   width: 200px;
   height: 270px;
-  border: 1px solid black;
+  border: 1px solid #dddddd;
   border-radius: .2em;
   margin-right: 1em;
   :last-child {
@@ -44,7 +42,7 @@ const AggressiveImg = styled.div`
 const AggressiveCI = styled.div`
   width: 50px;
   height: 50px;
-  border: 1px solid ${props => props.theme.color.gray};
+  border: 1px solid #dddddd;
   margin-top: -2em;
   img{
       width: 100%;
