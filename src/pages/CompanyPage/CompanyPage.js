@@ -58,6 +58,9 @@ const CompanyPage = () => {
                 companyDate.length > 0 && companyDate[0].article.slice(0, 150),
             }}
           />
+          <div>
+            <p>더 보기</p>
+          </div>
         </CompanyPageLeft>
 
         <CompanyPageRight>
