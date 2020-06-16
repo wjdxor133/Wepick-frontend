@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled, { css } from "styled-components";
 import Nav from "../../components/Nav/Nav";
-import Footer from "../../components/Footer/Footer";
+import Footer from "../../components/Footer/Footer"
 import Slider from "../../components/Slider/Slider";
 import ModalPortal from "../../Modal/ModalPortal";
 import ShareModal from "./ShareModal";
@@ -38,6 +38,8 @@ const DetailPage = (props) => {
         setDetailList(res.position);
       });
   }, []);
+  // console.log("detailList", detailList);
+  // console.log("detailData", detailData.images && detailData.images.length);
 
   // 로그인 여부에 따라 다른 모달창이 뜸
   const checkToken = () => {
@@ -75,7 +77,7 @@ const DetailPage = (props) => {
 
   return (
     <>
-      <Nav />
+      <Nav/>
       {showModal ? (
         <ModalPortal elementId="modal">
           <ShareModal showModal={showModal} setShowModal={setShowModal} />

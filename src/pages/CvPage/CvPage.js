@@ -4,10 +4,14 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import Nav from "../../components/Nav/Nav"
 import Footer from "../../components/Footer/Footer"
+import newfile from "../../images/newfileWhite.png"
+import upload from "../../images/upload.png"
+import UserCvList from "../../components/UserCvList/UserCvList"
 
-const CvPage = ( { loginCheck } ) => {
+const CvPage = ( { loginCheck, history, match } ) => {
 
   const [isLogin, setLogin] = useState(false)
+  const [isToggle, setToggle] = useState(0)
 
   useEffect(() => {
     loginCheck?setLogin(true):setLogin(false)
@@ -16,6 +20,19 @@ const CvPage = ( { loginCheck } ) => {
   useEffect(() => {
     document.documentElement.scrollTop=0;
   }, [])
+  
+  useEffect(() => {
+    console.log(match)
+  })
+
+  function inputFucn(input) {
+    if (input === 1) {
+      console.log("새 이력서 작성")
+      history.push("/cv/1")
+    } else {
+      console.log("파일 업로드") 
+    } 
+  }
 
   return (
     <>
@@ -63,18 +80,35 @@ const CvPage = ( { loginCheck } ) => {
             <IntroBackground high="100%" url="https://s3.ap-northeast-2.amazonaws.com/wanted-public/resume_intro/resume_04.jpg"/>
           </IntroBox>   
         </NonUser>
-
-
-
         <UserContents isLogin={isLogin}>
           <UserContentsWrap>
-          <Title>
-            <h4>최근 문서</h4>
-            <span>원티드 이력서 소개<i>ⓘ</i></span>
-          </Title>
-          <Contents></Contents>
-
+            <Title>
+              <h4>최근 문서</h4>
+              <span>원티드 이력서 소개<i>ⓘ</i></span>
+            </Title>
+            <Contents>
+              <ContentsWarp>
+                <InnerBox onClick={() => inputFucn(1)}>
+                  <BoxWrap>
+                    <IBox blue >
+                      <Icon url={newfile} top="15%" left="18%" size="50px"/>
+                    </IBox>
+                    <span>새 이력서 작성</span>
+                  </BoxWrap>
+                </InnerBox>
+                <InnerBox onClick={() => inputFucn(2)}>
+                  <BoxWrap>
+                    <IBox>
+                      <Icon url={upload} top="33%" left="33%" size="25px"/>
+                    </IBox>
+                    <span>파일 업로드</span>
+                  </BoxWrap>
+                </InnerBox>                
+                <UserCvList isToggle={isToggle} setToggle={setToggle}/>
+              </ContentsWarp>
+            </Contents>
           </UserContentsWrap>
+          <Background onClick={() => setToggle(0)}/>
         </UserContents>       
       </Cv>
       <Footer/>
@@ -154,21 +188,16 @@ const IntroBackground = styled.div`
   background-size: cover;
 `;
 
-/////
-
 const UserContents = styled.div` 
   display:${props => props.isLogin?"flex":"none"};
   justify-content:center;
   background-color: #f8f8fa;
-  padding-top:50px;
+  padding:50px 0 100px 0;
   width:100%;  
-  height:150vh;
-  border:4px solid green;  
 `;
 
 const UserContentsWrap = styled.div`
   width: 1060px;
-  border:1px solid red;
 `;
 
 const Title = styled.div`
@@ -191,4 +220,70 @@ const Title = styled.div`
   } 
 `;
 
-const Contents = styled.div``;
+const Contents = styled.div`
+  margin-left:-20px;
+  width:calc(100% + 40px);
+  display:flex;
+  justify-content:center;
+`;
+
+const ContentsWarp = styled.div`
+  width:100%;
+  display:flex;
+  flex-wrap:wrap;
+`;
+
+const InnerBox = styled.div`
+  cursor: pointer;
+  height:190px;
+  width: calc(25% - 25px);
+  margin-left: 20px;
+  margin-bottom: 20px; 
+  background-color:#fff;
+  display:flex;
+  flex-direction:column;
+  border:1px solid #e0e0e0;
+  z-index:10;
+`;
+
+const BoxWrap = styled.div`
+  width:100%;
+  height:100%;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  span {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333333;
+    margin: 20px 0 0;
+  }
+`;
+
+const IBox = styled.div`
+  position: relative;
+  width: 74px;
+  height: 74px;
+  margin: 0 auto;
+  border-radius: 50%;
+  background:${props => props.blue?"#258bf7":"#e1e2e3"};
+`;
+
+const Icon = styled.div`
+  background-image:url(${props => props.url});
+  background-position:50%;
+  background-size: cover;
+  position: absolute;
+  top:${props => props.top};
+  left:${props => props.left};
+  width:${props => props.size};
+  height:${props => props.size};
+`;
+
+const Background = styled.div`
+  width:100%;
+  height:100vh;
+  position:fixed;
+  top:0;
+`;

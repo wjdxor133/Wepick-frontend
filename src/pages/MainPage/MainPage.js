@@ -37,7 +37,7 @@ const MainPage = () => {
       .then((res) => res.json())
       .then((res) => {
         setData(res.position);
-        console.log(res.position);
+        // console.log(res.position);
       });
     fetch("/data/mainTopImg.json")
       .then((res) => res.json())
