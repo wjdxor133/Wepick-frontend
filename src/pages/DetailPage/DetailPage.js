@@ -25,7 +25,7 @@ const DetailPage = (props) => {
   useEffect(() => {
     // 채용 디테일 페이지 모든 데이터
     // fetch("/data/teak2Data/DetailPageMock.json") -> 목 데이터
-    fetch(`${API}/job/36`)
+    fetch(`${API}/job/10`)
       .then((res) => res.json())
       .then((res) => {
         setDetailData(res.data);
@@ -40,7 +40,7 @@ const DetailPage = (props) => {
       });
   }, []);
   // console.log("detailList", detailList);
-  console.log("detailData", detailData > 0 && detailData[0].lat);
+  // console.log("detailData", detailData > 0 && detailData[0].lat);
 
   // 로그인 여부에 따라 다른 모달창이 뜸
   const checkToken = () => {
