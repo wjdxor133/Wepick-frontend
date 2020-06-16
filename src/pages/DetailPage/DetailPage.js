@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled, { css } from "styled-components";
+import Nav from "../../components/Nav/Nav";
+import Footer from "../../components/Footer/Footer";
 import Slider from "../../components/Slider/Slider";
 import ModalPortal from "../../Modal/ModalPortal";
 import ShareModal from "./ShareModal";
@@ -9,22 +11,19 @@ import PositionList from "../MainPage/PositionList";
 import { AiFillHeart } from "react-icons/ai";
 import { BsFillBookmarkFill } from "react-icons/bs";
 import { FiCheck } from "react-icons/fi";
+import { API } from "../../config";
 
 const DetailPage = (props) => {
-  const [detailData, setDetailData] = useState({});
+  const [detailData, setDetailData] = useState([]);
   const [detailList, setDetailList] = useState([]);
   const [showModal, setShowModal] = useState(false);
-  const [apply, setApply] = useState(true);
+  const [apply, setApply] = useState(false);
   const [likeColor, setLikeColor] = useState(false);
   const [bookMarkColor, setBookMarkColor] = useState(false);
   const [followColor, setFollowColor] = useState(false);
 
-  // const img = [
-  //   "https://static.wanted.co.kr/images/company/4348/ueurxkxxd696lkuv__1080_790.jpg",
-  //   "https://static.wanted.co.kr/images/company/4348/afekmathpewbo8jq__1080_790.jpg",
-  // ];
-
   useEffect(() => {
+    // fetch(`${API}/job/36`)
     // 채용 디테일 페이지 모든 데이터
     fetch("/data/teak2Data/DetailPageMock.json")
       .then((res) => res.json())
@@ -36,12 +35,9 @@ const DetailPage = (props) => {
     fetch("/data/mainMock.json")
       .then((res) => res.json())
       .then((res) => {
-        // console.log("res.recommendedNotice", res.recommendedNotice);
         setDetailList(res.position);
       });
   }, []);
-  // console.log("detailList", detailList);
-  console.log("detailData", detailData.images && detailData.images.length);
 
   // 로그인 여부에 따라 다른 모달창이 뜸
   const checkToken = () => {
@@ -53,7 +49,7 @@ const DetailPage = (props) => {
     }
   };
 
-  const Click = (event) => {
+  const ClickOfAll = (event) => {
     if (event === "apply") {
       setApply(true);
     }
@@ -79,191 +75,203 @@ const DetailPage = (props) => {
 
   return (
     <>
+      <Nav />
       {showModal ? (
         <ModalPortal elementId="modal">
           <ShareModal showModal={showModal} setShowModal={setShowModal} />
         </ModalPortal>
       ) : null}
-      <DetailPageIn>
-        <h1>Header</h1>
-        <DetailPageBox>
-          <PageLeft>
-            <Slider slides={detailData.images && detailData.images} />
-            <div className="jobTitle">
-              <h3>{detailData.name}</h3>
-              <div className="TitleText">
-                <p className="TextLeft">{detailData.company}</p>
-                <div className="TextRight">
-                  <span className="Benchmark">|</span>
-                  <span>
-                    {detailData.region}
-                    <span> .</span>
-                    {detailData.country}
-                  </span>
-                </div>
-              </div>
-            </div>
-            <InnerHTML
-              dangerouslySetInnerHTML={{ __html: detailData.article }}
-            ></InnerHTML>
-            <MapBox>
-              <div className="mapText1">
-                <p>마감일</p>
-                <p>근무지역</p>
-              </div>
-              <div className="mapText2">
-                <p>{detailData.deadline}</p>
-                <p>{detailData.location}</p>
-              </div>
-            </MapBox>
-            <GoogleMap>
-              <MapContainer lat={detailData.lat} lng={detailData.lng} />
-            </GoogleMap>
-            <FollowBox>
-              <div className="FollowLeft">
-                <img
-                  src="https://static.wanted.co.kr/images/wdes/0_5.f4e880de.jpg"
-                  alt="로고 이미지"
-                ></img>
-                <div>
-                  <p className="FollowText1">인공지능연구원</p>
-                  <p className="FollowText2">IT, 컨텐츠</p>
-                </div>
-              </div>
-              <Button
-                shape="follow"
-                color={followColor}
-                onClick={() => {
-                  Click("follow");
-                }}
-              >
-                <div className="followBox">
-                  <div className="followIcon">
-                    <FiCheck size="15" />
+      {detailData.length > 0 && (
+        <DetailPageIn>
+          <DetailPageBox>
+            <PageLeft>
+              <Slider slides={detailData[0].images} />
+              <div className="jobTitle">
+                <h3>{detailData[0].name}</h3>
+                <div className="TitleText">
+                  <p className="TextLeft">{detailData[0].company}</p>
+                  <div className="TextRight">
+                    <span className="Benchmark">|</span>
+                    <span>
+                      {detailData[0].region}
+                      <span> . </span>
+                      {detailData[0].country}
+                    </span>
                   </div>
-                  {followColor ? "팔로잉" : "팔로우"}
                 </div>
-              </Button>
-            </FollowBox>
-          </PageLeft>
-          <PageRight>
-            <Fixed>
-              {apply ? (
-                <DetailApply setApply={setApply} />
-              ) : (
-                <div>
-                  <CompensationBox>
-                    <p className="CompensationTitle">채용보상금</p>
-                    <div className="boxTop">
-                      <div className="item1">
-                        <span className="person">추천인</span>
-                        <p>{detailData.referer_amount}원</p>
-                      </div>
-                      <div className="item1">
-                        <span className="person">지원자</span>
-                        <p>{detailData.fereree_amount}원</p>
-                      </div>
+              </div>
+              <InnerHTML
+                dangerouslySetInnerHTML={{
+                  __html: detailData[0].article,
+                }}
+              ></InnerHTML>
+              <MapBox>
+                <div className="mapText1">
+                  <p>마감일</p>
+                  <p>근무지역</p>
+                </div>
+                <div className="mapText2">
+                  <p>{detailData[0].deadline}</p>
+                  <p>{detailData[0].location}</p>
+                </div>
+              </MapBox>
+              <GoogleMap>
+                <MapContainer lat={detailData[0].lat} lng={detailData[0].lng} />
+              </GoogleMap>
+              <FollowBox>
+                <div className="FollowLeft">
+                  <img
+                    src={`${detailData[0].logo_url}`}
+                    alt="로고 이미지"
+                  ></img>
+                  <div>
+                    <p className="FollowText1">{detailData[0].company}</p>
+                    <p className="FollowText2">IT, 컨텐츠</p>
+                  </div>
+                </div>
+                <Button
+                  shape="follow"
+                  color={followColor}
+                  onClick={() => {
+                    ClickOfAll("follow");
+                  }}
+                >
+                  <div className="followBox">
+                    <div className="followIcon">
+                      <FiCheck size="15" />
                     </div>
+                    {followColor ? "팔로잉" : "팔로우"}
+                  </div>
+                </Button>
+              </FollowBox>
+            </PageLeft>
+            <PageRight>
+              <Fixed>
+                {apply ? (
+                  <DetailApply setApply={setApply} />
+                ) : (
+                  <div>
+                    <CompensationBox>
+                      <p className="CompensationTitle">채용보상금</p>
+                      <div className="boxTop">
+                        <div className="item1">
+                          <span className="person">추천인</span>
+                          <p>
+                            {detailData[0].referer_amount.slice(0, 3) + ",000"}
+                            원
+                          </p>
+                        </div>
+                        <div className="item1">
+                          <span className="person">지원자</span>
+                          <p>
+                            {detailData[0].fereree_amount.slice(0, 3) + ",000"}
+                            원
+                          </p>
+                        </div>
+                      </div>
+                      <Button
+                        shape="share"
+                        onClick={() => {
+                          ClickOfAll("modal");
+                        }}
+                      >
+                        공유하기
+                      </Button>
+                    </CompensationBox>
+                    <CompensationIcon>
+                      <div className="boxBottom">
+                        <div className="BottomLeft">
+                          <div
+                            className="Bottom1"
+                            onClick={() => {
+                              ClickOfAll("like");
+                            }}
+                          >
+                            <AiFillHeart
+                              size="16"
+                              color={likeColor ? "red" : "#e1e2e3"}
+                            />
+                            <p className="likeCount"> {detailData[0].likes}</p>
+                          </div>
+                          <ul className="Bottom2">
+                            {/* 이미지를 배열로 받아서 뿌려야 함 */}
+                            <li>
+                              <img
+                                className="profileImg1"
+                                src="https://lh5.googleusercontent.com/-0RCDys4PImk/AAAAAAAAAAI/AAAAAAAAAAA/AMZuucnGJA6X_ZtFqyfoXJLaJebV-YCeOg/s96-c/photo.jpg"
+                                alt="profile1.png"
+                              ></img>
+                            </li>
+                            <li>
+                              <img
+                                className="profileImg2"
+                                src="https://s3.ap-northeast-2.amazonaws.com/wanted-public/profile_default.png"
+                                alt="profile2.png"
+                              ></img>
+                            </li>
+                            <li>
+                              <img
+                                className="profileImg3"
+                                src="https://s3.ap-northeast-2.amazonaws.com/wanted-public/profile_default.png"
+                                alt="profile3.png"
+                              ></img>
+                            </li>
+                          </ul>
+                        </div>
+                        <div className="Bottom3">
+                          <BsFillBookmarkFill
+                            size="15"
+                            color={bookMarkColor ? "#258bf7" : "#e1e2e3"}
+                            onClick={() => {
+                              ClickOfAll("bookMark");
+                            }}
+                          />
+                        </div>
+                      </div>
+                    </CompensationIcon>
                     <Button
-                      shape="share"
+                      shape="apply"
                       onClick={() => {
-                        Click("modal");
+                        ClickOfAll("apply");
                       }}
                     >
-                      공유하기
+                      지원하기
                     </Button>
-                  </CompensationBox>
-                  <CompensationIcon>
-                    <div className="boxBottom">
-                      <div className="BottomLeft">
-                        <div
-                          className="Bottom1"
-                          onClick={() => {
-                            Click("like");
-                          }}
-                        >
-                          <AiFillHeart
-                            size="16"
-                            color={likeColor ? "red" : "#e1e2e3"}
-                          />
-                          <p className="likeCount"> {detailData.likes}</p>
-                        </div>
-                        <ul className="Bottom2">
-                          {/* 이미지를 배열로 받아서 뿌려야 함 */}
-                          <li>
-                            <img
-                              className="profileImg1"
-                              src="https://lh5.googleusercontent.com/-0RCDys4PImk/AAAAAAAAAAI/AAAAAAAAAAA/AMZuucnGJA6X_ZtFqyfoXJLaJebV-YCeOg/s96-c/photo.jpg"
-                              alt="profile1.png"
-                            ></img>
-                          </li>
-                          <li>
-                            <img
-                              className="profileImg2"
-                              src="https://s3.ap-northeast-2.amazonaws.com/wanted-public/profile_default.png"
-                              alt="profile2.png"
-                            ></img>
-                          </li>
-                          <li>
-                            <img
-                              className="profileImg3"
-                              src="https://s3.ap-northeast-2.amazonaws.com/wanted-public/profile_default.png"
-                              alt="profile3.png"
-                            ></img>
-                          </li>
-                        </ul>
-                      </div>
-                      <div className="Bottom3">
-                        <BsFillBookmarkFill
-                          size="15"
-                          color={bookMarkColor ? "#258bf7" : "#e1e2e3"}
-                          onClick={() => {
-                            Click("bookMark");
-                          }}
-                        />
-                      </div>
-                    </div>
-                  </CompensationIcon>
-                  <Button
-                    shape="apply"
-                    onClick={() => {
-                      Click("apply");
-                    }}
-                  >
-                    지원하기
-                  </Button>
-                </div>
-              )}
-            </Fixed>
-          </PageRight>
-        </DetailPageBox>
-        <PageBottom>
-          <h3>원티드 추천 공고</h3>
-          <ul className="HireList">
-            {detailList.map((myData) => {
-              return (
-                <PositionList
-                  key={myData.idx}
-                  title={myData.title}
-                  no={myData.job_id}
-                  name={myData.company}
-                  area={myData.country}
-                  compensation={myData.reward_total}
-                  img={myData.thumbnail_url}
-                  like={myData.like}
-                />
-              );
-            })}
-          </ul>
-        </PageBottom>
-      </DetailPageIn>
+                  </div>
+                )}
+              </Fixed>
+            </PageRight>
+          </DetailPageBox>
+          <PageBottom>
+            <h3>원티드 추천 공고</h3>
+            <ul className="HireList">
+              {detailList.map((myData, idx) => {
+                return (
+                  <PositionList
+                    key={myData.idx}
+                    title={myData.title}
+                    no={myData.job_id}
+                    company={myData.company}
+                    region={myData.region}
+                    country={myData.country}
+                    compensation={myData.reward_total}
+                    thumbnail={myData.thumbnail}
+                    like={myData.like}
+                  />
+                );
+              })}
+            </ul>
+          </PageBottom>
+        </DetailPageIn>
+      )}
+      <Footer />
     </>
   );
 };
 
 const DetailPageIn = styled.div`
   max-width: 1060px;
-  padding: 0 3em;
+  padding: 50px 3em 0;
   margin: 0 auto;
 `;
 
@@ -275,28 +283,6 @@ const DetailPageBox = styled.div`
 
 const PageLeft = styled.div`
   width: 65%;
-
-  /* .jobImg {
-    position: relative;
-    img {
-      width: 100%;
-      border-radius: 3px;
-    }
-
-    .allowLeft {
-      position: absolute;
-      color: #999;
-      top: 50%;
-      left: 3%;
-    }
-
-    .allowRight {
-      position: absolute;
-      color: #999;
-      top: 50%;
-      right: 3%;
-    }
-  } */
 
   .jobTitle {
     margin-top: 2em;
@@ -362,25 +348,25 @@ const PageRight = styled.div`
 
 const PageBottom = styled.div`
   width: 100%;
-  margin-top: 5em;
+  margin: 5em 0 6em;
   h3 {
-    font-size: 1.2rem;
+    font-size: 1.15rem;
     font-weight: 700;
     color: #333;
     margin: 1em 0;
   }
 
   .HireList {
+    width: 100%;
     list-style: none;
     display: flex;
     align-items: center;
-    flex-wrap: wrap;
   }
 `;
 
 const Fixed = styled.div`
   position: sticky;
-  top: 20px;
+  top: 50px;
 `;
 const CompensationBox = styled.div`
   border: 1px solid #e1e2e3;
@@ -519,7 +505,7 @@ const Button = styled.button`
     props.shape === "apply" &&
     css`
       width: 100%;
-      border: 1px solid #258bf7;
+      border: 1px solid #21c621;
       border-radius: 3px;
       background-color: #21c621;
       color: white;
