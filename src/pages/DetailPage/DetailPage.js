@@ -81,199 +81,189 @@ const DetailPage = (props) => {
           <ShareModal showModal={showModal} setShowModal={setShowModal} />
         </ModalPortal>
       ) : null}
-      <DetailPageIn>
-        <DetailPageBox>
-          <PageLeft>
-            <Slider slides={detailData.length > 0 && detailData[0].images} />
-            <div className="jobTitle">
-              <h3>{detailData.length > 0 && detailData[0].name}</h3>
-              <div className="TitleText">
-                <p className="TextLeft">
-                  {detailData.length > 0 && detailData[0].company}
-                </p>
-                <div className="TextRight">
-                  <span className="Benchmark">|</span>
-                  <span>
-                    {detailData.length > 0 && detailData[0].region}
-                    <span> . </span>
-                    {detailData.length > 0 && detailData[0].country}
-                  </span>
-                </div>
-              </div>
-            </div>
-            <InnerHTML
-              dangerouslySetInnerHTML={{
-                __html: detailData.length > 0 && detailData[0].article,
-              }}
-            ></InnerHTML>
-            <MapBox>
-              <div className="mapText1">
-                <p>마감일</p>
-                <p>근무지역</p>
-              </div>
-              <div className="mapText2">
-                <p>{detailData.length > 0 && detailData[0].deadline}</p>
-                <p>{detailData.length > 0 && detailData[0].location}</p>
-              </div>
-            </MapBox>
-            <GoogleMap>
-              <MapContainer
-                lat={detailData.length > 0 && detailData[0].lat}
-                lng={detailData.length > 0 && detailData[0].lng}
-              />
-            </GoogleMap>
-            <FollowBox>
-              <div className="FollowLeft">
-                <img
-                  src={detailData.length > 0 && `${detailData[0].logo_url}`}
-                  alt="로고 이미지"
-                ></img>
-                <div>
-                  <p className="FollowText1">
-                    {detailData.length > 0 && detailData[0].company}
-                  </p>
-                  <p className="FollowText2">IT, 컨텐츠</p>
-                </div>
-              </div>
-              <Button
-                shape="follow"
-                color={followColor}
-                onClick={() => {
-                  ClickOfAll("follow");
-                }}
-              >
-                <div className="followBox">
-                  <div className="followIcon">
-                    <FiCheck size="15" />
+      {detailData.length > 0 && (
+        <DetailPageIn>
+          <DetailPageBox>
+            <PageLeft>
+              <Slider slides={detailData[0].images} />
+              <div className="jobTitle">
+                <h3>{detailData[0].name}</h3>
+                <div className="TitleText">
+                  <p className="TextLeft">{detailData[0].company}</p>
+                  <div className="TextRight">
+                    <span className="Benchmark">|</span>
+                    <span>
+                      {detailData[0].region}
+                      <span> . </span>
+                      {detailData[0].country}
+                    </span>
                   </div>
-                  {followColor ? "팔로잉" : "팔로우"}
                 </div>
-              </Button>
-            </FollowBox>
-          </PageLeft>
-          <PageRight>
-            <Fixed>
-              {apply ? (
-                <DetailApply setApply={setApply} />
-              ) : (
-                <div>
-                  <CompensationBox>
-                    <p className="CompensationTitle">채용보상금</p>
-                    <div className="boxTop">
-                      <div className="item1">
-                        <span className="person">추천인</span>
-                        <p>
-                          {detailData.length > 0 &&
-                            detailData[0].referer_amount.slice(0, 3) + ",000"}
-                          원
-                        </p>
-                      </div>
-                      <div className="item1">
-                        <span className="person">지원자</span>
-                        <p>
-                          {detailData.length > 0 &&
-                            detailData[0].fereree_amount.slice(0, 3) + ",000"}
-                          원
-                        </p>
-                      </div>
+              </div>
+              <InnerHTML
+                dangerouslySetInnerHTML={{
+                  __html: detailData[0].article,
+                }}
+              ></InnerHTML>
+              <MapBox>
+                <div className="mapText1">
+                  <p>마감일</p>
+                  <p>근무지역</p>
+                </div>
+                <div className="mapText2">
+                  <p>{detailData[0].deadline}</p>
+                  <p>{detailData[0].location}</p>
+                </div>
+              </MapBox>
+              <GoogleMap>
+                <MapContainer lat={detailData[0].lat} lng={detailData[0].lng} />
+              </GoogleMap>
+              <FollowBox>
+                <div className="FollowLeft">
+                  <img
+                    src={`${detailData[0].logo_url}`}
+                    alt="로고 이미지"
+                  ></img>
+                  <div>
+                    <p className="FollowText1">{detailData[0].company}</p>
+                    <p className="FollowText2">IT, 컨텐츠</p>
+                  </div>
+                </div>
+                <Button
+                  shape="follow"
+                  color={followColor}
+                  onClick={() => {
+                    ClickOfAll("follow");
+                  }}
+                >
+                  <div className="followBox">
+                    <div className="followIcon">
+                      <FiCheck size="15" />
                     </div>
-                    <Button
-                      shape="share"
-                      onClick={() => {
-                        ClickOfAll("modal");
-                      }}
-                    >
-                      공유하기
-                    </Button>
-                  </CompensationBox>
-                  <CompensationIcon>
-                    <div className="boxBottom">
-                      <div className="BottomLeft">
-                        <div
-                          className="Bottom1"
-                          onClick={() => {
-                            ClickOfAll("like");
-                          }}
-                        >
-                          <AiFillHeart
-                            size="16"
-                            color={likeColor ? "red" : "#e1e2e3"}
-                          />
-                          <p className="likeCount">
-                            {" "}
-                            {detailData.length > 0 && detailData[0].likes}
+                    {followColor ? "팔로잉" : "팔로우"}
+                  </div>
+                </Button>
+              </FollowBox>
+            </PageLeft>
+            <PageRight>
+              <Fixed>
+                {apply ? (
+                  <DetailApply setApply={setApply} />
+                ) : (
+                  <div>
+                    <CompensationBox>
+                      <p className="CompensationTitle">채용보상금</p>
+                      <div className="boxTop">
+                        <div className="item1">
+                          <span className="person">추천인</span>
+                          <p>
+                            {detailData[0].referer_amount.slice(0, 3) + ",000"}
+                            원
                           </p>
                         </div>
-                        <ul className="Bottom2">
-                          {/* 이미지를 배열로 받아서 뿌려야 함 */}
-                          <li>
-                            <img
-                              className="profileImg1"
-                              src="https://lh5.googleusercontent.com/-0RCDys4PImk/AAAAAAAAAAI/AAAAAAAAAAA/AMZuucnGJA6X_ZtFqyfoXJLaJebV-YCeOg/s96-c/photo.jpg"
-                              alt="profile1.png"
-                            ></img>
-                          </li>
-                          <li>
-                            <img
-                              className="profileImg2"
-                              src="https://s3.ap-northeast-2.amazonaws.com/wanted-public/profile_default.png"
-                              alt="profile2.png"
-                            ></img>
-                          </li>
-                          <li>
-                            <img
-                              className="profileImg3"
-                              src="https://s3.ap-northeast-2.amazonaws.com/wanted-public/profile_default.png"
-                              alt="profile3.png"
-                            ></img>
-                          </li>
-                        </ul>
+                        <div className="item1">
+                          <span className="person">지원자</span>
+                          <p>
+                            {detailData[0].fereree_amount.slice(0, 3) + ",000"}
+                            원
+                          </p>
+                        </div>
                       </div>
-                      <div className="Bottom3">
-                        <BsFillBookmarkFill
-                          size="15"
-                          color={bookMarkColor ? "#258bf7" : "#e1e2e3"}
-                          onClick={() => {
-                            ClickOfAll("bookMark");
-                          }}
-                        />
+                      <Button
+                        shape="share"
+                        onClick={() => {
+                          ClickOfAll("modal");
+                        }}
+                      >
+                        공유하기
+                      </Button>
+                    </CompensationBox>
+                    <CompensationIcon>
+                      <div className="boxBottom">
+                        <div className="BottomLeft">
+                          <div
+                            className="Bottom1"
+                            onClick={() => {
+                              ClickOfAll("like");
+                            }}
+                          >
+                            <AiFillHeart
+                              size="16"
+                              color={likeColor ? "red" : "#e1e2e3"}
+                            />
+                            <p className="likeCount"> {detailData[0].likes}</p>
+                          </div>
+                          <ul className="Bottom2">
+                            {/* 이미지를 배열로 받아서 뿌려야 함 */}
+                            <li>
+                              <img
+                                className="profileImg1"
+                                src="https://lh5.googleusercontent.com/-0RCDys4PImk/AAAAAAAAAAI/AAAAAAAAAAA/AMZuucnGJA6X_ZtFqyfoXJLaJebV-YCeOg/s96-c/photo.jpg"
+                                alt="profile1.png"
+                              ></img>
+                            </li>
+                            <li>
+                              <img
+                                className="profileImg2"
+                                src="https://s3.ap-northeast-2.amazonaws.com/wanted-public/profile_default.png"
+                                alt="profile2.png"
+                              ></img>
+                            </li>
+                            <li>
+                              <img
+                                className="profileImg3"
+                                src="https://s3.ap-northeast-2.amazonaws.com/wanted-public/profile_default.png"
+                                alt="profile3.png"
+                              ></img>
+                            </li>
+                          </ul>
+                        </div>
+                        <div className="Bottom3">
+                          <BsFillBookmarkFill
+                            size="15"
+                            color={bookMarkColor ? "#258bf7" : "#e1e2e3"}
+                            onClick={() => {
+                              ClickOfAll("bookMark");
+                            }}
+                          />
+                        </div>
                       </div>
-                    </div>
-                  </CompensationIcon>
-                  <Button
-                    shape="apply"
-                    onClick={() => {
-                      ClickOfAll("apply");
-                    }}
-                  >
-                    지원하기
-                  </Button>
-                </div>
-              )}
-            </Fixed>
-          </PageRight>
-        </DetailPageBox>
-        <PageBottom>
-          <h3>원티드 추천 공고</h3>
-          <ul className="HireList">
-            {detailList.map((myData, idx) => {
-              return (
-                <PositionList
-                  key={myData.idx}
-                  title={myData.title}
-                  no={myData.job_id}
-                  company={myData.company}
-                  region={myData.region}
-                  country={myData.country}
-                  compensation={myData.reward_total}
-                  thumbnail={myData.thumbnail}
-                  like={myData.like}
-                />
-              );
-            })}
-          </ul>
-        </PageBottom>
-      </DetailPageIn>
+                    </CompensationIcon>
+                    <Button
+                      shape="apply"
+                      onClick={() => {
+                        ClickOfAll("apply");
+                      }}
+                    >
+                      지원하기
+                    </Button>
+                  </div>
+                )}
+              </Fixed>
+            </PageRight>
+          </DetailPageBox>
+          <PageBottom>
+            <h3>원티드 추천 공고</h3>
+            <ul className="HireList">
+              {detailList.map((myData, idx) => {
+                return (
+                  <PositionList
+                    key={myData.idx}
+                    title={myData.title}
+                    no={myData.job_id}
+                    company={myData.company}
+                    region={myData.region}
+                    country={myData.country}
+                    compensation={myData.reward_total}
+                    thumbnail={myData.thumbnail}
+                    like={myData.like}
+                  />
+                );
+              })}
+            </ul>
+          </PageBottom>
+        </DetailPageIn>
+      )}
       <Footer />
     </>
   );
