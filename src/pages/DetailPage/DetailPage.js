@@ -23,9 +23,9 @@ const DetailPage = (props) => {
   const [followColor, setFollowColor] = useState(false);
 
   useEffect(() => {
+    // fetch(`${API}/job/36`)
     // 채용 디테일 페이지 모든 데이터
-    // fetch("/data/teak2Data/DetailPageMock.json") -> 목 데이터
-    fetch(`${API}/job/36`)
+    fetch("/data/teak2Data/DetailPageMock.json")
       .then((res) => res.json())
       .then((res) => {
         setDetailData(res.data);
@@ -39,8 +39,8 @@ const DetailPage = (props) => {
         setDetailList(res.position);
       });
   }, []);
-  // console.log("detailList", detailList);
-  console.log("detailData", detailData > 0 && detailData[0].lat);
+  console.log("detailList", detailList);
+  console.log("detailData", detailData);
 
   // 로그인 여부에 따라 다른 모달창이 뜸
   const checkToken = () => {
@@ -259,16 +259,17 @@ const DetailPage = (props) => {
         <PageBottom>
           <h3>원티드 추천 공고</h3>
           <ul className="HireList">
-            {detailList.map((myData) => {
+            {detailList.map((myData, idx) => {
               return (
                 <PositionList
                   key={myData.idx}
                   title={myData.title}
                   no={myData.job_id}
-                  name={myData.company}
-                  area={myData.country}
+                  company={myData.company}
+                  region={myData.region}
+                  country={myData.country}
                   compensation={myData.reward_total}
-                  img={myData.thumbnail_url}
+                  thumbnail={myData.thumbnail}
                   like={myData.like}
                 />
               );
@@ -295,28 +296,6 @@ const DetailPageBox = styled.div`
 
 const PageLeft = styled.div`
   width: 65%;
-
-  /* .jobImg {
-    position: relative;
-    img {
-      width: 100%;
-      border-radius: 3px;
-    }
-
-    .allowLeft {
-      position: absolute;
-      color: #999;
-      top: 50%;
-      left: 3%;
-    }
-
-    .allowRight {
-      position: absolute;
-      color: #999;
-      top: 50%;
-      right: 3%;
-    }
-  } */
 
   .jobTitle {
     margin-top: 2em;
@@ -384,17 +363,17 @@ const PageBottom = styled.div`
   width: 100%;
   margin-top: 5em;
   h3 {
-    font-size: 1.2rem;
+    font-size: 1.15rem;
     font-weight: 700;
     color: #333;
     margin: 1em 0;
   }
 
   .HireList {
+    width: 100%;
     list-style: none;
     display: flex;
     align-items: center;
-    flex-wrap: wrap;
   }
 `;
 
