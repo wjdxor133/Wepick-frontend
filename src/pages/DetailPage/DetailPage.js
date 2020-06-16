@@ -35,12 +35,9 @@ const DetailPage = (props) => {
     fetch("/data/mainMock.json")
       .then((res) => res.json())
       .then((res) => {
-        // console.log("res.recommendedNotice", res.recommendedNotice);
         setDetailList(res.position);
       });
   }, []);
-  console.log("detailList", detailList);
-  console.log("detailData", detailData);
 
   // 로그인 여부에 따라 다른 모달창이 뜸
   const checkToken = () => {
@@ -52,7 +49,7 @@ const DetailPage = (props) => {
     }
   };
 
-  const Click = (event) => {
+  const ClickOfAll = (event) => {
     if (event === "apply") {
       setApply(true);
     }
@@ -142,7 +139,7 @@ const DetailPage = (props) => {
                 shape="follow"
                 color={followColor}
                 onClick={() => {
-                  Click("follow");
+                  ClickOfAll("follow");
                 }}
               >
                 <div className="followBox">
@@ -183,7 +180,7 @@ const DetailPage = (props) => {
                     <Button
                       shape="share"
                       onClick={() => {
-                        Click("modal");
+                        ClickOfAll("modal");
                       }}
                     >
                       공유하기
@@ -195,7 +192,7 @@ const DetailPage = (props) => {
                         <div
                           className="Bottom1"
                           onClick={() => {
-                            Click("like");
+                            ClickOfAll("like");
                           }}
                         >
                           <AiFillHeart
@@ -237,7 +234,7 @@ const DetailPage = (props) => {
                           size="15"
                           color={bookMarkColor ? "#258bf7" : "#e1e2e3"}
                           onClick={() => {
-                            Click("bookMark");
+                            ClickOfAll("bookMark");
                           }}
                         />
                       </div>
@@ -246,7 +243,7 @@ const DetailPage = (props) => {
                   <Button
                     shape="apply"
                     onClick={() => {
-                      Click("apply");
+                      ClickOfAll("apply");
                     }}
                   >
                     지원하기
@@ -361,7 +358,7 @@ const PageRight = styled.div`
 
 const PageBottom = styled.div`
   width: 100%;
-  margin-top: 5em;
+  margin: 5em 0 6em;
   h3 {
     font-size: 1.15rem;
     font-weight: 700;
