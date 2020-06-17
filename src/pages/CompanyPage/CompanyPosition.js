@@ -18,7 +18,9 @@ const CompanyPosition = ({ jobs }) => {
             </div>
           </div>
           <Text jobDeadLine>
-            {jobs && jobs.deadline ? `${jobs.deadline} 까지` : "상시 채용"}
+            {jobs && jobs.deadline === "상시"
+              ? `${jobs.deadline} 채용`
+              : `${jobs.deadline} 까지`}
           </Text>
         </div>
       </div>
@@ -27,10 +29,10 @@ const CompanyPosition = ({ jobs }) => {
 };
 
 const CompanyPositionIn = styled.div`
-  width: 100%;
+  margin: 1em 1em 0 0;
+  width: 47%;
 
   .positionBox {
-    width: 90%;
     border: 1px solid #e1e2e3;
     padding: 1em;
 
@@ -50,6 +52,8 @@ const Text = styled.div`
     props.jobName &&
     css`
       font-weight: 700;
+      margin-bottom: 0.5em;
+      line-height: 1.2rem;
     `}
 
   ${(props) =>

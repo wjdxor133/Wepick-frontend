@@ -10,7 +10,7 @@ const Slider = (props) => {
     activeIndex: 0,
     translate: 0,
     transition: 0.45,
-    width: 650,
+    width: props.width,
   });
 
   const { translate, transition, activeIndex, width } = state;
@@ -68,8 +68,8 @@ const Slider = (props) => {
 
 const SliderCSS = styled.div`
   position: relative;
-  height: 500px;
   width: 100%;
+  height: 480px;
   overflow: hidden;
 `;
 

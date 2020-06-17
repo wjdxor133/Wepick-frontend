@@ -24,8 +24,8 @@ const DetailPage = (props) => {
 
   useEffect(() => {
     // 채용 디테일 페이지 모든 데이터
-    // fetch("/data/teak2Data/DetailPageMock.json") -> 목 데이터
-    fetch(`${API}/job/10`)
+    // fetch("/data/teak2Data/DetailPageMock.json")
+    fetch(`${API}/job/15`)
       .then((res) => res.json())
       .then((res) => {
         setDetailData(res.data);
@@ -35,12 +35,9 @@ const DetailPage = (props) => {
     fetch("/data/mainMock.json")
       .then((res) => res.json())
       .then((res) => {
-        // console.log("res.recommendedNotice", res.recommendedNotice);
         setDetailList(res.position);
       });
   }, []);
-  // console.log("detailList", detailList);
-  // console.log("detailData", detailData > 0 && detailData[0].lat);
 
   // 로그인 여부에 따라 다른 모달창이 뜸
   const checkToken = () => {
@@ -87,7 +84,10 @@ const DetailPage = (props) => {
       <DetailPageIn>
         <DetailPageBox>
           <PageLeft>
-            <Slider slides={detailData.length > 0 && detailData[0].images} />
+            <Slider
+              width={700}
+              slides={detailData.length > 0 && detailData[0].images}
+            />
             <div className="jobTitle">
               <h3>{detailData.length > 0 && detailData[0].name}</h3>
               <div className="TitleText">
@@ -283,7 +283,7 @@ const DetailPage = (props) => {
 
 const DetailPageIn = styled.div`
   max-width: 1060px;
-  padding: 50px 3em 0;
+  padding: 50px 0;
   margin: 0 auto;
 `;
 
@@ -295,28 +295,6 @@ const DetailPageBox = styled.div`
 
 const PageLeft = styled.div`
   width: 65%;
-
-  /* .jobImg {
-    position: relative;
-    img {
-      width: 100%;
-      border-radius: 3px;
-    }
-
-    .allowLeft {
-      position: absolute;
-      color: #999;
-      top: 50%;
-      left: 3%;
-    }
-
-    .allowRight {
-      position: absolute;
-      color: #999;
-      top: 50%;
-      right: 3%;
-    }
-  } */
 
   .jobTitle {
     margin-top: 2em;
@@ -402,6 +380,7 @@ const Fixed = styled.div`
   position: sticky;
   top: 50px;
 `;
+
 const CompensationBox = styled.div`
   border: 1px solid #e1e2e3;
   border-radius: 3px;
