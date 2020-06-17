@@ -5,25 +5,27 @@ import { AiFillHeart } from "react-icons/ai";
 const CompanyPosition = ({ jobs }) => {
   return (
     <CompanyPositionIn>
-      <div className="positionBox">
-        <div>
-          <Text jobName>{jobs && jobs.name}</Text>
-          <div className="boxCenter">
-            <Text jobsRewardAmount>
-              채용보상금 {jobs && jobs.reward_amount.slice(0, 3) + ",000"}원
-            </Text>
-            <div className="iconBox">
-              <Text jobsLikes>{jobs && jobs.likes}</Text>
-              <AiFillHeart size="20" color="#e1e2e3" />
+      {jobs && (
+        <div className="positionBox">
+          <div>
+            <Text jobName>{jobs.name}</Text>
+            <div className="boxCenter">
+              <Text jobsRewardAmount>
+                채용보상금 {jobs.reward_amount.slice(0, 3) + ",000"}원
+              </Text>
+              <div className="iconBox">
+                <Text jobsLikes>{jobs.likes}</Text>
+                <AiFillHeart size="20" color="#e1e2e3" />
+              </div>
             </div>
+            <Text jobDeadLine>
+              {jobs.deadline === "상시"
+                ? `${jobs.deadline} 채용`
+                : `${jobs.deadline} 까지`}
+            </Text>
           </div>
-          <Text jobDeadLine>
-            {jobs && jobs.deadline === "상시"
-              ? `${jobs.deadline} 채용`
-              : `${jobs.deadline} 까지`}
-          </Text>
         </div>
-      </div>
+      )}
     </CompanyPositionIn>
   );
 };

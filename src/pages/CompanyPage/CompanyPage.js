@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled, { css } from "styled-components";
+import { Link } from "react-router-dom";
 import { API } from "../../config";
 import Nav from "../../components/Nav/Nav";
 import Slider from "../../components/Slider/Slider";
@@ -53,8 +54,8 @@ const CompanyPage = () => {
 
   useEffect(() => {
     // 회사 디테일 페이지 데이터
-    // fetch("/data/teak2Data/CompanyPageMock.json")
-    fetch(`${API}/company/151`)
+    fetch("/data/teak2Data/CompanyPageMock.json")
+      // fetch(`${API}/company/151`)
       .then((res) => res.json())
       .then((res) => {
         setCompanyDate(res.data);
@@ -81,6 +82,7 @@ const CompanyPage = () => {
           <div className="FollowBoxLeft">
             <img
               src={companyDate.length > 0 && `${companyDate[0].logo_url}`}
+              alt="logoImg"
             ></img>
             <Text companyName>
               {companyDate.length > 0 && companyDate[0].name}
@@ -213,7 +215,7 @@ const CompanyPage = () => {
           </AverageSalary>
           <News>
             <Text companyPosition>이 회사의 뉴스</Text>
-            <a
+            <Link
               className="newsBox"
               href={companyDate.length > 0 && companyDate[0].news[0].url}
               target="_blank"
@@ -224,7 +226,7 @@ const CompanyPage = () => {
               <Text newsData>
                 {companyDate.length > 0 && companyDate[0].news[0].source}
               </Text>
-            </a>
+            </Link>
           </News>
         </CompanyPageLeft>
         <CompanyPageRight></CompanyPageRight>
