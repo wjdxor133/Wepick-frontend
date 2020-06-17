@@ -1,8 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-const topCate = (props) => {
-    console.log("props: ", props.backImg);
+const TopCate = (props) => {
     return (
         <TopCateList img={props.backImg} >
             <p>{props.main_category_id}</p>
@@ -11,6 +10,7 @@ const topCate = (props) => {
 }
 
 const TopCateList = styled.li`
+    display: inline-block;
     width: 130px;
     height: 60px;
     border-radius: .3em;
@@ -18,8 +18,7 @@ const TopCateList = styled.li`
     text-align: center;
     font-size: 0.975rem;
     background: url(${props => props.img}),
-  linear-gradient(to top, rgba(0, 0, 0, .7) 100%, rgba(0, 0, 0, 1) 100%);
-    /* background-image: url(${props => props.img}); */
+    linear-gradient(to top, rgba(0, 0, 0, .7) 100%, rgba(0, 0, 0, 1) 100%);
     background-size: 100%;
     line-height: 3em;
     font-weight: 500;
@@ -29,4 +28,4 @@ const TopCateList = styled.li`
 
 
 
-export default topCate;
+export default TopCate;

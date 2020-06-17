@@ -2,23 +2,34 @@ import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import 'react-circular-progressbar/dist/styles.css';
+import Nav from "../../components/Nav/Nav";
 import { AiOutlineSetting } from "react-icons/ai";
-import { BsChevronLeft } from "react-icons/bs";
-import { BsChevronRight } from "react-icons/bs";
 import { FiFilter } from "react-icons/fi";
 import TopCate from "./TopCate";
 import PositionList from "./PositionList";
-import MainImg from "./MainImg";
 import Aggreesive from "./Aggreesive";
 // import { API } from "../../config";
+import MainSlider from "./MainSlider/MainSlider";
+import FilterModal from "./MainFilter/FilterModal";
+import { BsChevronLeft } from "react-icons/bs";
+import { BsChevronRight } from "react-icons/bs";
 
 const MainPage = () => {
   const [data, setData] = useState([]);
   const [cate, setCate] = useState([]);
   const [aggreesive, setAggreesive] = useState([]);
   const [topImg, setTopImg] = useState([]);
+  const [content, setContent] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [filter, setFilter] = useState([]);
+  const [filterAlign, setFilterAlign] = useState("최신순");
+  const [country, setCountry] = useState("한국");
+  const [region, setRegion] = useState("전국");
+  const [career, setCareer] = useState("전체");
+  const [transform, setTransform] = useState(0);
+  const [clicked, setClicked] = useState(0);
 
-  // const mainWidth = window.innerWidth;
+  const mainWidth = window.innerWidth;
   const percentage = 66;
 
   useEffect(() => {
@@ -33,7 +44,6 @@ const MainPage = () => {
       .then((res) => {
         setTopImg(res.main_top_img);
       });
-
     fetch("/data/mainCate.json")
       .then((res) => res.json())
       .then((res) => {
@@ -45,13 +55,38 @@ const MainPage = () => {
     //     setCate(res.data);
     //     console.log(res.data);
     //   });
-
     fetch("/data/aggreesive.json")
       .then((res) => res.json())
       .then((res) => {
         setAggreesive(res.data);
       });
+    fetch("/data/filter.json")
+      .then((res) => res.json())
+      .then((res) => {
+        setFilter(res.data);
+      });
+    fetch("/data/MainContent.json")
+      .then((res) => res.json())
+      .then((res) => {
+        setContent(res.data);
+      });
   }, []);
+
+  const mainContent = content.map((quest, idx) => {
+    return (
+      <PositionList
+        key={quest.idx}
+        title={quest.name}
+        no={quest.job_id}
+        company={quest.company}
+        region={quest.region}
+        country={quest.country}
+        compensation={quest.reward_amount}
+        thumbnail={quest.thumbnail}
+        like={quest.likes}
+      />
+    );
+  })
 
   const aggreesiveList = aggreesive.map((aggreesiveData, idx) => {
     return (
@@ -71,14 +106,12 @@ const MainPage = () => {
         main_category_id={mainData.name}
         backImg={mainData.background_image}
         duty={mainData.sub_category}
+        transform={transform}
       />
     );
   })
 
-
-
   const list = data.map((myData, idx) => {
-
     return (
       <PositionList
         key={myData.idx}
@@ -94,47 +127,24 @@ const MainPage = () => {
     );
   });
 
-  // const list = data.filter(mockData => mockData.job_id < 5).map((myData, idx) => {
-  //   return (
-  //     <PositionList
-  //       key={myData.idx}
-  //       title={myData.title}
-  //       no={myData.job_id}
-  //       name={myData.company}
-  //       area={myData.country}
-  //       compensation={myData.reward_total}
-  //       img={myData.thumbnail_url}
-  //       like={myData.like}
-  //     />
-  //   );
-  // });
+  const filterClick = () => {
+    setShowModal(true);
+  }
 
-  const mainImg = topImg.map((topImgOne, idx) => {
-    return (
-      <MainImg
-        title={topImgOne.title}
-        content={topImgOne.content}
-        img={topImgOne.img}
-        key={idx}
-      />
-    );
-  })
+  const arrowRight = () => {
+    setTransform(() => transform - 680);
+    setClicked(() => clicked - 1);
+  }
+
+  const arrowLeft = () => {
+    setTransform(() => transform + 680);
+    setClicked(() => clicked + 1);
+  }
 
   return (
     <>
-      <Slider>
-        <MainBox>
-          {mainImg}
-        </MainBox>
-        <MainButton>
-          <div>
-            <BsChevronLeft direction="left" />
-          </div>
-          <div>
-            <BsChevronRight direction="right" />
-          </div>
-        </MainButton>
-      </Slider>
+      <Nav />
+      <MainSlider mainWidth={mainWidth} slides={topImg} />
       < Main >
         <PostionBox>
           <FlexBox>
@@ -171,25 +181,49 @@ const MainPage = () => {
         <QuestContainer>
           <QuestCate>
             <PostionTitle>전체</PostionTitle>
-            <FlexUlCate>{mainList}</FlexUlCate>
+            <PositionBox>
+              <PositionBtnLeft>
+                <BsChevronLeft size={30} onClick={arrowLeft} />
+              </PositionBtnLeft>
+              <FlexUlCate transform={transform}>{mainList}</FlexUlCate>
+              <PositionBtnRight>
+                <BsChevronRight size={30} onClick={arrowRight} />
+              </PositionBtnRight>
+            </PositionBox>
           </QuestCate>
           <FlexBox>
             <QuestFliterLeft>
-              <QuestFliterButton>최신순</QuestFliterButton>
-              <QuestFliterButton><span>국가</span> 한국</QuestFliterButton>
-              <QuestFliterButton propsColor="black"><span>지역</span> 전국</QuestFliterButton>
-              <QuestFliterButton propsColor="black"><span>경력</span> 전체</QuestFliterButton>
+              {
+                showModal ? (
+                  <FilterModal
+                    setShowModal={setShowModal}
+                    setFilter={setFilter}
+                    setFilterAlign={setFilterAlign}
+                    setCountry={setCountry}
+                    setRegion={setRegion}
+                    setCareer={setCareer}
+                    filter={filter}
+                  />
+                ) : null
+              }
+              <QuestFliterButton>{filterAlign}</QuestFliterButton>
+              <QuestFliterButton><span>국가</span> {country}</QuestFliterButton>
+              <QuestFliterButton propsColor="black"><span>지역</span> {region}</QuestFliterButton>
+              <QuestFliterButton propsColor="black"><span>경력</span> {career}</QuestFliterButton>
             </QuestFliterLeft>
             <QuestFliterRight>
-              <QuestFliterButton>
+              <QuestFliterButton onClick={filterClick}>
                 <span><FiFilter color="#2986FA" /></span>필터
               </QuestFliterButton>
             </QuestFliterRight>
           </FlexBox>
           <AggressiveBox>
             <PostionTitle>적극 채용 중인 회사</PostionTitle>
-            <FlexUl>
+            <AggresiveFlexUl>
               {aggreesiveList}
+            </AggresiveFlexUl>
+            <FlexUl>
+              {mainContent}
             </FlexUl>
           </AggressiveBox>
         </QuestContainer>
@@ -205,10 +239,9 @@ const Main = styled.div`
 `;
 
 const PostionBox = styled.div`
-  margin: 3em 0em 5em 0em;
+  margin-top: 3em;
+  margin-bottom: -1em;
 `;
-
-
 
 const BlueBox = styled.div`
   width: 100%;
@@ -264,7 +297,7 @@ const PostionTitle = styled.div`
   font-size: 1.5rem;
   margin: 1em 0em 1em 0em;
   font-weight: 600;
-  color: ${props => props.theme.color.font}
+  color: ${props => props.theme.color.font};
 `;
 
 const MoreView = styled.span`
@@ -273,24 +306,55 @@ const MoreView = styled.span`
 `;
 
 const QuestContainer = styled.div`
-
+  background-color: white;
+  display: block;
+  position: sticky;
+  left: 0;
+  top: 55px;
 `;
 
 const QuestCate = styled.div`
   border-bottom: 1px solid gray;
   padding-bottom: 1em;
   margin-top: 3em;
+  /* position: sticky; 
+  position: -webkit-sticky;
+  top: 50px; */
+  background-color: white;
 `;
 
 const FlexUl = styled.ul`
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
+  flex-wrap: wrap;
+`;
+
+const AggresiveFlexUl = styled.ul`
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 3.5em;
+`;
+
+const PositionBox = styled.div`
+  width: 1000px;
+  display: flex;
+  align-items: center;
+  overflow-x: scroll;
+  -ms-overflow-style: none;
+  ::-webkit-scrollbar {
+    display:none;
+  }
 `;
 
 const FlexUlCate = styled.ul`
-  display: flex;
-  align-items: center;
+  width: 945px;
+  display: inline-block;
+  white-space: nowrap; 
+  /* 위에 white-space사용해서 해결함 ㅇㅅㅇ */
+  transform: translateX(${(props) => props.transform}px);
+  transition: transform .15s ease-in-out;
 `;
 
 const QuestFliterLeft = styled.div`
@@ -317,54 +381,38 @@ const QuestFliterButton = styled.div`
 `;
 
 const QuestFliterRight = styled.div`
-  
+  margin-top: 1em;  
 `;
 
 const AggressiveBox = styled.div`
-  
+ 
 `;
 
-const Slider = styled.div`
-  width: 100%;
-  height: 300px;
-  overflow: hidden;
-  margin-top: 0 auto;
+const PositionBtnRight = styled.div`
+  width: 150px;
+  height: 60px;
+  cursor: pointer;
+  transition: all 0.2s linear;
+  color: ${props => props.theme.color.gray};
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: linear-gradient(to right, rgba(255,255,255,1), rgba(255,255,255,.5));
 `;
 
-const MainBox = styled.ul`
-    width: 500%;
-    display: flex;
-    transform: translateX( -${props => props.translate}px );
-    transition: transform ease-out ${props => props.transition}s;
-`;
-
-/* const MainBox = styled.ul`
-    /* overflow: hidden;
-    width: 100%;
-    height: 300px;
-    margin: 0 auto;  */
-/* width: 500 %;
-display: flex;
-transform: translateX(-${ props => props.mainWidth }px);
-transition: transform ease - out 0.45s;
-`;  */
-
-const MainButton = styled.div`
-position: absolute;
-top: 13em;
-right: 0px;
-z-index: 10;
-display: flex;
-font-size: 1rem;
-margin-right: calc((100vw - 1060px) / 2);
-div{
-  background-color: white;
-  border-radius: 100;
-  width: 45px;
-  height: 45px;
-  text-align: center;
-  line-height: 3.3em;
-}
+const PositionBtnLeft = styled.div`
+  width: 300px;
+  height: 60px;
+  cursor: pointer;
+  transition: all 0.2s linear;
+  color: ${props => props.theme.color.gray};
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: linear-gradient(to left, rgba(255,255,255,.5), rgba(255,255,255,1));
+  background-color: transparent;
 `;
 
 export default MainPage;

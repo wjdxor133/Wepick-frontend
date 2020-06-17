@@ -17,11 +17,12 @@ const MainImg = props => {
 }
 
 const MainImgList = styled.li`
+    width: 100vw;
     img{
         width: 100%;
+        height: auto;
         position: relative;
     }
-   
 `;
 
 const MainImgBox = styled.div`

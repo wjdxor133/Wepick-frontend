@@ -7,40 +7,40 @@ import WdList from "../WdList/WdList"
 import LoginModal from "../../components/LoginModal/LoginModal"
 import GoogleLogoutGo from "../GoogleLogoutGo/GoogleLogoutGo"
 
-const Nav = ( { changeNavColor, changeModal, changeProfile, navPick, loginCheck, profileUpdown }, props ) => {
+const Nav = ({ changeNavColor, changeModal, changeProfile, navPick, loginCheck, profileUpdown }, props) => {
   const navBlueColor = (input) => {
     changeNavColor(input);
   };
-  
+
   const [data, setData] = useState({}) //히든 메뉴리스트 data 받을
   const [menuUpdown, setMenuUpdown] = useState(false) //히든 메뉴리스트(탐색 호버시 나올)
 
   useEffect(() => {
     fetch("data/navWdListMock.json", {})
-    .then((response) => response.json())
-    .then((res) => {
-      setData(res)
-    })
+      .then((response) => response.json())
+      .then((res) => {
+        setData(res)
+      })
   }, []);
 
   return (
     <>
       <NavBar>
-        <NavWarp>      
+        <NavWarp>
           <VisibleBox show={menuUpdown}>
             <NavContents>
               {/* <Logo onClick={() => props.history.push("/")}><Link>히스토리용</Link></Logo> */}
-              <Logo onClick={() => {navBlueColor(0); changeProfile(false); setMenuUpdown(false); document.documentElement.scrollTop=0;}}><Link to="/">wanted</Link></Logo>
+              <Logo onClick={() => { navBlueColor(0); changeProfile(false); setMenuUpdown(false); document.documentElement.scrollTop = 0; }}><Link to="/">wanted</Link></Logo>
               <NavUl underLine navPick={navPick}>
-                <Link to="/" onClick={() => {navBlueColor(1); changeProfile(false);}} onMouseEnter={() => {setMenuUpdown(true); changeProfile(false);}}>탐색</Link>
-                <Link to="/" onClick={() => {navBlueColor(2); changeProfile(false);}} onMouseEnter={() => setMenuUpdown(false)}>직군별 연봉</Link>
-                <Link to="/cv" onClick={() => {navBlueColor(3); changeProfile(false);}} onMouseEnter={() => setMenuUpdown(false)}>이력서</Link>
-                <Link to="/" onClick={() => {navBlueColor(4); changeProfile(false);}} onMouseEnter={() => setMenuUpdown(false)}>추천</Link>
-                <Link to="/" onClick={() => {navBlueColor(5); changeProfile(false);}} onMouseEnter={() => setMenuUpdown(false)}>이벤트</Link>
-                <Link to="/" onClick={() => {navBlueColor(6); changeProfile(false);}} onMouseEnter={() => setMenuUpdown(false)}>매치업</Link>
+                <Link to="/" onClick={() => { navBlueColor(1); changeProfile(false); }} onMouseEnter={() => { setMenuUpdown(true); changeProfile(false); }}>탐색</Link>
+                <Link to="/" onClick={() => { navBlueColor(2); changeProfile(false); }} onMouseEnter={() => setMenuUpdown(false)}>직군별 연봉</Link>
+                <Link to="/cv" onClick={() => { navBlueColor(3); changeProfile(false); }} onMouseEnter={() => setMenuUpdown(false)}>이력서</Link>
+                <Link to="/" onClick={() => { navBlueColor(4); changeProfile(false); }} onMouseEnter={() => setMenuUpdown(false)}>추천</Link>
+                <Link to="/" onClick={() => { navBlueColor(5); changeProfile(false); }} onMouseEnter={() => setMenuUpdown(false)}>이벤트</Link>
+                <Link to="/" onClick={() => { navBlueColor(6); changeProfile(false); }} onMouseEnter={() => setMenuUpdown(false)}>매치업</Link>
               </NavUl>
               <NavUl>
-                <InLoginProfile onClick={() => changeProfile(!profileUpdown)} loginCheck={loginCheck}/>
+                <InLoginProfile onClick={() => changeProfile(!profileUpdown)} loginCheck={loginCheck} />
                 <InLogoutProfile onClick={() => changeModal(true)} loginCheck={loginCheck}>회원가입/로그인</InLogoutProfile>
                 <Link to="/">기업 서비스</Link>
                 <HiddenProfile show={profileUpdown}>
@@ -49,43 +49,43 @@ const Nav = ( { changeNavColor, changeModal, changeProfile, navPick, loginCheck,
                     <li><Link to="/">지원현황</Link></li>
                     <li><Link to="/">좋아요</Link></li>
                     <li><Link to="/">북마크</Link></li>
-                    <GoogleLogoutGo/>                
+                    <GoogleLogoutGo />
                   </ul>
                 </HiddenProfile>
-              </NavUl>        
-            </NavContents>            
+              </NavUl>
+            </NavContents>
           </VisibleBox>
           <InvisibleBox show={menuUpdown} onMouseLeave={() => setMenuUpdown(false)}>
-              {data.dev && <div>
-                <WdList titleName={data.dev.title} titleUrl={data.dev.url} list={data.dev.list}/>
-                <WdList titleName={data.dev2.title} titleUrl={data.dev2.url} list={data.dev2.list} plus="/1"/>
-                <WdList titleName={data.biz.title} titleUrl={data.biz.url} list={data.biz.list} plus="/2"/>
-                <WdList titleName={data.market.title} titleUrl={data.market.url} list={data.market.list} plus="/3"/>
-                <WdList titleName={data.design.title} titleUrl={data.design.url} list={data.design.list} plus="/4"/>
-              </div>}          
-            </InvisibleBox>            
+            {data.dev && <div>
+              <WdList titleName={data.dev.title} titleUrl={data.dev.url} list={data.dev.list} />
+              <WdList titleName={data.dev2.title} titleUrl={data.dev2.url} list={data.dev2.list} plus="/1" />
+              <WdList titleName={data.biz.title} titleUrl={data.biz.url} list={data.biz.list} plus="/2" />
+              <WdList titleName={data.market.title} titleUrl={data.market.url} list={data.market.list} plus="/3" />
+              <WdList titleName={data.design.title} titleUrl={data.design.url} list={data.design.list} plus="/4" />
+            </div>}
+          </InvisibleBox>
         </NavWarp>
       </NavBar>
-      <LoginModal/>
-    </>  
+      <LoginModal />
+    </>
   );
 }
 
 const mapStateToProps = (state) => {
   return {
-    navPick:state.navPick,
-    loginCheck:state.loginCheck,
-    profileUpdown:state.profileUpdown
+    navPick: state.navPick,
+    loginCheck: state.loginCheck,
+    profileUpdown: state.profileUpdown
   }
 }
 
-export default withRouter(connect(mapStateToProps, {changeNavColor, changeModal, changeProfile})(Nav));
+export default withRouter(connect(mapStateToProps, { changeNavColor, changeModal, changeProfile })(Nav));
 
 const NavBar = styled.nav`
   position:fixed;
   width:100%;
   height:50px;
-  z-index:10;
+  z-index:100; 
 `;
 
 const NavWarp = styled.div`
@@ -142,7 +142,7 @@ const NavUl = styled.ul`
 `;
 
 const InLoginProfile = styled.div`
-  display:${props =>props.loginCheck?"":"none"};
+  display:${props => props.loginCheck ? "" : "none"};
   cursor:pointer;
   background-image:url("https://s3.ap-northeast-2.amazonaws.com/wanted-public/profile_default.png");
   width: 32px;
@@ -155,7 +155,7 @@ const InLoginProfile = styled.div`
 `;
 
 const InLogoutProfile = styled.a`
-  display:${props =>props.loginCheck?"none":""};
+  display:${props => props.loginCheck ? "none" : ""};
   cursor:pointer;
 `;
 
@@ -165,7 +165,7 @@ const InvisibleBox = styled.div`
   width:100%;
   height:295px;
   background-color:white;
-  transform:${props =>props.show?"translateY(0px)":"translateY(-294px)"};
+  transform:${props => props.show ? "translateY(0px)" : "translateY(-294px)"};
   transition:ease 0.3s;      
   display:flex;
   justify-content:center;  
@@ -184,8 +184,8 @@ const InvisibleBox = styled.div`
 `;
 
 const HiddenProfile = styled.div`
-  position:${props =>props.show?"absolute":""};
-  display:${props =>props.show?"":"none"};
+  position:${props => props.show ? "absolute" : ""};
+  display:${props => props.show ? "" : "none"};
   background-color: #fff;
   top:50px;
   width:170px;

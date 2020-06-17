@@ -1,0 +1,204 @@
+{
+    "data": [
+        {
+            "id": 1,
+            "name": "Server Software Engineer",
+            "company": "스퀘어랩",
+            "region": "서울",
+            "country": "한국",
+            "reward_amount": "1000000.00",
+            "thumbnail": "https://static.wanted.co.kr/images/company/2113/yiprywb9yd1vbwjt__400_400.jpg",
+            "likes": 0
+        },
+        {
+            "id": 2,
+            "name": "백엔드 개발자",
+            "company": "모바일퉁(트래블월렛)",
+            "region": "서울",
+            "country": "한국",
+            "reward_amount": "1000000.00",
+            "thumbnail": "https://static.wanted.co.kr/images/company/4348/ueurxkxxd696lkuv__400_400.jpg",
+            "likes": 0
+        },
+        {
+            "id": 3,
+            "name": "Backend Engineer",
+            "company": "매스프레소(Mathpresso)",
+            "region": "서울",
+            "country": "한국",
+            "reward_amount": "1000000.00",
+            "thumbnail": "https://static.wanted.co.kr/images/company/1628/kez7ovy9v8yi4vtk__400_400.jpg",
+            "likes": 0
+        },
+        {
+            "id": 4,
+            "name": "게임 서버개발자",
+            "company": "잼팟",
+            "region": "서울",
+            "country": "한국",
+            "reward_amount": "1000000.00",
+            "thumbnail": "https://static.wanted.co.kr/images/company/10695/r4bvgs5krhzyj77h__400_400.jpg",
+            "likes": 0
+        },
+        {
+            "id": 5,
+            "name": "JAVA 개발자",
+            "company": "테라핀테크(테라펀딩)",
+            "region": "서울",
+            "country": "한국",
+            "reward_amount": "1000000.00",
+            "thumbnail": "https://static.wanted.co.kr/images/company/168/vlzl5u1mliqqpsys__400_400.jpg",
+            "likes": 0
+        },
+        {
+            "id": 6,
+            "name": "서버 개발자(Backend Software Engineer)",
+            "company": "팀블라인드(Teamblind)",
+            "region": "서울",
+            "country": "한국",
+            "reward_amount": "1000000.00",
+            "thumbnail": "https://static.wanted.co.kr/images/company/94/17213_2_0.__400_400.jpg",
+            "likes": 0
+        },
+        {
+            "id": 7,
+            "name": "백엔드 개발자 / Software Engineer-Backend",
+            "company": "베이글코드(Bagelcode)",
+            "region": "서울",
+            "country": "한국",
+            "reward_amount": "1000000.00",
+            "thumbnail": "https://static.wanted.co.kr/images/company/36/vwj8fmtlsho5pzzc__400_400.jpg",
+            "likes": 0
+        },
+        {
+            "id": 8,
+            "name": "Backend 개발자 (Node.JS)",
+            "company": "라이프오버플로우(미세미세)",
+            "region": "서울",
+            "country": "한국",
+            "reward_amount": "1000000.00",
+            "thumbnail": "https://static.wanted.co.kr/images/company/4614/5wofhyyh38xbzgbe__400_400.jpg",
+            "likes": 0
+        },
+        {
+            "id": 9,
+            "name": "Web/PHP Engineer",
+            "company": "머니투데이",
+            "region": "서울",
+            "country": "한국",
+            "reward_amount": "1000000.00",
+            "thumbnail": "https://static.wanted.co.kr/images/company/3046/11018_2_0.1bb0dc99__400_400.jpg",
+            "likes": 0
+        },
+        {
+            "id": 10,
+            "name": "SRE엔지니어(DEVOPS/인프라)",
+            "company": "크로키닷컴(ZIGZAG/지그재그)",
+            "region": "서울",
+            "country": "한국",
+            "reward_amount": "1000000.00",
+            "thumbnail": "https://static.wanted.co.kr/images/company/506/dtmfb8owtgurptwv__400_400.jpg",
+            "likes": 0
+        },
+        {
+            "id": 11,
+            "name": "백엔드 개발자",
+            "company": "크로키닷컴(ZIGZAG/지그재그)",
+            "region": "서울",
+            "country": "한국",
+            "reward_amount": "1000000.00",
+            "thumbnail": "https://static.wanted.co.kr/images/company/506/dtmfb8owtgurptwv__400_400.jpg",
+            "likes": 0
+        },
+        {
+            "id": 12,
+            "name": "이커머스 정산 서버 개발자",
+            "company": "크로키닷컴(ZIGZAG/지그재그)",
+            "region": "서울",
+            "country": "한국",
+            "reward_amount": "1000000.00",
+            "thumbnail": "https://static.wanted.co.kr/images/company/506/dtmfb8owtgurptwv__400_400.jpg",
+            "likes": 0
+        },
+        {
+            "id": 13,
+            "name": "서버(Backend) 개발자",
+            "company": "에어프레미아",
+            "region": "서울",
+            "country": "한국",
+            "reward_amount": "1000000.00",
+            "thumbnail": "https://static.wanted.co.kr/images/company/7205/c0aa8wecuntt0nfy__400_400.jpg",
+            "likes": 0
+        },
+        {
+            "id": 14,
+            "name": "서버 개발자",
+            "company": "제네시스랩",
+            "region": "서울",
+            "country": "한국",
+            "reward_amount": "1000000.00",
+            "thumbnail": "https://static.wanted.co.kr/images/company/7144/pzuoqbwrdhan3kgy__400_400.png",
+            "likes": 0
+        },
+        {
+            "id": 15,
+            "name": "웹 서비스 개발자",
+            "company": "헬스커넥트",
+            "region": "서울",
+            "country": "한국",
+            "reward_amount": "1000000.00",
+            "thumbnail": "https://static.wanted.co.kr/images/company/443/9049_2_0.fa99769a__400_400.jpg",
+            "likes": 0
+        },
+        {
+            "id": 16,
+            "name": "AI OCR 솔루션 백엔드 개발자 (전문연구요원 가능)",
+            "company": "로민",
+            "region": "서울",
+            "country": "한국",
+            "reward_amount": "1000000.00",
+            "thumbnail": "https://static.wanted.co.kr/images/company/10785/qz53ylonj5q0wtk9__400_400.jpg",
+            "likes": 0
+        },
+        {
+            "id": 17,
+            "name": "Java Back-End 개발자",
+            "company": "무신사",
+            "region": "서울",
+            "country": "한국",
+            "reward_amount": "1000000.00",
+            "thumbnail": "https://static.wanted.co.kr/images/company/4248/16230_2_0.50567682__400_400.jpg",
+            "likes": 0
+        },
+        {
+            "id": 18,
+            "name": "테크 리드",
+            "company": "라이픽 (LIFIC)",
+            "region": "서울",
+            "country": "한국",
+            "reward_amount": "1000000.00",
+            "thumbnail": "https://static.wanted.co.kr/images/company/12751/rwo0uoia5tzgasnc__400_400.jpg",
+            "likes": 0
+        },
+        {
+            "id": 19,
+            "name": "백엔드 개발자",
+            "company": "아이포트폴리오",
+            "region": "서울",
+            "country": "한국",
+            "reward_amount": "1000000.00",
+            "thumbnail": "https://static.wanted.co.kr/images/company/9726/dqwzr62wc4tzmlvv__400_400.jpg",
+            "likes": 0
+        },
+        {
+            "id": 20,
+            "name": "백엔드 엔지니어",
+            "company": "퀘스처너스",
+            "region": "서울",
+            "country": "한국",
+            "reward_amount": "1000000.00",
+            "thumbnail": "https://static.wanted.co.kr/images/company/11947/arfvfkj5jdls7nyf__400_400.jpg",
+            "likes": 0
+        }
+    ]
+}
