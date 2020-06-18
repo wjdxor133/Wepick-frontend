@@ -16,13 +16,15 @@ class Routes extends Component {
       <Router>
         <Switch>
           <Route exact path="/" component={Index} />
-
           <Route exact path="/cv" component={cv} />
           <Route exact path="/cv/:index" component={cvDetail} />
           <Route exact path="/main" component={Main} />
+          <Route exact path="/category/:id" component={Main} />
+          <Route exact path="/category/:id/:subId" component={Main} />
           <Route exact path="/DetailPage/:job" component={DetailPage} />
           <Route exact path="/CompanyPage/:company" component={CompanyPage} />
           <Route exact path="/MyProfilePage" component={MyProfilePage} />
+          <Route exact path="/DetailPage" component={DetailPage} />
           <Route exact path="/FilterModal" component={FilterModal} />
         </Switch>
       </Router>
