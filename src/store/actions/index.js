@@ -14,6 +14,13 @@ export const changeLogin = check => {
   }
 }
 
+export const kindLogin = kind => {
+  return {
+    type:"login_kind",
+    payload:kind
+  }  
+}
+
 // modal창 들어갔나 나오게할 action
 export const changeModal = onoff => {
   return {

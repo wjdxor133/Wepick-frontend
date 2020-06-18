@@ -2,9 +2,10 @@ import React  from "react";
 import styled from "styled-components"
 import { GoogleLogin } from "react-google-login";
 import { connect } from "react-redux";
-import { changeLogin, changeModal } from "../../store/actions";
+import { changeLogin, changeModal, kindLogin } from "../../store/actions";
+import { API } from "../../config"
 
-const GoogleLoginGo = ( { changeLogin, changeModal } ) => {
+const GoogleLoginGo = ( { changeLogin, changeModal, kindLogin } ) => {
   return (
   <GoogleLogin 
     cookiePolicy={'single_host_origin'} isSignedIn={false} 
@@ -15,35 +16,51 @@ const GoogleLoginGo = ( { changeLogin, changeModal } ) => {
         <i>Google로 시작하기</i>
       </SnsButton>  
     )}
-    onSuccess={
-      // (res) => console.log(res.accessToken)
-      // (res) => localStorage.setItem("accessToken", res.accessToken)      
+    // ////////// 로컬용 ////////////
+    // onSuccess={      
+    //   (res) => {           
+    //     localStorage.setItem("access_Token", res.wc.access_token);
+    //     const token = localStorage.getItem("access_Token")
+    //     changeModal(false);
+    //     changeLogin(true);
+    //     kindLogin("google");
+    //     document.documentElement.scrollTop=0;  
+    //     console.log("구글토큰값", token);
+    //   }            
+    // }
+    // ////////// 로컬용 ////////////
+    ////////// 서버용 ////////////
+    onSuccess={      
       (res) => {           
-        localStorage.setItem("accessToken", res.accessToken);
-        changeModal(false);
-        changeLogin(true);
-        document.documentElement.scrollTop=0;  
-        console.log("구글 접속되있음");  
-      
-        // fetch("http://10.58.5.247:8000/api/google", {
-        //   method: "POST",
-        //   headers: {
-        //     Authorization: localStorage.getItem(token, res.accessToken);,
-        //     "Content-Type": "application/json",
-        //   },
-        //   body: JSON.stringify({
-        //     access_token:token
-        //   }),                                    
-        // })
-        // .then(console.log("완료"))
-          
-      }              
-    }            
+        localStorage.setItem("googleToken", res.wc.access_token); // google 토큰 저장
+        const googleToken = localStorage.getItem("googleToken") // google 토큰 가져오기
+        fetch(`${API}/account/sociallogin`, {
+          method: "POST",
+          headers: {
+            Authorization: googleToken, // google 토큰 보내기
+            "Content-Type": "application/json",
+          }
+        })
+        .then((response) => response.json())
+        .then(
+          function SucSet(res) {
+            localStorage.setItem("access_token", res.access_token); // BackEnd에서 온 토큰 저장
+            localStorage.removeItem("googleToken"); // BackEnd 토큰 왔으니 google토큰은 제거
+            changeModal(false);
+            changeLogin(true);
+            kindLogin("google"); // login인 종류를 google로 확인해준다
+            document.documentElement.scrollTop=0;
+            console.log("토큰교환완료")
+          }
+        )
+      }            
+    }
+    ////////// 서버용 ////////////
   />
   )
 }
 
-export default connect(null, {changeLogin, changeModal})(GoogleLoginGo);
+export default connect(null, {changeLogin, changeModal, kindLogin})(GoogleLoginGo);
 
 const SnsButton = styled.button`
   outline:0;
