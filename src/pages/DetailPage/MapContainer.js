@@ -9,8 +9,6 @@ const containerStyle = {
 };
 
 const MapContainer = (props) => {
-  // console.log("props 확인", props && props.lat);
-
   return (
     <>
       {props.lat && (

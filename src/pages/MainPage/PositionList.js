@@ -20,16 +20,16 @@ const PositionList = (props) => {
         <span> {props.region} </span>
         <span> {props.country} </span>
       </PositionText>
-      <Compensation>채용보상금 {props.compensation}원</Compensation>
+      <Compensation>
+        채용보상금 {Number(props.compensation).toLocaleString()}원
+      </Compensation>
     </PositionBoxList>
   );
 };
 
 const PositionBoxList = styled.li`
-  margin-right: 1rem;
-  :last-child {
-    margin-right: 0rem;
-  }
+  width: 230px;
+  height: 400px;
   span {
     font-size: 0.875rem;
     color: ${(props) => props.theme.color.gray};
@@ -39,6 +39,7 @@ const PositionBoxList = styled.li`
 const PositionImg = styled.div`
   position: relative;
   width: 100%;
+  height: 175px;
   img {
     width: 100%;
     border-radius: 0.3em;

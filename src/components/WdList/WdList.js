@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components"
 import { withRouter } from "react-router-dom";
 
-function WdList(props) {
+const WdList = (props) => {
   return(
     <WdWrap>
       <WdTitle titleOn={props.titleName} onClick={() => props.history.push(`${props.titleUrl}`)}>
