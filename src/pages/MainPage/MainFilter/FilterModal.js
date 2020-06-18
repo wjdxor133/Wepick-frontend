@@ -3,32 +3,13 @@ import styled from "styled-components";
 import { WiRefresh } from 'react-icons/wi';
 import { IoIosClose } from "react-icons/io";
 import First from "./First";
-import Zero from "./Zero";
 import ScrollLock from "../../../Modal/ScrollLock";
 
 const FilterModal = ({ setShowModal, filter, setFilterAlign, setCountry, setRegion, setCareer, onSuccess }) => {
-    const obj = {
-        0: <Zero />,
-        1: <First filter={filter} setRegion={setRegion} setCareer={setCareer} />
-    };
-
-    const [activeTab, setActiveTab] = useState(1);
+    const [filterItem, setFilterItem] = useState("한국");
     const choiceCountry = [
         "전세계", "대만", "싱가폴", "일본", "한국", "홍콩", "기타"
     ]
-
-    const handleClick = (id) => {
-        setActiveTab(id);
-    };
-
-    const closeModal = () => {
-        setShowModal(false);
-    }
-
-    const curAlign = (e) => {
-        setFilterAlign = e.target.value;
-        console.log(setFilterAlign);
-    }
 
     ScrollLock();
 
@@ -41,14 +22,14 @@ const FilterModal = ({ setShowModal, filter, setFilterAlign, setCountry, setRegi
                     </div>
                     <div className="filterTitle">필터</div>
                     <div className="closeIcon">
-                        <IoIosClose size="35" color="#999" onClick={closeModal} />
+                        <IoIosClose size="35" color="#999" onClick={() => setShowModal(false)} />
                     </div>
                 </FilterTop>
                 <FilterMain>
                     <AlignBox className="marginBottom">
                         <p className="pTag">정렬</p>
                         <label>
-                            <select onChange={curAlign}>
+                            <select onChange={(e) => setFilterAlign(e.target.value)}>
                                 <option>최신순</option>
                                 <option>보상금순</option>
                                 <option>인기순</option>
@@ -60,26 +41,19 @@ const FilterModal = ({ setShowModal, filter, setFilterAlign, setCountry, setRegi
                         <ChoiceBox>
                             {
                                 choiceCountry && choiceCountry.map((choice, idx) => {
-                                    if (choice === "한국") {
-                                        return (
-                                            <li onClick={() => handleClick(1)}>{choice}</li>
-                                        );
-                                    } else {
-                                        return (
-                                            <li onClick={() => handleClick(0)}>{choice}</li>
-                                        );
-                                    }
+                                    return <li onClick={() => setFilterItem(choice)
+                                    } style={{ backgroundColor: filterItem === choice ? '#2986FA' : '#F8F8FA', color: filterItem === choice ? 'white' : '#333333' }}>{choice}</li>
                                 })
                             }
                         </ChoiceBox>
                     </CountryBox>
-                    <div className="contents">{obj[activeTab]}</div>
+                    <div className="contents"><First filter={filter} filterItem={filterItem} setRegion={setRegion} setCareer={setCareer} /></div>
                 </FilterMain>
                 <FilterBottom onClick={onSuccess}>
                     <div>적용</div>
                 </FilterBottom>
             </Filter>
-        </ShareModaIn>
+        </ShareModaIn >
     );
 }
 

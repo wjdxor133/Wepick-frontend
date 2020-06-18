@@ -31,10 +31,11 @@ const ProfileIn = styled.div`
   width: 100%;
   background-color: white;
   border: 1px solid #e1e2e3;
+  padding: 1em;
   h1 {
     padding: 1em;
-    font-size: 1.2rem;
-    font-weight: 700;
+    font-size: 1.25rem;
+    font-weight: 600;
   }
 
   .profileContent {
@@ -42,6 +43,10 @@ const ProfileIn = styled.div`
 
     .contentItem {
       margin: 1em 0;
+      :last-child{
+        border-top: 1px solid #e1e2e3;
+        padding-top: 1.5em;
+      }
     }
   }
 `;
@@ -51,14 +56,14 @@ const Text = styled.p`
   ${(props) =>
     props.gray &&
     css`
-      font-weight: 500;
+      /* font-weight: 500; */
       color: #999;
     `}
 
   ${(props) =>
     props.black &&
     css`
-      font-weight: 650;
+      font-weight: 500;
     `}
 `;
 
