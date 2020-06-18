@@ -7,6 +7,7 @@ import cv from "./pages/CvPage/CvPage";
 import Main from "./pages/MainPage/MainPage";
 import DetailPage from "./pages/DetailPage/DetailPage";
 import CompanyPage from "./pages/CompanyPage/CompanyPage";
+import MyProfilePage from "./pages/MyProfilePage/MyProfilePage";
 
 class Routes extends Component {
   render() {
@@ -18,8 +19,9 @@ class Routes extends Component {
           <Route exact path="/cv" component={cv} />
 
           <Route exact path="/main" component={Main} />
-          <Route exact path="/DetailPage" component={DetailPage} />
-          <Route exact path="/CompanyPage" component={CompanyPage} />
+          <Route exact path="/DetailPage/:job" component={DetailPage} />
+          <Route exact path="/CompanyPage/:company" component={CompanyPage} />
+          <Route exact path="/MyProfilePage" component={MyProfilePage} />
         </Switch>
       </Router>
     );

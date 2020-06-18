@@ -11,12 +11,14 @@ import { IoIosArrowDown } from "react-icons/io";
 import { IoIosArrowUp } from "react-icons/io";
 import { FiCheck } from "react-icons/fi";
 
-const CompanyPage = () => {
+const CompanyPage = (props) => {
   const [companyDate, setCompanyDate] = useState([]);
   const [viewMoreCheck, setViewMoreCheck] = useState(false);
   const [detailViewMore, setDetailViewMore] = useState(false);
   const [blur, setBlur] = useState(false);
   const [followValue, setFollowValue] = useState();
+
+  // console.log("props", props);
 
   const viewMoreBtn = (more) => {
     if (more === "contentMore") {
@@ -30,13 +32,17 @@ const CompanyPage = () => {
 
   const followBtnClick = () => {
     setFollowValue(!followValue);
+    const token = localStorage.getItem("access_token");
+
+    // 팔로우 버튼 값 변경
     fetch(
-      `${API}/company/follow?account_id=1&company_id=${
+      `${API}/company/follow?company_id=${
         companyDate.length > 0 && companyDate[0].id
       }`,
       {
         method: "POST",
         headers: {
+          Authorization: token,
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
@@ -47,24 +53,32 @@ const CompanyPage = () => {
   };
 
   const checkToken = () => {
-    if (!localStorage.getItem("token")) {
+    if (!localStorage.getItem("access_token")) {
       setBlur(true);
     }
   };
 
   useEffect(() => {
     // 회사 디테일 페이지 데이터
-    fetch("/data/teak2Data/CompanyPageMock.json")
-      // fetch(`${API}/company/151`)
+    // fetch("/data/teak2Data/CompanyPageMock.json")
+    const token = localStorage.getItem("access_token");
+
+    fetch(`${API}/company/${props.match.params.company}`)
       .then((res) => res.json())
       .then((res) => {
         setCompanyDate(res.data);
       });
 
+    // 팔로우 데이터 가져오기
     fetch(
-      `${API}/company/follow?account_id=1&company_id=${
+      `${API}/company/follow?company_id=${
         companyDate.length > 0 && companyDate[0].id
-      }`
+      }`,
+      {
+        headers: {
+          Authorization: token,
+        },
+      }
     )
       .then((res) => res.json())
       .then((res) => {
@@ -100,137 +114,123 @@ const CompanyPage = () => {
           </Button>
         </FollowBox>
       </CompanyFollow>
-      <CompanyPageIn>
-        <CompanyPageLeft>
-          <Text companyPosition>채용 중인 포지션</Text>
-          <div className="companyJobList">
-            {detailViewMore
-              ? companyDate.length > 0 &&
-                companyDate[0].jobs.map((jobs, idx) => {
-                  return <CompanyPosition key={idx} jobs={jobs} />;
-                })
-              : companyDate.length > 0 &&
-                companyDate[0].jobs
-                  .filter((jobs, idx) => {
-                    return jobs && idx < 4;
-                  })
-                  .map((jobs, idx) => {
+      {companyDate.length > 0 && (
+        <CompanyPageIn>
+          <CompanyPageLeft>
+            <Text companyPosition>채용 중인 포지션</Text>
+            <div className="companyJobList">
+              {detailViewMore
+                ? companyDate[0].jobs.map((jobs, idx) => {
                     return <CompanyPosition key={idx} jobs={jobs} />;
-                  })}
-            <div
-              className="detailMore"
-              onClick={() => viewMoreBtn("detailMore")}
-              style={{
-                display:
-                  companyDate.length > 0 && companyDate[0].jobs.length < 5
-                    ? "none"
-                    : "block",
-              }}
-            >
-              <div className="detailMoreItem">
-                <p>{detailViewMore ? "접기" : "더 많은 포지션 보기"}</p>
-                {detailViewMore ? (
-                  <IoIosArrowUp size="15" />
-                ) : (
-                  <IoIosArrowDown size="15" />
-                )}
+                  })
+                : companyDate[0].jobs
+                    .filter((jobs, idx) => {
+                      return jobs && idx < 4;
+                    })
+                    .map((jobs, idx) => {
+                      return <CompanyPosition key={idx} jobs={jobs} />;
+                    })}
+              <div
+                className="detailMore"
+                onClick={() => viewMoreBtn("detailMore")}
+                style={{
+                  display: companyDate[0].jobs.length < 5 ? "none" : "block",
+                }}
+              >
+                <div className="detailMoreItem">
+                  <p>{detailViewMore ? "접기" : "더 많은 포지션 보기"}</p>
+                  {detailViewMore ? (
+                    <IoIosArrowUp size="15" />
+                  ) : (
+                    <IoIosArrowDown size="15" />
+                  )}
+                </div>
               </div>
             </div>
-          </div>
-          <Text companyPosition>회사 소개</Text>
-          <div className="imgSlides">
-            <Slider
-              width={800}
-              slides={companyDate.length > 0 && companyDate[0].images}
+            <Text companyPosition>회사 소개</Text>
+            <div className="imgSlides">
+              <Slider width={800} slides={companyDate[0].images} />
+            </div>
+            <InnerHTML
+              dangerouslySetInnerHTML={
+                viewMoreCheck
+                  ? {
+                      __html: companyDate[0].article,
+                    }
+                  : {
+                      __html: companyDate[0].article.slice(0, 150) + `...`,
+                    }
+              }
             />
-          </div>
-          <InnerHTML
-            dangerouslySetInnerHTML={
-              viewMoreCheck
-                ? {
-                    __html: companyDate.length > 0 && companyDate[0].article,
-                  }
-                : {
-                    __html:
-                      companyDate.length > 0 &&
-                      companyDate[0].article.slice(0, 150) + `...`,
-                  }
-            }
-          />
-          <div className="viewMore" onClick={() => viewMoreBtn("contentMore")}>
-            <p>{viewMoreCheck ? "접기" : "더 보기"}</p>
-            {viewMoreCheck ? (
-              <IoIosArrowUp size="15" />
-            ) : (
-              <IoIosArrowDown size="15" />
-            )}
-          </div>
-          <AverageSalary blur={blur}>
-            <div className="blurBox" style={{ position: "relative" }}>
-              <div className="SalaryBox">
-                <div className="SalaryBoxTitle">
-                  <Text companyPosition>평균 연봉</Text>
-                  <Text gray>출처: 국민연금</Text>
-                </div>
-                <div className="SalaryBoxIn">
-                  <div className="SalaryBoxLeft">
-                    <Text gray>신규 입사자</Text>
-                    <Text Salary>
-                      {companyDate.length > 0 &&
-                        companyDate[0].salary_new.slice(0, 1) +
+            <div
+              className="viewMore"
+              onClick={() => viewMoreBtn("contentMore")}
+            >
+              <p>{viewMoreCheck ? "접기" : "더 보기"}</p>
+              {viewMoreCheck ? (
+                <IoIosArrowUp size="15" />
+              ) : (
+                <IoIosArrowDown size="15" />
+              )}
+            </div>
+            <AverageSalary blur={blur}>
+              <div className="blurBox" style={{ position: "relative" }}>
+                <div className="SalaryBox">
+                  <div className="SalaryBoxTitle">
+                    <Text companyPosition>평균 연봉</Text>
+                    <Text gray>출처: 국민연금</Text>
+                  </div>
+                  <div className="SalaryBoxIn">
+                    <div className="SalaryBoxLeft">
+                      <Text gray>신규 입사자</Text>
+                      <Text Salary>
+                        {companyDate[0].salary_new.slice(0, 1) +
                           "," +
                           companyDate[0].salary_new.slice(1, 4) +
                           " 만원"}
-                    </Text>
-                  </div>
-                  <div className="SalaryBoxRight">
-                    <Text gray>전체</Text>
-                    <Text Salary>
-                      {companyDate.length > 0 &&
-                        companyDate[0].salary_all.slice(0, 1) +
+                      </Text>
+                    </div>
+                    <div className="SalaryBoxRight">
+                      <Text gray>전체</Text>
+                      <Text Salary>
+                        {companyDate[0].salary_all.slice(0, 1) +
                           "," +
                           companyDate[0].salary_all.slice(1, 4) +
                           " 만원"}
-                    </Text>
+                      </Text>
+                    </div>
+                  </div>
+                </div>
+                <div className="numEmployees">
+                  <div className="EmployeesTitle">
+                    <Text companyPosition>직원수</Text>
+                    <Text gray>출처: 국민연금</Text>
+                  </div>
+                  <div className="EmployeesContent">
+                    <div>
+                      <Text gray>전체 인원</Text>
+                      <Text Salary>{companyDate[0].employees.slice(0, 2)}</Text>
+                    </div>
                   </div>
                 </div>
               </div>
-              <div className="numEmployees">
-                <div className="EmployeesTitle">
-                  <Text companyPosition>직원수</Text>
-                  <Text gray>출처: 국민연금</Text>
-                </div>
-                <div className="EmployeesContent">
-                  <div>
-                    <Text gray>전체 인원</Text>
-                    <Text Salary>
-                      {companyDate.length > 0 &&
-                        companyDate[0].employees.slice(0, 2)}
-                    </Text>
-                  </div>
-                </div>
-              </div>
-            </div>
-            {blur ? <SalaryPopup /> : null}
-          </AverageSalary>
-          <News>
-            <Text companyPosition>이 회사의 뉴스</Text>
-            <Link
-              className="newsBox"
-              href={companyDate.length > 0 && companyDate[0].news[0].url}
-              target="_blank"
-            >
-              <Text newsTitle>
-                {companyDate.length > 0 && companyDate[0].news[0].name}
-              </Text>
-              <Text newsData>
-                {companyDate.length > 0 && companyDate[0].news[0].source}
-              </Text>
-            </Link>
-          </News>
-        </CompanyPageLeft>
-        <CompanyPageRight></CompanyPageRight>
-      </CompanyPageIn>
+              {blur ? <SalaryPopup /> : null}
+            </AverageSalary>
+            <News>
+              <Text companyPosition>이 회사의 뉴스</Text>
+              <Link
+                className="newsBox"
+                href={companyDate[0].news[0].url}
+                target="_blank"
+              >
+                <Text newsTitle>{companyDate[0].news[0].name}</Text>
+                <Text newsData>{companyDate[0].news[0].source}</Text>
+              </Link>
+            </News>
+          </CompanyPageLeft>
+          <CompanyPageRight></CompanyPageRight>
+        </CompanyPageIn>
+      )}
       <Footer />
     </>
   );

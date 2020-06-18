@@ -4,8 +4,6 @@ import Slide from "./Slide";
 import Arrow from "./Arrow";
 
 const Slider = (props) => {
-  console.log("props.slides", props);
-
   const [state, setState] = useState({
     activeIndex: 0,
     translate: 0,

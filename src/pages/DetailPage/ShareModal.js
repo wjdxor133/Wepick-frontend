@@ -6,8 +6,6 @@ import { GoCheck } from "react-icons/go";
 import { IoIosClose } from "react-icons/io";
 
 const ShareModal = ({ setShowModal }) => {
-  // console.log(props);
-  // const { setShowModal } = props;
   const [copyIcon, setCopyIcon] = useState(false);
   const onChangeIcon = () => {
     setCopyIcon(true);
