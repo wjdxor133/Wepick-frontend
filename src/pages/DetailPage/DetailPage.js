@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled, { css } from "styled-components";
 import Nav from "../../components/Nav/Nav";
-import Footer from "../../components/Footer/Footer"
+import Footer from "../../components/Footer/Footer";
 import Slider from "../../components/Slider/Slider";
 import ModalPortal from "../../Modal/ModalPortal";
 import ShareModal from "./ShareModal";
@@ -18,17 +18,58 @@ const DetailPage = (props) => {
   const [detailList, setDetailList] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [apply, setApply] = useState(false);
-  const [likeColor, setLikeColor] = useState(false);
-  const [bookMarkColor, setBookMarkColor] = useState(false);
-  const [followColor, setFollowColor] = useState(false);
+  const [likeValue, setLikeValue] = useState(undefined);
+  const [likeCount, setlikeCount] = useState();
+  const [bookMarkValue, setBookMarkValue] = useState(false);
+  const [followValue, setFollowValue] = useState(undefined);
+
+  // console.log("props", props);
 
   useEffect(() => {
-    // fetch(`${API}/job/36`)
     // 채용 디테일 페이지 모든 데이터
-    fetch("/data/teak2Data/DetailPageMock.json")
+    // fetch("/data/teak2Data/DetailPageMock.json")
+
+    // 토큰값 받기
+    const token = localStorage.getItem("access_token");
+
+    fetch(`${API}/job/${props.match.params.job}`)
       .then((res) => res.json())
       .then((res) => {
         setDetailData(res.data);
+        setlikeCount(res.data[0].likes);
+      });
+
+    // like 상태 값 받기
+    fetch(`${API}/job/like?job_id=${props.match.params.job}`, {
+      headers: {
+        Authorization: token,
+      },
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        setLikeValue(res.is_like);
+      });
+
+    // 북마크 상태 값 받기
+    fetch(`${API}/job/bookmark?job_id=${props.match.params.job}`, {
+      headers: {
+        Authorization: token,
+      },
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        setBookMarkValue(res.is_bookmark);
+      });
+
+    // 팔로우 상태 값 받기
+    fetch(`${API}/company/follow?company_id=${props.match.params.job}`, {
+      headers: {
+        Authorization: token,
+      },
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        setFollowValue(res.is_follow);
       });
 
     //원티드 추천 공고 데이터
@@ -38,8 +79,6 @@ const DetailPage = (props) => {
         setDetailList(res.position);
       });
   }, []);
-  // console.log("detailList", detailList);
-  // console.log("detailData", detailData.images && detailData.images.length);
 
   // 로그인 여부에 따라 다른 모달창이 뜸
   const checkToken = () => {
@@ -51,7 +90,7 @@ const DetailPage = (props) => {
     }
   };
 
-  const ClickOfAll = (event) => {
+  const Click = (event) => {
     if (event === "apply") {
       setApply(true);
     }
@@ -61,23 +100,82 @@ const DetailPage = (props) => {
     }
 
     if (event === "like") {
-      setLikeColor(!likeColor);
+      setLikeValue(!likeValue);
+      if (likeValue) {
+        setlikeCount(likeCount - 1);
+      } else {
+        setlikeCount(likeCount + 1);
+      }
+
+      const token = localStorage.getItem("access_token");
+      // like 상태 값 보내기
       // 백엔드에 true, false 값을 보내야 함
+      fetch(
+        `${API}/job/like?account_id=1&job_id=${
+          detailData.length > 0 && detailData[0].id
+        }`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: token,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            is_like: likeValue,
+          }),
+        }
+      );
     }
 
     if (event === "bookMark") {
-      setBookMarkColor(!bookMarkColor);
+      setBookMarkValue(!bookMarkValue);
+
+      const token = localStorage.getItem("access_token");
+      fetch(
+        `${API}/job/bookmark?account_id=1&job_id=${
+          detailData.length > 0 && detailData[0].id
+        }`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: token,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            is_bookmark: bookMarkValue,
+          }),
+        }
+      );
+
       // 백엔드에 true, false 값을 보내야 함
     }
 
     if (event === "follow") {
-      setFollowColor(!followColor);
+      setFollowValue(!followValue);
+
+      const token = localStorage.getItem("access_token");
+      fetch(
+        `${API}/company/follow?account_id=1&company_id=${
+          detailData.length > 0 && detailData[0].id
+        }`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: token,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            is_follow: followValue,
+          }),
+        }
+      );
     }
   };
 
+  console.log("likeCount", likeCount);
   return (
     <>
-      <Nav/>
+      <Nav />
       {showModal ? (
         <ModalPortal elementId="modal">
           <ShareModal showModal={showModal} setShowModal={setShowModal} />
@@ -87,7 +185,7 @@ const DetailPage = (props) => {
         <DetailPageIn>
           <DetailPageBox>
             <PageLeft>
-              <Slider slides={detailData[0].images} />
+              <Slider width={700} slides={detailData[0].images} />
               <div className="jobTitle">
                 <h3>{detailData[0].name}</h3>
                 <div className="TitleText">
@@ -133,16 +231,16 @@ const DetailPage = (props) => {
                 </div>
                 <Button
                   shape="follow"
-                  color={followColor}
+                  color={followValue}
                   onClick={() => {
-                    ClickOfAll("follow");
+                    Click("follow");
                   }}
                 >
                   <div className="followBox">
                     <div className="followIcon">
                       <FiCheck size="15" />
                     </div>
-                    {followColor ? "팔로잉" : "팔로우"}
+                    {followValue ? "팔로잉" : "팔로우"}
                   </div>
                 </Button>
               </FollowBox>
@@ -174,7 +272,7 @@ const DetailPage = (props) => {
                       <Button
                         shape="share"
                         onClick={() => {
-                          ClickOfAll("modal");
+                          Click("modal");
                         }}
                       >
                         공유하기
@@ -186,14 +284,14 @@ const DetailPage = (props) => {
                           <div
                             className="Bottom1"
                             onClick={() => {
-                              ClickOfAll("like");
+                              Click("like");
                             }}
                           >
                             <AiFillHeart
                               size="16"
-                              color={likeColor ? "red" : "#e1e2e3"}
+                              color={likeValue ? "red" : "#e1e2e3"}
                             />
-                            <p className="likeCount"> {detailData[0].likes}</p>
+                            <p className="likeCount">{likeCount}</p>
                           </div>
                           <ul className="Bottom2">
                             {/* 이미지를 배열로 받아서 뿌려야 함 */}
@@ -223,9 +321,9 @@ const DetailPage = (props) => {
                         <div className="Bottom3">
                           <BsFillBookmarkFill
                             size="15"
-                            color={bookMarkColor ? "#258bf7" : "#e1e2e3"}
+                            color={bookMarkValue ? "#258bf7" : "#e1e2e3"}
                             onClick={() => {
-                              ClickOfAll("bookMark");
+                              Click("bookMark");
                             }}
                           />
                         </div>
@@ -234,7 +332,7 @@ const DetailPage = (props) => {
                     <Button
                       shape="apply"
                       onClick={() => {
-                        ClickOfAll("apply");
+                        Click("apply");
                       }}
                     >
                       지원하기
@@ -247,7 +345,7 @@ const DetailPage = (props) => {
           <PageBottom>
             <h3>원티드 추천 공고</h3>
             <ul className="HireList">
-              {detailList.map((myData, idx) => {
+              {detailList.map((myData) => {
                 return (
                   <PositionList
                     key={myData.idx}
@@ -273,7 +371,7 @@ const DetailPage = (props) => {
 
 const DetailPageIn = styled.div`
   max-width: 1060px;
-  padding: 50px 3em 0;
+  padding: 50px 0;
   margin: 0 auto;
 `;
 
@@ -350,9 +448,9 @@ const PageRight = styled.div`
 
 const PageBottom = styled.div`
   width: 100%;
-  margin: 5em 0 6em;
+  margin-top: 5em;
   h3 {
-    font-size: 1.15rem;
+    font-size: 1.2rem;
     font-weight: 700;
     color: #333;
     margin: 1em 0;
@@ -370,6 +468,7 @@ const Fixed = styled.div`
   position: sticky;
   top: 50px;
 `;
+
 const CompensationBox = styled.div`
   border: 1px solid #e1e2e3;
   border-radius: 3px;

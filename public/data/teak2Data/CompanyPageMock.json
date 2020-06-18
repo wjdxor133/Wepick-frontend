@@ -1,0 +1,68 @@
+{
+  "data": [
+    {
+      "id": 15,
+      "name": "페니로이스",
+      "logo_url": "https://static.wanted.co.kr/images/wdes/0_4.ec7680aa.png",
+      "article": "<span>페니로이스는 빅데이터 분석 및 예측 모델링을 통해 금융기관들의 다양한 모형 및 전략을 개발하는 전문 컨설팅회사입니다. 국내외 금융기관을 대상으로 다양한 컨설팅 프로젝트를 수행하고 있으며 특히, 신용평가모델링과 전략 부문에서 뛰어난 성과를 인정받고 있습니다. 최근에는 핀테크 사업분야로 사세를 확장하여 금융소비자를 위한 앱 “알다”로 알려진 “팀윙크”를 특수 관계사로 두고 My Data 사업에 적극적으로 참여하고 있습니다. 당사는 소비자에게 더 많은 금융 혜택과 금융 권리를 찾을 수 있도록 다양한 전략 및 서비스 개발을 통해 국내 금융산업의 발전에 기여하고자 합니다.<br>당사의 주력 사업분야는 다음과 같습니다.<br> - Scoring Modeling &amp; Analytic Strategy Consulting<br> - Optimization Consulting<br> - Big Data Analysis &amp; Marketing Strategy Consulting<br> - Compliance Consulting<br> - 마이 데이터(Mydata)<br>당사의 컨설턴트들은 국내/외 전문 컨설팅사 및 금융기관을 거쳐온 전문가들입니다. 이들은 국내/외의 선진 기술을 융화하여, 페니로이스만의 데이터기반 문제해결 방법론을 개발하고, 실제 프로젝트에 적용하여 뛰어난 기술력을 입증하고 있습니다.<br>금융분야의 비즈니스 분석 전문가이신가요? <br>금융 업무 또는 활용되는 AI 알고리즘에 관심이 많으신 데이터 사이언티스트 이신가요 ?<br>그렇다면, 페니로이스에 지원하십시오!</span><br><br><a href=\"http://www.panirois.com\" target=\"_blank\" rel=\"noopener noreferrer\">http://www.panirois.com</a><br>",
+      "salary_new": "2540.00",
+      "salary_all": "3740.00",
+      "employees": "68.00",
+      "images": [
+        {
+          "name": "first",
+          "url": "https://static.wanted.co.kr/images/company/8767/jxzzx9eicgtbsp3x__1080_790.jpg"
+        },
+        {
+          "name": "second",
+          "url": "https://static.wanted.co.kr/images/company/8767/le4d6917aky3r1jt__1080_790.jpg"
+        }
+      ],
+      "news": [
+        {
+          "name": "OK저축은행, 모든 대출상품 심사에 AI 기술 도입 - 대한금융신문",
+          "source": "kbanker.co.kr 2018.1.4",
+          "url": "https://www.kbanker.co.kr/news/articleView.html?idxno=70950"
+        }
+      ],
+      "jobs": [
+        {
+          "name": "Data based Strategy Consultant",
+          "reward_amount": "1000000.00",
+          "deadline": "2020.06.14",
+          "likes": 0
+        },
+        {
+          "name": "Data based Strategy Consultant",
+          "reward_amount": "1000000.00",
+          "deadline": "2020.06.14",
+          "likes": 0
+        },
+        {
+          "name": "Data based Strategy Consultant",
+          "reward_amount": "1000000.00",
+          "deadline": "2020.06.14",
+          "likes": 0
+        },
+        {
+          "name": "Data based Strategy Consultant",
+          "reward_amount": "1000000.00",
+          "deadline": "2020.06.14",
+          "likes": 0
+        },
+        {
+          "name": "Data based Strategy Consultant",
+          "reward_amount": "1000000.00",
+          "deadline": "2020.06.14",
+          "likes": 0
+        },
+        {
+          "name": "Data based Strategy Consultant",
+          "reward_amount": "1000000.00",
+          "deadline": "2020.06.14",
+          "likes": 0
+        }
+      ]
+    }
+  ]
+}
