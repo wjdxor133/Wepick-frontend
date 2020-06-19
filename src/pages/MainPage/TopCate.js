@@ -1,11 +1,21 @@
 import React from "react";
 import styled from "styled-components";
+import { BrowserRouter as Link, useHistory } from "react-router-dom";
+// import { API } from "../../config";
 
 const TopCate = (props) => {
+    let history = useHistory();
+
+    const clickCate = (id) => {
+        history.push(`/job/category/${id}`);
+    }
+
     return (
-        <TopCateList img={props.backImg} >
-            <p>{props.main_category_id}</p>
-        </TopCateList>
+        <Link>
+            <TopCateList img={props.backImg} onClick={() => { clickCate(props.id) }}>
+                <p>{props.main_category_id}</p>
+            </TopCateList>
+        </Link>
     );
 }
 

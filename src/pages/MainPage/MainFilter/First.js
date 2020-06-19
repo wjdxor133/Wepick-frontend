@@ -1,25 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 
-const First = ({ filter, setCareer, setRegion }) => {
+const First = ({ filter, filterItem, setCareer }) => {
+    const [filterRegion, setFilterRegion] = useState("전국")
     const career = (e) => {
         setCareer = e.target.value;
         console.log(setCareer);
     }
 
-    const country = (e) => {
-        setRegion = e.target.name;
-        console.log(setRegion);
-    }
-
     return (
         <>
-            <Area className="marginBottom">
+            <Area className="marginBottom" isActive={filterItem}>
                 <p className="pTag">지역</p>
                 <ChoiceBox>
                     {
                         filter && filter.map((region, idx) => {
-                            return (<li onClick={country}>{region.name}</li>);
+                            return <li onClick={() => setFilterRegion(region.name)} style={{ backgroundColor: filterRegion === region.name ? '#2986FA' : '#F8F8FA', color: filterRegion === region.name ? 'white' : '#333333' }}>{region.name}</li>
                         })
                     }
                 </ChoiceBox>
@@ -52,7 +48,7 @@ const First = ({ filter, setCareer, setRegion }) => {
 }
 
 const Area = styled.div`
-
+    display: ${props => props.isActive === "한국" ? "block" : "none"};
 `;
 
 const AlignBox = styled.div`

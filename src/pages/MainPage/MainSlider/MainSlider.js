@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { BsChevronLeft } from "react-icons/bs";
 import { BsChevronRight } from "react-icons/bs";
@@ -13,6 +13,20 @@ const MainSlider = (props) => {
     });
 
     const { translate, transition, activeIndex, width } = state;
+    const autoPlayRef = useRef()
+
+    useEffect(() => {
+        autoPlayRef.current = nextSlide
+    })
+
+    useEffect(() => {
+        const play = () => {
+            autoPlayRef.current()
+        }
+
+        const interval = setInterval(play, props.autoPlay * 2000)
+        return () => clearInterval(interval)
+    }, [])
 
     const nextSlide = () => {
         if (activeIndex === (props.slides && props.slides.length - 1)) {
@@ -65,14 +79,16 @@ const MainSlider = (props) => {
                     {mainImg}
                 </MainBox>
             </Slider>
-            <MainButton>
-                <div>
-                    <BsChevronLeft direction="left" onClick={prevSlide} />
-                </div>
-                <div>
-                    <BsChevronRight direction="right" onClick={nextSlide} />
-                </div>
-            </MainButton>
+            {props.autoPlay && (
+                <MainButton>
+                    <div>
+                        <BsChevronLeft direction="left" onClick={prevSlide} />
+                    </div>
+                    <div>
+                        <BsChevronRight direction="right" onClick={nextSlide} />
+                    </div>
+                </MainButton>
+            )}
         </>
     );
 }
@@ -101,13 +117,19 @@ display: flex;
 font-size: 1rem;
 margin-right: calc((100vw - 1060px) / 2);
 div{
-  background-color: white;
+  background-color: rgba(250, 250, 250, 0.8);
   border-radius: 100;
   width: 45px;
   height: 45px;
   text-align: center;
   line-height: 3.3em;
   border-radius: 100%;
+  :first-child{
+      margin-right: .5em;
+  }
+}
+&:hover {
+    cursor: pointer;
 }
 `;
 

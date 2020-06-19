@@ -34,6 +34,9 @@ const PositionBoxList = styled.li`
     font-size: 0.875rem;
     color: ${(props) => props.theme.color.gray};
   }
+  &:hover {
+      cursor: pointer;
+    }
 `;
 
 const PositionImg = styled.div`

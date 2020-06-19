@@ -112,7 +112,7 @@ const DetailPage = (props) => {
       // 백엔드에 true, false 값을 보내야 함
       fetch(
         `${API}/job/like?account_id=1&job_id=${
-          detailData.length > 0 && detailData[0].id
+        detailData.length > 0 && detailData[0].id
         }`,
         {
           method: "POST",
@@ -133,7 +133,7 @@ const DetailPage = (props) => {
       const token = localStorage.getItem("access_token");
       fetch(
         `${API}/job/bookmark?account_id=1&job_id=${
-          detailData.length > 0 && detailData[0].id
+        detailData.length > 0 && detailData[0].id
         }`,
         {
           method: "POST",
@@ -156,7 +156,7 @@ const DetailPage = (props) => {
       const token = localStorage.getItem("access_token");
       fetch(
         `${API}/company/follow?account_id=1&company_id=${
-          detailData.length > 0 && detailData[0].id
+        detailData.length > 0 && detailData[0].id
         }`,
         {
           method: "POST",
@@ -194,7 +194,7 @@ const DetailPage = (props) => {
                     <span className="Benchmark">|</span>
                     <span>
                       {detailData[0].region}
-                      <span> . </span>
+                      •
                       {detailData[0].country}
                     </span>
                   </div>
@@ -250,95 +250,95 @@ const DetailPage = (props) => {
                 {apply ? (
                   <DetailApply setApply={setApply} />
                 ) : (
-                  <div>
-                    <CompensationBox>
-                      <p className="CompensationTitle">채용보상금</p>
-                      <div className="boxTop">
-                        <div className="item1">
-                          <span className="person">추천인</span>
-                          <p>
-                            {detailData[0].referer_amount.slice(0, 3) + ",000"}
+                    <div>
+                      <CompensationBox>
+                        <p className="CompensationTitle">채용보상금</p>
+                        <div className="boxTop">
+                          <div className="item1">
+                            <span className="person">추천인</span>
+                            <p className="money">
+                              {detailData[0].referer_amount.slice(0, 3) + ",000"}
                             원
                           </p>
-                        </div>
-                        <div className="item1">
-                          <span className="person">지원자</span>
-                          <p>
-                            {detailData[0].fereree_amount.slice(0, 3) + ",000"}
+                          </div>
+                          <div className="item1">
+                            <span className="person">지원자</span>
+                            <p className="money">
+                              {detailData[0].fereree_amount.slice(0, 3) + ",000"}
                             원
                           </p>
+                          </div>
                         </div>
-                      </div>
+                        <Button
+                          shape="share"
+                          onClick={() => {
+                            Click("modal");
+                          }}
+                        >
+                          공유하기
+                      </Button>
+                      </CompensationBox>
+                      <CompensationIcon>
+                        <div className="boxBottom">
+                          <div className="BottomLeft">
+                            <div
+                              className="Bottom1"
+                              onClick={() => {
+                                Click("like");
+                              }}
+                            >
+                              <AiFillHeart
+                                size="16"
+                                color={likeValue ? "red" : "#e1e2e3"}
+                              />
+                              <p className="likeCount">{likeCount}</p>
+                            </div>
+                            <ul className="Bottom2">
+                              {/* 이미지를 배열로 받아서 뿌려야 함 */}
+                              <li>
+                                <img
+                                  className="profileImg1"
+                                  src="https://lh5.googleusercontent.com/-0RCDys4PImk/AAAAAAAAAAI/AAAAAAAAAAA/AMZuucnGJA6X_ZtFqyfoXJLaJebV-YCeOg/s96-c/photo.jpg"
+                                  alt="profile1.png"
+                                ></img>
+                              </li>
+                              <li>
+                                <img
+                                  className="profileImg2"
+                                  src="https://s3.ap-northeast-2.amazonaws.com/wanted-public/profile_default.png"
+                                  alt="profile2.png"
+                                ></img>
+                              </li>
+                              <li>
+                                <img
+                                  className="profileImg3"
+                                  src="https://s3.ap-northeast-2.amazonaws.com/wanted-public/profile_default.png"
+                                  alt="profile3.png"
+                                ></img>
+                              </li>
+                            </ul>
+                          </div>
+                          <div className="Bottom3">
+                            <BsFillBookmarkFill
+                              size="18"
+                              color={bookMarkValue ? "#258bf7" : "#e1e2e3"}
+                              onClick={() => {
+                                Click("bookMark");
+                              }}
+                            />
+                          </div>
+                        </div>
+                      </CompensationIcon>
                       <Button
-                        shape="share"
+                        shape="apply"
                         onClick={() => {
-                          Click("modal");
+                          Click("apply");
                         }}
                       >
-                        공유하기
-                      </Button>
-                    </CompensationBox>
-                    <CompensationIcon>
-                      <div className="boxBottom">
-                        <div className="BottomLeft">
-                          <div
-                            className="Bottom1"
-                            onClick={() => {
-                              Click("like");
-                            }}
-                          >
-                            <AiFillHeart
-                              size="16"
-                              color={likeValue ? "red" : "#e1e2e3"}
-                            />
-                            <p className="likeCount">{likeCount}</p>
-                          </div>
-                          <ul className="Bottom2">
-                            {/* 이미지를 배열로 받아서 뿌려야 함 */}
-                            <li>
-                              <img
-                                className="profileImg1"
-                                src="https://lh5.googleusercontent.com/-0RCDys4PImk/AAAAAAAAAAI/AAAAAAAAAAA/AMZuucnGJA6X_ZtFqyfoXJLaJebV-YCeOg/s96-c/photo.jpg"
-                                alt="profile1.png"
-                              ></img>
-                            </li>
-                            <li>
-                              <img
-                                className="profileImg2"
-                                src="https://s3.ap-northeast-2.amazonaws.com/wanted-public/profile_default.png"
-                                alt="profile2.png"
-                              ></img>
-                            </li>
-                            <li>
-                              <img
-                                className="profileImg3"
-                                src="https://s3.ap-northeast-2.amazonaws.com/wanted-public/profile_default.png"
-                                alt="profile3.png"
-                              ></img>
-                            </li>
-                          </ul>
-                        </div>
-                        <div className="Bottom3">
-                          <BsFillBookmarkFill
-                            size="15"
-                            color={bookMarkValue ? "#258bf7" : "#e1e2e3"}
-                            onClick={() => {
-                              Click("bookMark");
-                            }}
-                          />
-                        </div>
-                      </div>
-                    </CompensationIcon>
-                    <Button
-                      shape="apply"
-                      onClick={() => {
-                        Click("apply");
-                      }}
-                    >
-                      지원하기
+                        지원하기
                     </Button>
-                  </div>
-                )}
+                    </div>
+                  )}
               </Fixed>
             </PageRight>
           </DetailPageBox>
@@ -387,9 +387,9 @@ const PageLeft = styled.div`
   .jobTitle {
     margin-top: 2em;
     h3 {
-      font-size: 1.2rem;
-      font-weight: 700;
-      margin-bottom: 0.6em;
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 0.4em;
       color: #333;
     }
 
@@ -398,7 +398,8 @@ const PageLeft = styled.div`
       font-size: 0.85rem;
 
       .TextLeft {
-        font-weight: 700;
+        font-size: 0.875rem;
+        font-weight: 500;
         color: #333;
       }
 
@@ -407,7 +408,8 @@ const PageLeft = styled.div`
         align-items: center;
 
         span {
-          font-weight: 700;
+          font-size: 0.875rem;
+          font-weight: 600;
           margin-right: 0.5em;
           color: #999;
         }
@@ -426,7 +428,8 @@ const PageLeft = styled.div`
 const InnerHTML = styled.div`
   padding: 2em 0em 4em;
   p {
-    font-size: 0.9rem;
+    font-size: 1rem;
+    line-height: 1.7em;
     padding: 0.7em 0 1em;
     color: #333;
 
@@ -436,9 +439,9 @@ const InnerHTML = styled.div`
   }
 
   h6 {
-    font-size: 0.9rem;
+    font-size: 1.2rem;
     font-weight: 700;
-    margin-top: 0.8em;
+    margin-top: 1.2em;
   }
 `;
 
@@ -450,8 +453,9 @@ const PageBottom = styled.div`
   width: 100%;
   margin-top: 5em;
   h3 {
-    font-size: 1.2rem;
-    font-weight: 700;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 0.4em;
     color: #333;
     margin: 1em 0;
   }
@@ -472,17 +476,18 @@ const Fixed = styled.div`
 const CompensationBox = styled.div`
   border: 1px solid #e1e2e3;
   border-radius: 3px;
-  padding: 1em;
+  padding: 1.5em 1.2em;
 
   p {
-    font-size: 0.8rem;
-    font-weight: 700;
+    font-size: 1rem;
+    font-weight: 500;
     margin-bottom: 1em;
   }
 
   .boxTop {
     width: 100%;
     display: flex;
+    margin-top: 2em;
 
     .item1 {
       display: flex;
@@ -490,10 +495,14 @@ const CompensationBox = styled.div`
       justify-content: space-between;
       width: 50%;
     }
-
+    .money{
+      font-size: .9rem;
+      font-weight: 700;
+      margin-bottom: 2em;
+    }
     .person {
-      margin-bottom: 0.5em;
-      font-size: 0.85rem;
+      margin-bottom: 0.7em;
+      font-size: 0.875rem;
       font-weight: 700;
       color: #999;
     }
@@ -517,7 +526,7 @@ const CompensationIcon = styled.div`
         align-items: center;
         border: 1px solid #e1e2e3;
         border-radius: 20px;
-        padding: 0.2em 0.5em 0.4em;
+        padding: .5em .7em;
 
         &:hover {
           cursor: pointer;
@@ -526,7 +535,7 @@ const CompensationIcon = styled.div`
         .likeCount {
           font-size: 0.8rem;
           font-weight: 700;
-          margin-left: 0.5em;
+          margin-left: 0.5em; 
         }
       }
 
@@ -562,9 +571,10 @@ const CompensationIcon = styled.div`
     }
 
     .Bottom3 {
+      display: inline-block;
       border: 1px solid #e1e2e3;
       border-radius: 50%;
-      padding: 0.23em 0.25em;
+      padding: .3em .5em;
 
       &:hover {
         cursor: pointer;
@@ -582,10 +592,11 @@ const Button = styled.button`
       border-radius: 2px;
       background-color: #fff;
       color: #258bf7;
-      font-weight: 900;
+      font-weight: 500;
       text-align: center;
       padding: 1em;
       outline: none;
+      font-size: 1rem;
 
       &:hover {
         cursor: pointer;
@@ -610,12 +621,12 @@ const Button = styled.button`
       border-radius: 3px;
       background-color: #21c621;
       color: white;
-      font-size: 0.9rem;
-      font-weight: 700;
+      font-size: 1rem;
+      font-weight: 500;
       text-align: center;
-      padding: 0.8em 1em;
       margin-top: 1em;
       outline: none;
+      padding: .9em 0em;
 
       &:hover {
         cursor: pointer;
@@ -644,22 +655,24 @@ const Button = styled.button`
 const MapBox = styled.div`
   border-top: 1px solid #e1e2e3;
   display: flex;
+  margin-top: 1em;
 
   .mapText1 {
     color: #999;
-    font-weight: bold;
+    font-weight: 600;
     margin-right: 1em;
-    margin-top: 1em;
+    margin-top: 1.5em;
     p {
-      margin-bottom: 1em;
+      margin-bottom: 1.5em;
     }
   }
 
   .mapText2 {
-    font-weight: bold;
-    margin-top: 1em;
+    font-weight: 600;
+    margin-top: 1.5em;
+    margin-right: 1em;
     p {
-      margin-bottom: 1em;
+      margin-bottom: 1.5em;
     }
   }
 `;
