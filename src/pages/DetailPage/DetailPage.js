@@ -48,7 +48,7 @@ const DetailPage = (props) => {
     // like 상태 값 받기
     fetch(`${API}/job/like?job_id=${props.match.params.job}`, {
       headers: {
-        Authorization: token,
+        "Authorization":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhY2NvdW50X2lkIjo0fQ.w1z54j_Vf6rmysn_8a2S0AKrwZ54vrBufrNCxaBbg_g",
       },
     })
       .then((res) => res.json())
@@ -59,7 +59,7 @@ const DetailPage = (props) => {
     // 북마크 상태 값 받기
     fetch(`${API}/job/bookmark?job_id=${props.match.params.job}`, {
       headers: {
-        Authorization: token,
+        "Authorization":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhY2NvdW50X2lkIjo0fQ.w1z54j_Vf6rmysn_8a2S0AKrwZ54vrBufrNCxaBbg_g",
       },
     })
       .then((res) => res.json())
@@ -70,7 +70,7 @@ const DetailPage = (props) => {
     // 팔로우 상태 값 받기
     fetch(`${API}/company/follow?company_id=${props.match.params.job}`, {
       headers: {
-        Authorization: token,
+        "Authorization":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhY2NvdW50X2lkIjo0fQ.w1z54j_Vf6rmysn_8a2S0AKrwZ54vrBufrNCxaBbg_g",
       },
     })
       .then((res) => res.json())
@@ -89,13 +89,9 @@ const DetailPage = (props) => {
 
   // 로그인 여부에 따라 다른 모달창이 뜸
   const checkToken = () => {
-    if (localStorage.getItem("token")) {
+    
       setShowModal(true);
-    } else {
-      // 로그인 모달창이 뜸
-      alert("로그인 해주세요!");
-    }
-  };
+      };
 
   const Click = (event) => {
     if (event === "apply") {
@@ -120,7 +116,7 @@ const DetailPage = (props) => {
       fetch(`${API}/job/like?&job_id=${props.match.params.job}`, {
         method: "POST",
         headers: {
-          Authorization: token,
+          Authorization: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhY2NvdW50X2lkIjo0fQ.w1z54j_Vf6rmysn_8a2S0AKrwZ54vrBufrNCxaBbg_g",
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
@@ -136,7 +132,7 @@ const DetailPage = (props) => {
       fetch(`${API}/job/bookmark?job_id=${props.match.params.job}`, {
         method: "POST",
         headers: {
-          Authorization: token,
+          Authorization: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhY2NvdW50X2lkIjo0fQ.w1z54j_Vf6rmysn_8a2S0AKrwZ54vrBufrNCxaBbg_g",
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
@@ -154,7 +150,7 @@ const DetailPage = (props) => {
       fetch(`${API}/company/follow?company_id=${props.match.params.job}`, {
         method: "POST",
         headers: {
-          Authorization: token,
+          Authorization: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhY2NvdW50X2lkIjo0fQ.w1z54j_Vf6rmysn_8a2S0AKrwZ54vrBufrNCxaBbg_g",
           "Content-Type": "application/json",
         },
         body: JSON.stringify({

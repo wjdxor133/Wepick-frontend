@@ -131,7 +131,7 @@ const Nav = ({
                 <li onClick={() => history.push("/")}>기업 서비스</li>
                 <HiddenProfile show={profileUpdown}>
                   <ul>
-                    <li>
+                    <li onClick={() => history.push("/myprofilepage")}>
                       <Link to="/">프로필</Link>
                     </li>
                     <li>

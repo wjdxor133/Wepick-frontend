@@ -20,7 +20,7 @@ const MyProfilePage = () => {
     const token = localStorage.getItem("access_token");
     fetch(`${API}/account/mypage`, {
       headers: {
-        Authorization: token,
+        Authorization: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhY2NvdW50X2lkIjo0fQ.w1z54j_Vf6rmysn_8a2S0AKrwZ54vrBufrNCxaBbg_g",
       },
     })
       .then((res) => res.json())

@@ -46,10 +46,10 @@ const CvDetailPage = (props) => {
 
   const GetFunc = () => {
     const token = localStorage.getItem("access_token");
-    fetch(`http://10.58.2.7:8000/resume/detail/${props.match.params.index}`, {
+      fetch(`${API}/resume/detail/${props.match.params.index}`, {
       headers: {
         // Authorization:token,
-        "Authorization":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhY2NvdW50X2lkIjoxM30.ogbEu2v4xQIpsmUn9D8JJcA9FW898b5Yg0SnGkYhvSU",
+        "Authorization":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhY2NvdW50X2lkIjo0fQ.w1z54j_Vf6rmysn_8a2S0AKrwZ54vrBufrNCxaBbg_g",
         'Content-Type':'application/json',
       }  
     })
@@ -77,11 +77,11 @@ const CvDetailPage = (props) => {
     //   if (isValiIntro) {
     //     if (isValiCareer) {
           const token = localStorage.getItem("access_token");
-          fetch(`http://10.58.2.7:8000/resume/detail/${props.match.params.index}`, {
+          fetch(`${API}/resume/detail/${props.match.params.index}`, {
             method:"POST",
             headers: {
               // Authorization:token,
-              "Authorization":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhY2NvdW50X2lkIjoxM30.ogbEu2v4xQIpsmUn9D8JJcA9FW898b5Yg0SnGkYhvSU",
+              "Authorization":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhY2NvdW50X2lkIjo0fQ.w1z54j_Vf6rmysn_8a2S0AKrwZ54vrBufrNCxaBbg_g",
               'Content-Type':'application/json',
             },
             body: JSON.stringify({

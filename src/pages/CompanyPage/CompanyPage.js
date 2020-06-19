@@ -38,7 +38,7 @@ const CompanyPage = (props) => {
     fetch(`${API}/company/follow?company_id=${props.match.params.company}`, {
       method: "POST",
       headers: {
-        Authorization: token,
+        "Authorization":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhY2NvdW50X2lkIjo0fQ.w1z54j_Vf6rmysn_8a2S0AKrwZ54vrBufrNCxaBbg_g",
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
@@ -67,7 +67,7 @@ const CompanyPage = (props) => {
     // 팔로우 데이터 가져오기
     fetch(`${API}/company/follow?company_id=${props.match.params.company}`, {
       headers: {
-        Authorization: token,
+        "Authorization":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhY2NvdW50X2lkIjo0fQ.w1z54j_Vf6rmysn_8a2S0AKrwZ54vrBufrNCxaBbg_g",
       },
     })
       .then((res) => res.json())

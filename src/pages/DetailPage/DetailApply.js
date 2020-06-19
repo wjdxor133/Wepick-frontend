@@ -18,7 +18,7 @@ const DetailApply = ({ setApply, job_id }) => {
     fetch(`${API}/job/apply?job_id=${job_id}&${resumeId}`, {
       method: "POST",
       headers: {
-        Authorization: token,
+        "Authorization":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhY2NvdW50X2lkIjo0fQ.w1z54j_Vf6rmysn_8a2S0AKrwZ54vrBufrNCxaBbg_g",
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
@@ -34,7 +34,7 @@ const DetailApply = ({ setApply, job_id }) => {
     // 이력서 뿌리는 API
     fetch(`${API}/job/apply`, {
       headers: {
-        Authorization: token,
+        "Authorization":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhY2NvdW50X2lkIjo0fQ.w1z54j_Vf6rmysn_8a2S0AKrwZ54vrBufrNCxaBbg_g",
       },
     })
       .then((res) => res.json())
