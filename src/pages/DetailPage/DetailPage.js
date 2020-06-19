@@ -12,9 +12,13 @@ import { AiFillHeart } from "react-icons/ai";
 import { BsFillBookmarkFill } from "react-icons/bs";
 import { FiCheck } from "react-icons/fi";
 import { API } from "../../config";
+import { useHistory } from "react-router-dom";
 
 const DetailPage = (props) => {
+  let history = useHistory();
   const [detailData, setDetailData] = useState([]);
+  const [subCategory, setSubCategory] = useState();
+  const [companyId, setCompanyId] = useState();
   const [detailList, setDetailList] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [apply, setApply] = useState(false);
@@ -27,16 +31,18 @@ const DetailPage = (props) => {
 
   useEffect(() => {
     // 채용 디테일 페이지 모든 데이터
-    // fetch("/data/teak2Data/DetailPageMock.json")
 
     // 토큰값 받기
     const token = localStorage.getItem("access_token");
 
+    // fetch("/data/teak2Data/DetailPageMock.json")
     fetch(`${API}/job/${props.match.params.job}`)
       .then((res) => res.json())
       .then((res) => {
         setDetailData(res.data);
         setlikeCount(res.data[0].likes);
+        setSubCategory(res.data[0].sub_category_id);
+        setCompanyId(res.data[0].company_id);
       });
 
     // like 상태 값 받기
@@ -71,14 +77,15 @@ const DetailPage = (props) => {
       .then((res) => {
         setFollowValue(res.is_follow);
       });
-
-    //원티드 추천 공고 데이터
-    fetch("/data/mainMock.json")
+    // 왜 안되는거지?
+    // fetch("/data/mainMock.json");
+    fetch(`${API}/job/list/${subCategory}`)
       .then((res) => res.json())
       .then((res) => {
-        setDetailList(res.position);
+        console.log("res", res);
+        setDetailList(res.data);
       });
-  }, []);
+  }, [subCategory]);
 
   // 로그인 여부에 따라 다른 모달창이 뜸
   const checkToken = () => {
@@ -110,42 +117,32 @@ const DetailPage = (props) => {
       const token = localStorage.getItem("access_token");
       // like 상태 값 보내기
       // 백엔드에 true, false 값을 보내야 함
-      fetch(
-        `${API}/job/like?account_id=1&job_id=${
-          detailData.length > 0 && detailData[0].id
-        }`,
-        {
-          method: "POST",
-          headers: {
-            Authorization: token,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            is_like: likeValue,
-          }),
-        }
-      );
+      fetch(`${API}/job/like?&job_id=${props.match.params.job}`, {
+        method: "POST",
+        headers: {
+          Authorization: token,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          is_like: likeValue,
+        }),
+      });
     }
 
     if (event === "bookMark") {
       setBookMarkValue(!bookMarkValue);
 
       const token = localStorage.getItem("access_token");
-      fetch(
-        `${API}/job/bookmark?account_id=1&job_id=${
-          detailData.length > 0 && detailData[0].id
-        }`,
-        {
-          method: "POST",
-          headers: {
-            Authorization: token,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            is_bookmark: bookMarkValue,
-          }),
-        }
-      );
+      fetch(`${API}/job/bookmark?job_id=${props.match.params.job}`, {
+        method: "POST",
+        headers: {
+          Authorization: token,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          is_bookmark: bookMarkValue,
+        }),
+      });
 
       // 백엔드에 true, false 값을 보내야 함
     }
@@ -154,25 +151,23 @@ const DetailPage = (props) => {
       setFollowValue(!followValue);
 
       const token = localStorage.getItem("access_token");
-      fetch(
-        `${API}/company/follow?account_id=1&company_id=${
-          detailData.length > 0 && detailData[0].id
-        }`,
-        {
-          method: "POST",
-          headers: {
-            Authorization: token,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            is_follow: followValue,
-          }),
-        }
-      );
+      fetch(`${API}/company/follow?company_id=${props.match.params.job}`, {
+        method: "POST",
+        headers: {
+          Authorization: token,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          is_follow: followValue,
+        }),
+      });
     }
   };
 
-  console.log("likeCount", likeCount);
+  const goCompany = () => {
+    history.push(`/CompanyPage/${companyId}`);
+  };
+
   return (
     <>
       <Nav />
@@ -219,7 +214,7 @@ const DetailPage = (props) => {
                 <MapContainer lat={detailData[0].lat} lng={detailData[0].lng} />
               </GoogleMap>
               <FollowBox>
-                <div className="FollowLeft">
+                <div className="FollowLeft" onClick={goCompany}>
                   <img
                     src={`${detailData[0].logo_url}`}
                     alt="로고 이미지"
@@ -248,7 +243,10 @@ const DetailPage = (props) => {
             <PageRight>
               <Fixed>
                 {apply ? (
-                  <DetailApply setApply={setApply} />
+                  <DetailApply
+                    setApply={setApply}
+                    job_id={props.match.params.job}
+                  />
                 ) : (
                   <div>
                     <CompensationBox>
@@ -345,21 +343,27 @@ const DetailPage = (props) => {
           <PageBottom>
             <h3>원티드 추천 공고</h3>
             <ul className="HireList">
-              {detailList.map((myData) => {
-                return (
-                  <PositionList
-                    key={myData.idx}
-                    title={myData.title}
-                    no={myData.job_id}
-                    company={myData.company}
-                    region={myData.region}
-                    country={myData.country}
-                    compensation={myData.reward_total}
-                    thumbnail={myData.thumbnail}
-                    like={myData.like}
-                  />
-                );
-              })}
+              {detailList
+                .filter((jobs, idx) => {
+                  return jobs && idx < 8;
+                })
+                .map((myData) => {
+                  return (
+                    <PositionList
+                      key={myData.idx}
+                      title={myData.name}
+                      no={myData.id}
+                      company={myData.company}
+                      region={myData.region}
+                      country={myData.country}
+                      compensation={myData.reward_amount}
+                      thumbnail={myData.thumbnail}
+                      like={myData.likes}
+                      likeValue={likeValue}
+                      setLikeValue={setLikeValue}
+                    />
+                  );
+                })}
             </ul>
           </PageBottom>
         </DetailPageIn>
@@ -457,10 +461,12 @@ const PageBottom = styled.div`
   }
 
   .HireList {
-    width: 100%;
+    width: 98%;
     list-style: none;
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
+    justify-content: space-between;
   }
 `;
 

@@ -1,22 +1,38 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled, { css } from "styled-components";
+import { API } from "../../config";
 
 const Profile = () => {
+  const [profileData, setProfileData] = useState({});
+
+  useEffect(() => {
+    const token = localStorage.getItem("access_token");
+    fetch(`${API}/account/profile`, {
+      headers: {
+        Authorization: token,
+      },
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        // console.log("profileData", res);
+        setProfileData(res.data);
+      });
+  }, []);
   return (
     <ProfileIn>
       <h1>전문분야 설정</h1>
       <div className="profileContent">
         <div className="contentItem">
           <Text gray>직군</Text>
-          <Text black>개발</Text>
+          <Text black>{profileData.main_category_name}</Text>
         </div>
         <div className="contentItem">
           <Text gray>직무</Text>
-          <Text black>프론트엔드 개발자</Text>
+          <Text black>{profileData.sub_category_name}</Text>
         </div>
         <div className="contentItem">
           <Text gray>경력</Text>
-          <Text black>신입</Text>
+          <Text black>{profileData.career}</Text>
         </div>
         <div className="contentItem">
           <Text gray>스킬</Text>

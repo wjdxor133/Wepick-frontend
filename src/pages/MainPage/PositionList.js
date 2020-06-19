@@ -1,15 +1,44 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { AiFillHeart } from "react-icons/ai";
+import { API } from "../../config";
+import { useHistory } from "react-router-dom";
 
 const PositionList = (props) => {
+  let history = useHistory();
+  console.log("props", props);
+  const [likeCheck, setLikeCheck] = useState(undefined);
+
+  useEffect(() => {
+    const token = localStorage.getItem("access_token");
+
+    fetch(`${API}/job/like?job_id=${props.no}`, {
+      headers: {
+        Authorization: token,
+      },
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        setLikeCheck(res.is_like);
+        console.log(res);
+      });
+  }, []);
+
+  const goDetail = (id) => {
+    history.push(`/DetailPage/${id}`);
+  };
+
   return (
-    <PositionBoxList>
+    <PositionBoxList
+      onClick={() => {
+        goDetail(props.no);
+      }}
+    >
       <PositionImg>
         <img src={props.thumbnail} alt="" />
         <LikeBox>
           <div>
-            <AiFillHeart />
+            <AiFillHeart style={{ color: likeCheck ? "red" : "null" }} />
           </div>
           <span>{props.like}</span>{" "}
         </LikeBox>
@@ -33,6 +62,9 @@ const PositionBoxList = styled.li`
   span {
     font-size: 0.875rem;
     color: ${(props) => props.theme.color.gray};
+  }
+  &:hover {
+    cursor: pointer;
   }
 `;
 

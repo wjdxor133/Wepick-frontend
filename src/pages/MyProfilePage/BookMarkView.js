@@ -1,19 +1,26 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import PositionList from "../MainPage/PositionList";
+import { API } from "../../config";
 
 const BookMarkView = () => {
   const [bookMarkList, setbookMarkList] = useState([]);
 
   useEffect(() => {
-    fetch("/data/teak2Data/BookMarkViewMork.json")
+    const token = localStorage.getItem("access_token");
+    fetch(`${API}/account/mypage/bookmark`, {
+      headers: {
+        Authorization: token,
+      },
+    })
       .then((res) => res.json())
       .then((res) => {
-        setbookMarkList(res.position);
+        // console.log(res);
+        setbookMarkList(res.data);
       });
   }, []);
 
-  console.log("bookMarkList", bookMarkList);
+  // console.log("bookMarkList", bookMarkList);
   return (
     <BookMarkViewIn>
       <ul>
@@ -22,14 +29,14 @@ const BookMarkView = () => {
             return (
               <PositionList
                 key={myData.idx}
-                title={myData.title}
-                no={myData.job_id}
+                title={myData.name}
+                no={myData.id}
                 company={myData.company}
                 region={myData.region}
                 country={myData.country}
-                compensation={myData.reward_total}
+                compensation={myData.reward_amount}
                 thumbnail={myData.thumbnail}
-                like={myData.like}
+                like={myData.likes}
               />
             );
           })}
@@ -46,6 +53,8 @@ const BookMarkViewIn = styled.div`
     list-style: none;
     display: flex;
     align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
   }
 `;
 

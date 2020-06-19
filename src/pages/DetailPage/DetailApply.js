@@ -4,19 +4,43 @@ import FileUpload from "./FlieUpload";
 import styled, { css } from "styled-components";
 import { IoIosArrowForward } from "react-icons/io";
 import { BsPlus } from "react-icons/bs";
+import { API } from "../../config";
 
-const DetailApply = ({ setApply }) => {
-  const [resumeData, setResumeData] = useState([]);
+const DetailApply = ({ setApply, job_id }) => {
+  const [resumeData, setResumeData] = useState({});
+  const [resumeId, setResumeId] = useState(0);
   const goback = () => {
     setApply(false);
   };
 
+  const gosubmit = () => {
+    const token = localStorage.getItem("access_token");
+    fetch(`${API}/job/apply?job_id=${job_id}&${resumeId}`, {
+      method: "POST",
+      headers: {
+        Authorization: token,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        job_id: job_id,
+        resume_id: resumeId,
+      }),
+    });
+    goback();
+  };
+
   useEffect(() => {
+    const token = localStorage.getItem("access_token");
     // 이력서 뿌리는 API
-    fetch("data/teak2Data/ResumeItem.json")
+    fetch(`${API}/job/apply`, {
+      headers: {
+        Authorization: token,
+      },
+    })
       .then((res) => res.json())
       .then((res) => {
-        setResumeData(res.resume);
+        console.log("res", res);
+        setResumeData(res.data);
       });
   }, []);
   // console.log("resumeData", resumeData);
@@ -34,11 +58,11 @@ const DetailApply = ({ setApply }) => {
           <h4>지원정보</h4>
           <Item>
             <ApplyInfoText>이름</ApplyInfoText>
-            <p className="ItemName">임정택</p>
+            <p className="ItemName">{resumeData && resumeData.name}</p>
           </Item>
           <Item>
             <ApplyInfoText>이메일</ApplyInfoText>
-            <p className="ItemText">wjdxor1224@gmail.com</p>
+            <p className="ItemText">{resumeData && resumeData.email}</p>
           </Item>
           <Item hover>
             <ApplyInfoText>연락처</ApplyInfoText>
@@ -65,21 +89,22 @@ const DetailApply = ({ setApply }) => {
           </div>
           <div className="ResumeList">
             <ul>
-              {resumeData.map((resume, idx) => {
-                // console.log("resume", resume);
-                return (
-                  <li>
-                    <ResumeItemBox
-                      key={idx}
-                      name={resume.name}
-                      languge={resume.languge}
-                      resume={resume.date}
-                      write={resume.write}
-                      resumeCheck={true}
-                    />
-                  </li>
-                );
-              })}
+              {resumeData.resume &&
+                resumeData.resume.map((resume, idx) => {
+                  console.log("resume.id", resume.id);
+                  return (
+                    <li>
+                      <ResumeItemBox
+                        key={idx}
+                        resumeId={resumeId}
+                        setResumeId={() => setResumeId(resume.id)}
+                        title={resume.title}
+                        updated_at={resume.updated_at}
+                        resumeCheck={true}
+                      />
+                    </li>
+                  );
+                })}
             </ul>
           </div>
           <Button newResume>새 이력서 작성</Button>
@@ -87,7 +112,13 @@ const DetailApply = ({ setApply }) => {
         <ApplyInfoText Explanation="explanation">
           원티드 이력서로 지원하면 최종 합격률이 40% 높아집니다.
         </ApplyInfoText>
-        <Button submit>제출하기</Button>
+        <Button
+          submit
+          onClick={gosubmit}
+          style={{ color: resumeId !== 0 ? "white" : null }}
+        >
+          제출하기
+        </Button>
       </InfoBox>
     </DetailApplyPage>
   );
@@ -99,7 +130,7 @@ const DetailApplyPage = styled.div`
 `;
 
 const InfoBox = styled.div`
-  overflow: scroll;
+  overflow-y: scroll;
 `;
 
 const DetailApplyHeader = styled.div`
@@ -234,6 +265,10 @@ const Button = styled.button`
       color: rgba(255, 255, 255, 0.5);
       font-size: 1rem;
       font-weight: 700;
+
+      :hover {
+        cursor: pointer;
+      }
     `}
 `;
 export default DetailApply;
