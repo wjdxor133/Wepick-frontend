@@ -3,27 +3,28 @@ import { IoIosArrowForward } from "react-icons/io";
 import styled, { css } from "styled-components";
 
 const ResumeItemBox = ({
-  name,
-  languge,
-  resume,
-  write,
+  title,
+  updated_at,
+  resumeId,
+  setResumeId,
   resumeCheck,
   fileCheck,
   fileName,
   fileDate,
   fileText,
 }) => {
+  console.log("resumeId", resumeId);
   return (
     <ResumeItemBoxIn fileCheck={fileCheck} ResumeCheck={resumeCheck}>
       <div className="BoxLeft">
-        <input type="checkbox" id="cb1" />
-        <label for="cb1"></label>
+        <input type="checkbox" id={resumeId} onClick={setResumeId} />
+        <label for={resumeId}></label>
         <ResumeTextBox>
-          <ResumeText bold>{fileCheck ? fileName : name}</ResumeText>
+          <ResumeText bold>{fileCheck ? fileName : title}</ResumeText>
           <ResumeText>
             {fileCheck
               ? fileDate + fileText
-              : `${languge} | ${resume} | ${write}`}
+              : `한국어 | ${updated_at.slice(0, 10)} | 검토 중`}
           </ResumeText>
         </ResumeTextBox>
       </div>

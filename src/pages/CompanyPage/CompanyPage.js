@@ -35,21 +35,16 @@ const CompanyPage = (props) => {
     const token = localStorage.getItem("access_token");
 
     // 팔로우 버튼 값 변경
-    fetch(
-      `${API}/company/follow?company_id=${
-        companyDate.length > 0 && companyDate[0].id
-      }`,
-      {
-        method: "POST",
-        headers: {
-          Authorization: token,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          is_follow: followValue,
-        }),
-      }
-    );
+    fetch(`${API}/company/follow?company_id=${props.match.params.company}`, {
+      method: "POST",
+      headers: {
+        Authorization: token,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        is_follow: followValue,
+      }),
+    });
   };
 
   const checkToken = () => {
@@ -70,16 +65,11 @@ const CompanyPage = (props) => {
       });
 
     // 팔로우 데이터 가져오기
-    fetch(
-      `${API}/company/follow?company_id=${
-        companyDate.length > 0 && companyDate[0].id
-      }`,
-      {
-        headers: {
-          Authorization: token,
-        },
-      }
-    )
+    fetch(`${API}/company/follow?company_id=${props.match.params.company}`, {
+      headers: {
+        Authorization: token,
+      },
+    })
       .then((res) => res.json())
       .then((res) => {
         setFollowValue(res.is_follow);
@@ -220,7 +210,7 @@ const CompanyPage = (props) => {
               <Text companyPosition>이 회사의 뉴스</Text>
               <Link
                 className="newsBox"
-                href={companyDate[0].news[0].url}
+                to={companyDate[0].news[0].url}
                 target="_blank"
               >
                 <Text newsTitle>{companyDate[0].news[0].name}</Text>

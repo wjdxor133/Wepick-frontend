@@ -1,19 +1,26 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import PositionList from "../MainPage/PositionList";
+import { API } from "../../config";
 
 const LikeView = () => {
   const [likeList, setLikeList] = useState([]);
 
   useEffect(() => {
-    fetch("/data/teak2Data/LikeViewData.json")
+    const token = localStorage.getItem("access_token");
+    fetch(`${API}/account/mypage/like`, {
+      headers: {
+        Authorization: token,
+      },
+    })
       .then((res) => res.json())
       .then((res) => {
-        setLikeList(res.position);
+        // console.log(res);
+        setLikeList(res.data);
       });
   }, []);
 
-  console.log("likeList", likeList);
+  // console.log("likeList", likeList);
   return (
     <LikeViewIn>
       <ul>
@@ -22,14 +29,14 @@ const LikeView = () => {
             return (
               <PositionList
                 key={myData.idx}
-                title={myData.title}
-                no={myData.job_id}
+                title={myData.name}
+                no={myData.id}
                 company={myData.company}
                 region={myData.region}
                 country={myData.country}
-                compensation={myData.reward_total}
+                compensation={myData.reward_amount}
                 thumbnail={myData.thumbnail}
-                like={myData.like}
+                like={myData.likes}
               />
             );
           })}
@@ -45,7 +52,10 @@ const LikeViewIn = styled.div`
     width: 100%;
     list-style: none;
     display: flex;
+    height: 100%;
     align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
   }
 `;
 
