@@ -8,7 +8,7 @@ import newfile from "../../images/newfileWhite.png"
 import upload from "../../images/upload.png"
 import UserCvList from "../../components/UserCvList/UserCvList"
 
-const CvPage = ( { loginCheck, history, match } ) => {
+const CvPage = ( { loginCheck, history } ) => {
 
   const [isLogin, setLogin] = useState(false)
   const [isToggle, setToggle] = useState(0)
@@ -21,16 +21,11 @@ const CvPage = ( { loginCheck, history, match } ) => {
     document.documentElement.scrollTop=0;
   }, [])
   
-  useEffect(() => {
-    console.log(match)
-  })
-
   function inputFucn(input) {
     if (input === 1) {
-      console.log("새 이력서 작성")
-      history.push("/cv/1")
+      history.push("/cv/0");
     } else {
-      console.log("파일 업로드") 
+      alert("파일 업로드 서비스는 곧 업데이트 됩니다!")
     } 
   }
 

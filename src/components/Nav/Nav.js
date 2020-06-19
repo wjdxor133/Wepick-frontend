@@ -3,16 +3,14 @@ import styled from "styled-components"
 import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { changeNavColor, changeModal, changeProfile } from "../../store/actions";
-import WdList from "../WdList/WdList"
-import LoginModal from "../../components/LoginModal/LoginModal"
-import LogoutGo from "../LogoutGo/LogoutGo"
+import WdList from "../WdList/WdList";
+import LoginModal from "../../components/LoginModal/LoginModal";
+import LogoutGo from "../LogoutGo/LogoutGo";
 
 const Nav = ( { changeNavColor, changeModal, changeProfile, navPick, loginCheck, profileUpdown, history } ) => {
   const navBlueColor = (input) => {
     changeNavColor(input);
   };
-
-  // props.changeNavColor();
   
   const [data, setData] = useState({}) //히든 메뉴리스트 data 받을
   const [menuUpdown, setMenuUpdown] = useState(false) //히든 메뉴리스트(탐색 호버시 나올)
@@ -34,7 +32,7 @@ const Nav = ( { changeNavColor, changeModal, changeProfile, navPick, loginCheck,
               <Logo onClick={() => {navBlueColor(0); changeProfile(false); setMenuUpdown(false); document.documentElement.scrollTop=0; history.push("/");}}><p>wanted</p></Logo>
               <NavUl underLine navPick={navPick}>
                 <li onClick={() => {navBlueColor(1); changeProfile(false); history.push("/main");}} onMouseEnter={() => {setMenuUpdown(true); changeProfile(false);}}>탐색</li>
-                <li onClick={() => {navBlueColor(2); changeProfile(false); history.push("/detailpage");}} onMouseEnter={() => setMenuUpdown(false)}>직군별 연봉</li>
+                <li onClick={() => {navBlueColor(2); changeProfile(false); history.push("/");}} onMouseEnter={() => setMenuUpdown(false)}>직군별 연봉</li>
                 <li onClick={() => {navBlueColor(3); changeProfile(false); history.push("/cv");}} onMouseEnter={() => setMenuUpdown(false)}>이력서</li>
                 <li onClick={() => {navBlueColor(4); changeProfile(false); history.push("/");}} onMouseEnter={() => setMenuUpdown(false)}>추천</li>
                 <li onClick={() => {navBlueColor(5); changeProfile(false); history.push("/");}} onMouseEnter={() => setMenuUpdown(false)}>이벤트</li>

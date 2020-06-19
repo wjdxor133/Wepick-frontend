@@ -6,35 +6,100 @@ import { API } from "../../config"
 
 const CvDetailPage = (props) => {
 
-  const [introHigh, setintroHigh] = useState(0);
+  const [introHigh, setIntroHigh] = useState(0);
   const [careerHigh, setcareerHigh] = useState(0);
-  const [data, setData] = useState({});
+  const [title, setTitle] = useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [intro, setIntro] = useState("");
+  const [career, setCareer] = useState("");  
+  // const [isValiTitle, setIsValiTitle] = useState(false);
+  // const [isValiIntro, setIsValiIntro] = useState(false);
+  // const [isValiCareer, setIsValiCareer] = useState(false);
 
   useEffect(() => {
-    fetch("/data/cvDetail.json", {})
+    document.documentElement.scrollTop=0;
+  }, [])
+ 
+  useEffect(() => {GetFunc()}, [])
+
+  // useEffect(() =>
+  //   title.length>0?
+  //   setIsValiTitle(true):
+  //   setIsValiTitle(false)
+  //   , [title]
+  // )
+  
+  // useEffect(() =>
+  //   intro.length>0?
+  //   setIsValiIntro(true):
+  //   setIsValiIntro(false)
+  //   , [intro]
+  // )
+
+  // useEffect(() =>
+  //   career.length>0?
+  //   setIsValiCareer(true):
+  //   setIsValiCareer(false)
+  //   , [career]
+  // )
+
+  const GetFunc = () => {
+    const token = localStorage.getItem("access_token");
+    fetch(`http://10.58.2.7:8000/resume/detail/${props.match.params.index}`, {
+      headers: {
+        // Authorization:token,
+        "Authorization":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhY2NvdW50X2lkIjoxM30.ogbEu2v4xQIpsmUn9D8JJcA9FW898b5Yg0SnGkYhvSU",
+        'Content-Type':'application/json',
+      }  
+    })
     .then((response) => response.json())
     .then((res) => {
-      setData(res)
+      setTitle(res.resume[0].title);
+      setName(res.resume[0].name);
+      setEmail(res.resume[0].email);
+      setIntro(res.resume[0].introduction);
+      setCareer(res.resume[0].work_experiences);     
     })
-  }, []);
+  }
 
-  // useEffect(() => {
-  //   const token = localStorage.getItem("access_token");
-  //   fetch(`${API}/cv/${props.match.params.index}`, {
-  //     headers: {
-  //       "Authorization":token,
-  //       'Content-Type':'application/json',
-  //     }  
-  //   })
-  //   .then((response) => response.json())
-  //   .then((res) => {
-  //     setData(res)
-  //   })
-  // }, [])
-    
-  useEffect(() => {
-    console.log(props.match)
-  })
+  const writeFunc = () => {
+    // if (isValiTitle === false) {  
+    //   alert("제목을 입력해주세요.") 
+    // }
+    // else if (isValiIntro === false) {  
+    //   alert("소개 글을 입력해주세요.") 
+    // }
+    // else if (isValiCareer === false) {  
+    //   alert("경력을 입력해주세요.") 
+    // }
+    // if (isValiTitle) {
+    //   if (isValiIntro) {
+    //     if (isValiCareer) {
+          const token = localStorage.getItem("access_token");
+          fetch(`http://10.58.2.7:8000/resume/detail/${props.match.params.index}`, {
+            method:"POST",
+            headers: {
+              // Authorization:token,
+              "Authorization":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhY2NvdW50X2lkIjoxM30.ogbEu2v4xQIpsmUn9D8JJcA9FW898b5Yg0SnGkYhvSU",
+              'Content-Type':'application/json',
+            },
+            body: JSON.stringify({
+              "title" : title, 
+              "introduction" : intro, 
+              "comment" : career, 
+              "education" : "", 
+              "other" : "",
+              "language" : ""
+            })  
+          })
+          .then(() => {
+            props.history.push("/cv");      
+          })
+    //     }
+    //   }
+    // }
+  }
 
   return (
     <>
@@ -49,24 +114,42 @@ const CvDetailPage = (props) => {
             <DownBox><IoMdDownload/></DownBox>
           </ContentsHeader>
           <ContentsName>
-            <input type="text" placeholder="이력서 제목(필수)" defaultValue={data.name}/>
+            <input type="text" placeholder="이력서 제목(필수)" defaultValue={title} 
+              onChange={
+                function titleFunc(e) {
+                  setTitle(e.target.value);
+                  // setIsValiTitle((e.target.value).length>0 === true)
+                }
+              } 
+            />
           </ContentsName>
           <ContentsUser>
-            <input type="text" placeholder="이름(필수)" defaultValue={data.name}/>
-            <input type="text" placeholder="이메일(필수)" defaultValue={data.email}/>
-            <input type="text" placeholder="연락처(필수) ex)010-0000-0000" defaultValue={data.phone}/>
+            <input type="text" placeholder="이름(필수)" value={name}/>
+            <input type="text" placeholder="이메일(필수)" value={email}/>
           </ContentsUser>
           <BottomWrap>
             <BottomBox high={introHigh}>
               <BoxTitle>간단 소개글</BoxTitle>            
                 <Textarea high={introHigh} placeholder="간단한 자기소개를 통해 이력서를 돋보이게 만들어보세요. (3~5줄 권장)" 
-                  maxlength="2000" defaultValue={data.intro} onChange={(e) => setintroHigh((e.target.value).length)}
+                  maxlength="2000" defaultValue={intro} onChange={
+                    function introFunc(e) {
+                      setIntroHigh((e.target.value).length);
+                      setIntro(e.target.value);
+                      // setIsValiIntro((e.target.value).length>0 === true);
+                    }
+                  }
                 />            
             </BottomBox>
             <BottomBox high={careerHigh}>
               <BoxTitle>경력</BoxTitle>            
                 <Textarea high={careerHigh} placeholder="경력 사항을 입력해 주세요." 
-                  maxlength="2000" defaultValue={data.career} onChange={(e) => setcareerHigh((e.target.value).length)}
+                  maxlength="2000" defaultValue={career} onChange={
+                    function careerFunc(e) {
+                      setcareerHigh((e.target.value).length);
+                      setCareer(e.target.value);
+                      // setIsValiCareer((e.target.value).length>0 === true);
+                    }
+                  }
                 />            
             </BottomBox>
           </BottomWrap>
@@ -74,8 +157,8 @@ const CvDetailPage = (props) => {
         <DPageFooter>
           <FooterWrap>
             <ButtonWrap>
-              <Button white><span>임시 저장</span></Button>
-              <Button><span>작성 완료</span></Button>
+              <Button onClick={writeFunc} white><span>임시 저장</span></Button>
+              <Button onClick={writeFunc}><span>작성 완료</span></Button>
             </ButtonWrap>
           </FooterWrap>  
         </DPageFooter>   

@@ -4,8 +4,9 @@ import GoogleLoginGo from "../GoogleLoginGo/GoogleLoginGo"
 import { connect } from "react-redux";
 import { changeModal, changeLogin, kindLogin } from "../../store/actions";
 import { API } from "../../config";
+import { withRouter } from "react-router-dom";
 
-const LoginModal = ( { changeModal, changeLogin, modalOnoff, kindLogin } ) => {
+const LoginModal = ( { changeModal, changeLogin, modalOnoff, kindLogin, history } ) => {
   // modal 화면 페이지 넘버
   const [isView, setIsView] = useState(0);
   // email관련
@@ -74,16 +75,17 @@ const LoginModal = ( { changeModal, changeLogin, modalOnoff, kindLogin } ) => {
           "email": inputEmail,             
         })
       })  
-      .then(
+      .then((response) => response.json())
+      .then(        
         function innerFunc(res) {
-          if (res.status === 200) { // emailcheck.status가 200일 경우 비회원
-            setIsView(2) // 비회원창으로 보낸다
+          if (res.message === "To Login") { // emailcheck.status가 200일 경우 비회원
+            setIsView(1) // 비회원창으로 보낸다
           }
-          if (res.status === 401) { // emailcheck.status가 401일 경우 비회원
-            setIsView(1) // 회원창으로 보낸다
+          if (res.message === "To Signup") { // emailcheck.status가 401일 경우 비회원
+            setIsView(2) // 회원창으로 보낸다
           }
         }
-      )     
+      )    
     }
   }
 
@@ -193,10 +195,10 @@ const LoginModal = ( { changeModal, changeLogin, modalOnoff, kindLogin } ) => {
   
   // 로그인 성공시 실행할 함수
   const sucSet = () => {
-    console.log("로그인 성공");
     changeModal(false); changeLogin(true); kindLogin("default"); setIsView(0);
     setInputEmail(""); setInputName(""); setInputPass(""); setInputPassCon("");   
     document.documentElement.scrollTop=0;
+    history.push("/main")
   }
 
   // 회원가입 성공시 실행할 함수
@@ -323,7 +325,7 @@ const mapStateToProps = (state) => {
   }
 }
 
-export default connect(mapStateToProps, {changeModal, changeLogin, kindLogin})(LoginModal);
+export default withRouter(connect(mapStateToProps, {changeModal, changeLogin, kindLogin})(LoginModal));
 
 const ModalArea = styled.div`
   display:flex;

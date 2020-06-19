@@ -3,9 +3,10 @@ import styled from "styled-components"
 import { GoogleLogin } from "react-google-login";
 import { connect } from "react-redux";
 import { changeLogin, changeModal, kindLogin } from "../../store/actions";
-import { API } from "../../config"
+import { API } from "../../config";
+import { withRouter } from "react-router-dom";
 
-const GoogleLoginGo = ( { changeLogin, changeModal, kindLogin } ) => {
+const GoogleLoginGo = ( { changeLogin, changeModal, kindLogin, history } ) => {
   return (
   <GoogleLogin 
     cookiePolicy={'single_host_origin'} isSignedIn={false} 
@@ -16,20 +17,6 @@ const GoogleLoginGo = ( { changeLogin, changeModal, kindLogin } ) => {
         <i>Google로 시작하기</i>
       </SnsButton>  
     )}
-    // ////////// 로컬용 ////////////
-    // onSuccess={      
-    //   (res) => {           
-    //     localStorage.setItem("access_Token", res.wc.access_token);
-    //     const token = localStorage.getItem("access_Token")
-    //     changeModal(false);
-    //     changeLogin(true);
-    //     kindLogin("google");
-    //     document.documentElement.scrollTop=0;  
-    //     console.log("구글토큰값", token);
-    //   }            
-    // }
-    // ////////// 로컬용 ////////////
-    ////////// 서버용 ////////////
     onSuccess={      
       (res) => {           
         localStorage.setItem("googleToken", res.wc.access_token); // google 토큰 저장
@@ -50,21 +37,20 @@ const GoogleLoginGo = ( { changeLogin, changeModal, kindLogin } ) => {
             changeLogin(true);
             kindLogin("google"); // login인 종류를 google로 확인해준다
             document.documentElement.scrollTop=0;
-            console.log("토큰교환완료")
+            history.push("/main")
           }
         )
       }            
     }
-    ////////// 서버용 ////////////
   />
   )
 }
 
-export default connect(null, {changeLogin, changeModal, kindLogin})(GoogleLoginGo);
+export default withRouter(connect(null, {changeLogin, changeModal, kindLogin})(GoogleLoginGo));
 
 const SnsButton = styled.button`
   outline:0;
-  width: 100%;
+  width: 90%;
   height: 54px;
   cursor: pointer;
   display: flex;
