@@ -12,7 +12,6 @@ const LogoutGo = ( { changeLogin, changeProfile, kindLogin, loginKind } ) => {
     changeProfile(false);
     kindLogin("default");
     document.documentElement.scrollTop=0;
-    console.log("로그아웃 됨")
   }       
 
   return (

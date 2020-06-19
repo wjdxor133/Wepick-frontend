@@ -10,26 +10,23 @@ const UserCvList = (props) => {
   const [data, setData] = useState({});
 
   useEffect(() => {
-    fetch("/data/userCvList.json", {})
+    getFunc();
+  }, [])
+
+  function getFunc() {
+    const token = localStorage.getItem("access_token");
+    fetch("http://10.58.2.7:8000/resume/list", {
+      headers: {
+      // "Authorization":token,  
+      "Authorization":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhY2NvdW50X2lkIjoxM30.ogbEu2v4xQIpsmUn9D8JJcA9FW898b5Yg0SnGkYhvSU",
+      'Content-Type':'application/json',
+      }  
+    })
     .then((response) => response.json())
     .then((res) => {
       setData(res)
     })
-  }, []);  
-
-  // useEffect(() => {
-  //   const token = localStorage.getItem("access_token");
-  //   fetch(`${API}/cv`, {
-  //     headers: {
-  //       "Authorization":token,
-  //       'Content-Type':'application/json',
-  //     }  
-  //   })
-  //   .then((response) => response.json())
-  //   .then((res) => {
-  //     setData(res)
-  //   })
-  // }, [])
+  }
 
   function moveDetailFunc(input) {
     props.history.push(`/cv/${input}`)   
@@ -45,22 +42,22 @@ const UserCvList = (props) => {
 
   return (
     <>
-      {data.data && data.data.map((item, inx) => {
+      {data.resume && data.resume.map((item, inx) => {
         return (
           <Cover>
             <BoxWrap>    
               <InnerBox key={inx}>            
-                <HeaderWarp onClick={() =>{moveDetailFunc(item.index); props.setToggle(0);}}>
-                  <NameIng color={validation(item.text)}>{item.name}</NameIng>
-                  <DateSpan>{item.date}</DateSpan>           
+                <HeaderWarp onClick={() =>{moveDetailFunc(item.id); props.setToggle(0);}}>
+                  <NameIng color={validation(item.intro)}>{item.title}</NameIng>
+                  <DateSpan>{(item.updated_at).substring(0, 10)}</DateSpan>           
                 </HeaderWarp>
-                <TextIng color={validation(item.text)}>         
-                  <NonClickBox onClick={() => {moveDetailFunc(item.index); props.setToggle(0);}} color={validation(item.text)}><span>{validation(item.text)}</span></NonClickBox>
-                  <ClickBox onClick={() => props.isToggle !== item.index ? props.setToggle(item.index) : props.setToggle(0)}><MdMoreVert/></ClickBox>                          
+                <TextIng color={validation(item.intro)}>         
+                  <NonClickBox onClick={() => {moveDetailFunc(item.id); props.setToggle(0);}} color={validation(item.intro)}><span>{validation(item.intro)}</span></NonClickBox>
+                  <ClickBox onClick={() => props.isToggle !== item.id ? props.setToggle(item.id) : props.setToggle(0)}><MdMoreVert/></ClickBox>                          
                 </TextIng>       
               </InnerBox>
             </BoxWrap>
-            <UserCvListToggle index={item.index} isToggle={props.isToggle}/>  
+            <UserCvListToggle index={item.id} isToggle={props.isToggle} getFunc={getFunc}/>  
           </Cover>
         )
       })}

@@ -71,6 +71,7 @@ const SliderCSS = styled.div`
   width: 100%;
   height: 480px;
   overflow: hidden;
+  border-radius: .3em;
 `;
 
 const SliderContent = styled.div`

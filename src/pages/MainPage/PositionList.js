@@ -64,8 +64,13 @@ const PositionBoxList = styled.li`
     color: ${(props) => props.theme.color.gray};
   }
   &:hover {
+<<<<<<< HEAD
     cursor: pointer;
   }
+=======
+      cursor: pointer;
+    }
+>>>>>>> master
 `;
 
 const PositionImg = styled.div`

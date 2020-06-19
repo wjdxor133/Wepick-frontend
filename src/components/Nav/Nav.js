@@ -24,8 +24,6 @@ const Nav = ({
     changeNavColor(input);
   };
 
-  // props.changeNavColor();
-
   const [data, setData] = useState({}); //히든 메뉴리스트 data 받을
   const [menuUpdown, setMenuUpdown] = useState(false); //히든 메뉴리스트(탐색 호버시 나올)
 
