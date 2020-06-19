@@ -5,22 +5,23 @@ import { API } from "../../config"
 const UserCvListToggle = (props) => {
 
   const deleteFunc = () => {
-    console.log(props.index)
-    // const token = localStorage.getItem("access_token");
-    // fetch(`${API}/cv/${props.index}`, {
-    //   method: "DELETE",
-    //   headers: {
-    //     "Authorization":token,
-    //     'Content-Type':'application/json',
-    //   }  
-    // })
+    const token = localStorage.getItem("access_token");
+    fetch(`http://10.58.2.7:8000/resume/detail/${props.index}`, {
+      method:"DELETE",
+      headers: {
+        // Authorization:token,
+        "Authorization":"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhY2NvdW50X2lkIjoxM30.ogbEu2v4xQIpsmUn9D8JJcA9FW898b5Yg0SnGkYhvSU",
+        'Content-Type':'application/json',
+      }
+    })
+    .then(props.getFunc)
   }
 
   return (
     <>    
       <ToggleBox isToggle={props.isToggle} index={props.index}>    
         <ul>
-          <li onClick={() => console.log(props.index)}>이름 변경</li>
+          <li onClick={() => props.getFunc}>이름 변경</li>
           <li>다운로드</li>
           <li onClick={deleteFunc}>삭제</li>
         </ul>    
