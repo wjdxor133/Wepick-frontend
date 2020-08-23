@@ -6,7 +6,7 @@
 - 프로젝트 기간 : 2020.06.08 ~ 2020.06.19 (약 10일)
 
 
-## Demo
+## Demo (click!)
 [![Video Label](http://img1.daumcdn.net/thumb/C400x300.fpng/?fname=http://t1.daumcdn.net/brunch/service/user/Nzn/image/9C1pmNL6IByiihIQ3QXfR6qZw6k.png)](https://www.youtube.com/watch?v=I54QGEJnOo8)
 
 
