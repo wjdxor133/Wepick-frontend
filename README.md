@@ -42,7 +42,17 @@
 - 메인 탐색 페이지에서 스크롤과 Query string으로 일정량의 데이터를 추가적으로 호출하는 페이지네이션 구현
 - 이력서 페이지 저장, 추가, 삭제 기능 구현
 - 지원하기 및 지원현황 기능 구현
-- modal 창 구현
+- ModalPortal 사용하여 modal 창 구현
 
 ## 회고록
+
+### Front-end
+
+- 임정택
+
+[2차 프로젝트 회고록](https://ljtaek2.tistory.com/118)
+
+- 권미란
+
+[All posts](https://gwonran.github.io/blog/)
 
